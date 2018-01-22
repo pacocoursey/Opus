@@ -18,7 +18,5 @@ Be able to specify a default folder from where files should be read, i.e:
 
 ### Editor
 
-Headings: 1, 2, 3, 4
-Effects: bold, italic, underline, strikethrough
-Lists: unordered (4 styles of bullet points), ordered
-Extra: quote, line separator (<hr>)
+
+Support all features from Quill.js
