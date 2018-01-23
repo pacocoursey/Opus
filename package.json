@@ -1,0 +1,12 @@
+{
+  "name": "opus",
+  "version": "0.0.1",
+  "description": "hackable note-taking app",
+  "main": "./main.js",
+  "scripts": {
+    "start": "/Applications/Electron.app/Contents/MacOS/Electron ."
+  },
+  "repository": "https://github.com/pacocoursey/opus",
+  "author": "Paco Coursey",
+  "license": "MIT"
+}
