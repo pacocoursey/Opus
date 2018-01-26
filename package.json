@@ -8,5 +8,8 @@
   },
   "repository": "https://github.com/pacocoursey/opus",
   "author": "Paco Coursey",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "electron-settings": "^3.1.4"
+  }
 }
