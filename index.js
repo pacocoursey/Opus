@@ -8,8 +8,6 @@ const writeFile = function(data) {
   fs.writeFile(path, data, function(e) {
     if(e)
       return console.log(e);
-
-    console.log("file saved");
   })
 
 }

@@ -30,36 +30,38 @@ var quill = new Quill('.editor', {
 });
 
 
-/* Load delta contents */
 var Delta = Quill.import('delta');
 
-var contents = fs.readFileSync('/Users/paco/Dropbox/school/opus/new').toString();
+function loadFile() {
+  // Load Delta content from file
+  var contents = fs.readFileSync('/Users/paco/Dropbox/school/opus/new').toString();
 
-var load = new Delta(JSON.parse(contents));
+  var load = new Delta(JSON.parse(contents));
 
-quill.setContents(load, "user");
+  quill.setContents(load, "user");
+}
 
-
-// Store accumulated changes
-var change = new Delta();
+// Set a flag on text-change event.
+var change = false;
 quill.on('text-change', function(delta) {
-  change = change.compose(delta);
+  change = true;
 });
 
-// Save periodically
+// Every second, monitor the text-change flag
+// If true, save the entire file locally.
 setInterval(function() {
-  if (change.length() > 0) {
-    console.log('Saving changes', change);
+  if(change) {
+    console.log("Saving file.");
 
-    writeFile(JSON.stringify(change));
+    writeFile(JSON.stringify(quill.getContents()));
 
-    change = new Delta();
+    change = false;
   }
-}, 5*1000);
+}, 1000);
 
 // Check for unsaved data
 window.onbeforeunload = function() {
-  if (change.length() > 0) {
+  if (change) {
     return 'There are unsaved changes. Are you sure you want to leave?';
   }
 }

@@ -9,6 +9,47 @@ html, body {
   -webkit-app-region: drag;
 }
 
+/*
+  • \2022
+  Ξ \039e
+  › \203A
+  ↳ \21B3
+  ⊦ \2228
+  〉\232A
+  □ \25A1
+  ○ \25CB
+
+  •
+    -
+      ↳
+        ›
+
+
+*/
+
+/* Default */
+.ql-editor ul > li::before,
+.ql-editor ul li:before {
+  content: '\2022 ' !important;
+}
+
+/* First indent */
+.ql-editor ul li.ql-indent-1:before {
+  content: '- ' !important;
+}
+
+/* Second indent */
+.ql-editor ul li.ql-indent-2:before {
+  content: '\21B3 ' !important;
+}
+
+/* Third indent */
+.ql-editor ul li.ql-indent-3:before {
+  content: '\203A ' !important;
+}
+
+
+
 input[type="submit"],
 input[type="reset"],
 input[type="button"],
