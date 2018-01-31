@@ -1,10 +1,10 @@
 var quill = new Quill('.editor', {
-  debug: 'info',
+  debug: 'error',
   theme: 'snow'
 });
 
 
-/* Strikethrough */
+// Strikethrough
 quill.keyboard.addBinding({
   key: 'S',
   shiftKey: true,
@@ -14,7 +14,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Heading 1 */
+// Heading 1
 quill.keyboard.addBinding({
   key: '1',
   shortKey: true,
@@ -23,7 +23,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Heading 2 */
+// Heading 2
 quill.keyboard.addBinding({
   key: '2',
   shortKey: true,
@@ -32,7 +32,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Heading 3 */
+// Heading 3
 quill.keyboard.addBinding({
   key: '3',
   shortKey: true,
@@ -41,7 +41,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Clear formatting */
+// Clear formatting
 quill.keyboard.addBinding({
   key: '0',
   shortKey: true,
@@ -50,7 +50,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Ordered list */
+// Ordered list
 quill.keyboard.addBinding({
   key: 'L',
   shortKey: true,
@@ -59,7 +59,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Unordered list */
+// Unordered list
 quill.keyboard.addBinding({
   key: 'L',
   shiftKey: true,
@@ -69,7 +69,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Subscript */
+// Subscript
 quill.keyboard.addBinding({
   key: 189, // -
   shiftKey: true,
@@ -79,7 +79,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Superscript */
+// Superscript
 quill.keyboard.addBinding({
   key: 187, // =
   shiftKey: true,
@@ -89,7 +89,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Code-block */
+// Code-block
 quill.keyboard.addBinding({
   key: "C",
   shiftKey: true,
@@ -99,7 +99,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Blockquote */
+// Blockquote
 quill.keyboard.addBinding({
   key: 190, // .
   shortKey: true,
@@ -108,7 +108,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Indent */
+// Indent
 quill.keyboard.addBinding({
   key: 221, // ]
   shortKey: true,
@@ -117,7 +117,7 @@ quill.keyboard.addBinding({
   }
 });
 
-/* Outdent */
+// Outdent
 quill.keyboard.addBinding({
   key: 219, // ]
   shortKey: true,
@@ -126,10 +126,18 @@ quill.keyboard.addBinding({
   }
 });
 
-
-
-
-
+// Hide tree
+quill.keyboard.addBinding({
+  key: 220, // \
+  shortKey: true,
+  handler: function(range, context) {
+    var sidebar = document.getElementsByClassName("sidebar")[0].parentElement;
+    if(sidebar.style.display === "block" || !sidebar.style.display)
+      sidebar.style.display = "none";
+    else
+      sidebar.style.display = "block";
+  }
+});
 
 
 

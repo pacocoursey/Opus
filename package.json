@@ -10,6 +10,7 @@
   "author": "Paco Coursey",
   "license": "MIT",
   "dependencies": {
-    "electron-settings": "^3.1.4"
+    "electron-settings": "^3.1.4",
+    "open": "0.0.5"
   }
 }

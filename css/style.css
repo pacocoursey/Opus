@@ -15,41 +15,48 @@ input[type="button"],
 input[type="text"],
 button,
 textarea,
-.editor {
+.ql-editor {
 	-webkit-app-region: no-drag;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Lato', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Lato', sans-serif !important;
   background: #ffffff;
   color: #495057;
 
   min-height: 100vh;
   min-width: 100%;
 
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  grid-template-rows: 1fr;
-  grid-template-areas: "sidebar editor";
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 aside {
-  grid-area: sidebar;
   background-color: #495057;
   color: #f8f9fa;
+  display: block;
+  width: 225px;
+}
 
+.sidebar {
   padding: 30px;
 }
 
 main {
-  grid-area: editor;
+  flex-grow: 2;
 
-  display: flex;
-  flex-direction: column;
 }
 
 .ql-editor {
+  max-width: 750px;
+  margin: 0 auto;
   padding: 50px !important;
+}
+
+.ql-container {
+  font-family: -apple-system, BlinkMacSystemFont, 'Lato', sans-serif !important;
+  border: none !important;
 }
 
 .ql-toolbar {

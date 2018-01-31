@@ -21,3 +21,5 @@
 - outdent : Cmd+[
 
 - clear formatting : Cmd+0
+
+- hide sidebar : Cmd+\

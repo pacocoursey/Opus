@@ -2,6 +2,7 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 const settings = require('electron-settings')
+const open = require('open')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -18,15 +19,20 @@ function createWindow () {
     }
   })
 
-  let webContents = win.webContents;
+  let webContents = win.webContents
   webContents.on('did-finish-load', () => {
-    webContents.setZoomFactor(1);
-    webContents.setVisualZoomLevelLimits(1, 1);
-    webContents.setLayoutZoomLevelLimits(0, 0);
-  });
+    webContents.setZoomFactor(1)
+    webContents.setVisualZoomLevelLimits(1, 1)
+    webContents.setLayoutZoomLevelLimits(0, 0)
+  })
 
-  settings.set('editor', {
-    path: '/Users/paco/Dropbox/school/opus/'
+  webContents.on('new-window', function(event, url){
+    event.preventDefault()
+    open(url)
+  })
+
+  settings.set('default', {
+    directory: '/Users/paco/Dropbox/school/opus/'
   })
 
   // and load the index.html of the app.
