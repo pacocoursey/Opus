@@ -18,6 +18,13 @@ function createWindow () {
     }
   })
 
+  let webContents = win.webContents;
+  webContents.on('did-finish-load', () => {
+    webContents.setZoomFactor(1);
+    webContents.setVisualZoomLevelLimits(1, 1);
+    webContents.setLayoutZoomLevelLimits(0, 0);
+  });
+
   settings.set('editor', {
     path: '/Users/paco/Dropbox/school/opus/'
   })

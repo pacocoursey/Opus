@@ -1,22 +1,23 @@
 # opus
 
-## Features
+### editing
 
-More of a text-editor in the sense that it simply reads local files and parses the markdown.
+- bold : Cmd+B
+- italic : Cmd+I
+- underline : Cmd+U
+- strikethrough : Cmd+Shift+S
+- subscript : Cmd+Shift+-
+- superscript : Cmd+Shift++
+- header 1 : Cmd+1
+- header 2 : Cmd+2
+- header 3 : Cmd+3
 
-### Customizable
-- Font: typeface, size, color, spacing
-- Editor: editor colors, sidebar colors, icons (?)
+- unordered list : Cmd+L
+- ordered list : Cmd+Shift+L
+- blockquote : Cmd+Shift+.
+- code-block : Cmd+Shift+C
 
-Extensible -- use `styles/` folder with multiple css files to allow for multiple themes?
+- indent : Cmd+]
+- outdent : Cmd+[
 
-### File System
-Stores notes in markdown as .md (or .txt?) files rather than hidden in some database system. Makes it easy to work with a folder system and programs like Dropbox.
-
-Be able to specify a default folder from where files should be read, i.e:
-`~/Documents/School/2018/` or `~/Dropbox/opus/`
-
-### Editor
-
-
-Support all features from Quill.js
+- clear formatting : Cmd+0
