@@ -10,6 +10,7 @@
   "author": "Paco Coursey",
   "license": "MIT",
   "dependencies": {
+    "directory-tree": "^2.0.0",
     "electron-settings": "^3.1.4",
     "open": "0.0.5"
   }

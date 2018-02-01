@@ -45,6 +45,8 @@ aside {
   padding: 30px;
   line-height: 2em;
   font-size: 12px;
+
+  display: fixed;
 }
 
 .sidebar h4 {
@@ -57,14 +59,16 @@ aside {
   text-decoration: none;
   padding-left: 20px;
   color: #fff;
+  cursor: pointer;
 }
 
 .sidebar i {
   padding-right: 7px;
 }
 
-
-
+.active {
+  background-color: #343a40;
+}
 
 
 main {

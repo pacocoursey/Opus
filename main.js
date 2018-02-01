@@ -31,8 +31,9 @@ function createWindow () {
     open(url)
   })
 
-  settings.set('default', {
-    directory: '/Users/paco/Dropbox/school/opus/'
+  settings.set('active', {
+    directory: '/Users/paco/Dropbox/school/opus/',
+    file: ''
   })
 
   // and load the index.html of the app.

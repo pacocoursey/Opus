@@ -149,8 +149,6 @@ quill.keyboard.addBinding({
 var Delta = Quill.import('delta');
 
 function loadFile(path) {
-  // Save current file in settings
-
   // Load Delta content from file
   var contents = fs.readFileSync(path).toString();
   var load = new Delta(JSON.parse(contents));
@@ -167,10 +165,7 @@ quill.on('text-change', function(delta) {
 // If true, save the entire file locally.
 setInterval(function() {
   if(change) {
-    console.log("Saving file.");
-
     writeFile(JSON.stringify(quill.getContents()));
-
     change = false;
   }
 }, 1000);

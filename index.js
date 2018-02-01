@@ -1,49 +1,69 @@
 const settings = require('electron-settings')
 const fs = require('fs')
 const path = require('path')
+const dirtree = require('directory-tree')
 
-const writeFile = function(path, data) {
+fs.watch(settings.get('active.directory'), function (event, filename) {
+    console.log('event is: ' + event);
+    if (filename) {
+        console.log('filename provided: ' + filename);
+    } else {
+        console.log('filename not provided');
+    }
+});
 
-  var current_file = settings.get('current.file')
+function updateSidebar() {
+  var activePath = settings.get('active.directory')
+  var sidebar = document.getElementsByClassName("sidebar")[0];
 
-  console.log("Saving: " + current_file)
+  var tree = dirtree(activePath, {extensions:/\.json/})
 
-  // fs.writeFile(current_file, data, function(e) {
-  //   if(e)
-  //     return console.log(e)
-  // })
+  document.getElementById("activeDirectory").innerHTML += path.basename(activePath)
 
-}
+  for(var i = 0; i < tree.children.length; i++) {
+    var icon;
 
-// Automatically populate sidebar
-var opus_path = settings.get('default.directory')
+    if(tree.children[i].type === "directory")
+      icon = "<i class='fas fa-folder'></i>"
+    else if(tree.children[i].type === "file")
+      icon = "<i class='far fa-file'></i>"
 
-fs.readdir(opus_path, function(err, items) {
+    var item = document.createElement("a")
+    item.innerHTML = icon + tree.children[i].name;
+    item.addEventListener("click", load)
+    sidebar.appendChild(item)
 
-  // Output working directory
-  var sidebar = document.getElementsByClassName("sidebar")[0]
-  var project_root_path = path.basename(opus_path)
-  document.getElementById("project_root").innerHTML += project_root_path;
-
-  // Loop through files in working directory
-  for(var i = 0;i < items.length; i++) {
-
-    // Output file
-    var file = document.createElement("a")
-    file.innerHTML = "<i class='fa fa-file'></i>" + items[i]
-
-    file.addEventListener("click", function() {
-      load(this.innerHTML)
-    })
-
-    sidebar.appendChild(file)
   }
-})
 
-function load(path) {
-  console.log("load() hit: " + path)
 }
 
+updateSidebar()
+
+function load() {
+  var activePath = settings.get('active.directory')
+  var name = this.innerHTML.replace(/<(?:.|\n)*?>/gm, '');
+  var fileName = activePath + name;
+
+  var current = document.getElementsByClassName("active")
+  if(current.length > 0)
+    current[0].classList.remove("active")
+
+  this.classList = "active";
+
+  settings.set('active.file', fileName)
+
+  loadFile(fileName);
+}
+
+const writeFile = function(data) {
+  var activeFile = settings.get('active.file')
+
+  fs.writeFile(activeFile, data, function(e) {
+    if(e)
+      return console.log(e)
+  })
+
+}
 
 
 
