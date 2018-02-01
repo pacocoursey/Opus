@@ -2,14 +2,16 @@ const settings = require('electron-settings')
 const fs = require('fs')
 const path = require('path')
 
-const writeFile = function(data) {
+const writeFile = function(path, data) {
 
-  var current_file = settings.get('default.directory') + "new"
+  var current_file = settings.get('current.file')
 
-  fs.writeFile(current_file, data, function(e) {
-    if(e)
-      return console.log(e)
-  })
+  console.log("Saving: " + current_file)
+
+  // fs.writeFile(current_file, data, function(e) {
+  //   if(e)
+  //     return console.log(e)
+  // })
 
 }
 
@@ -17,18 +19,38 @@ const writeFile = function(data) {
 var opus_path = settings.get('default.directory')
 
 fs.readdir(opus_path, function(err, items) {
+
+  // Output working directory
   var sidebar = document.getElementsByClassName("sidebar")[0]
+  var project_root_path = path.basename(opus_path)
+  document.getElementById("project_root").innerHTML += project_root_path;
 
-  var folder = document.createElement("H3")
-  var folder_name = document.createTextNode(path.basename(opus_path))
-  folder.appendChild(folder_name)
-  sidebar.appendChild(folder)
-
+  // Loop through files in working directory
   for(var i = 0;i < items.length; i++) {
-    var file = document.createElement("P")
-    var file_name = document.createTextNode(items[i])
-    file.appendChild(file_name)
+
+    // Output file
+    var file = document.createElement("a")
+    file.innerHTML = "<i class='fa fa-file'></i>" + items[i]
+
+    file.addEventListener("click", function() {
+      load(this.innerHTML)
+    })
+
     sidebar.appendChild(file)
-    // console.log(items[i]);
   }
 })
+
+function load(path) {
+  console.log("load() hit: " + path)
+}
+
+
+
+
+
+
+
+
+
+
+// space

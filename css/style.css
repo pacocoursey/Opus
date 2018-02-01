@@ -37,11 +37,35 @@ aside {
   color: #f8f9fa;
   display: block;
   width: 225px;
+  max-width: 225px;
+  min-width: 225px;
 }
 
 .sidebar {
   padding: 30px;
+  line-height: 2em;
+  font-size: 12px;
 }
+
+.sidebar h4 {
+  font-size: 14px;
+  dislay: inline;
+}
+
+.sidebar a {
+  display: block;
+  text-decoration: none;
+  padding-left: 20px;
+  color: #fff;
+}
+
+.sidebar i {
+  padding-right: 7px;
+}
+
+
+
+
 
 main {
   flex-grow: 2;
