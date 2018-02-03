@@ -34,46 +34,58 @@ body {
 
 aside {
   background-color: #495057;
-  color: #f8f9fa;
+  color: #ffffff;
   display: block;
   width: 225px;
   max-width: 225px;
   min-width: 225px;
+  max-height: 100vh;
+
+  overflow: auto;
 }
 
 .sidebar {
-  padding: 30px;
+  padding: 40px 30px;
   line-height: 2em;
   font-size: 12px;
-
-  display: fixed;
 }
 
-.sidebar h4 {
-  font-size: 14px;
-  dislay: inline;
+.sidebar ol {
+  list-style-type: none;
 }
 
-.sidebar a {
-  display: block;
-  text-decoration: none;
-  padding-left: 20px;
-  color: #fff;
-  cursor: pointer;
+.sidebar ol li ol {
+  margin-left: 10px;
+}
+
+.file, .folder {
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.project span {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 3px;
 }
 
 .sidebar i {
-  padding-right: 7px;
+  padding-right:5px;
 }
 
-.active {
+.file:hover {
   background-color: #343a40;
 }
 
 
+
+
+
+
 main {
   flex-grow: 2;
-
+  max-height: 100vh;
+  overflow: auto;
 }
 
 .ql-editor {

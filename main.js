@@ -13,7 +13,7 @@ function createWindow () {
   win = new BrowserWindow({
     width: 960,
     height: 544,
-    frame: false,
+    titleBarStyle: 'hidden',
     webPreferences: {
       experimentalFeatures: true
     }
@@ -32,7 +32,8 @@ function createWindow () {
   })
 
   settings.set('active', {
-    directory: '/Users/paco/Dropbox/school/opus/',
+    // project: '/Users/paco/Dropbox/school/opus/',
+    directory: '',
     file: ''
   })
 
