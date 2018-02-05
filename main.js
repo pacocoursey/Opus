@@ -13,6 +13,7 @@ function createWindow () {
   win = new BrowserWindow({
     width: 960,
     height: 544,
+    transparent: true,
     titleBarStyle: 'hidden',
     webPreferences: {
       experimentalFeatures: true
@@ -44,6 +45,10 @@ function createWindow () {
     slashes: true
   }))
 
+  win.once('ready-to-show', () => {
+    win.show()
+  })
+
   // Open the DevTools.
   // win.webContents.openDevTools()
 
@@ -69,6 +74,7 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the

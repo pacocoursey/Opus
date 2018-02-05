@@ -9,13 +9,13 @@ watch(settings.get('active.project'),
     recursive: true,
     filter: /\.json$/
   }, function(evt, name) {
-    console.log(evt)
     if(evt == 'update' || evt == 'remove') {
       // created, modified, or deleted
+      console.log("Reloading.")
       reloadProject(name)
-      console.log("Reloading sidebar project view.")
     }
 })
+
 
 const getDirectories = p => fs.readdirSync(p).filter(f => fs.statSync(path.join(p, f)).isDirectory())
 const getFiles = p => fs.readdirSync(p).filter(f => fs.statSync(path.join(p, f)).isFile() && path.extname(f) === ".json")
@@ -91,14 +91,12 @@ const reloadProject = function(filePath) {
   var ol = parentFolder.nextElementSibling
   var openFolders = ol.getElementsByClassName("folder open")
   var paths = new Array()
+  var activeFilePath = document.getElementsByClassName("active")[0].children[1].getAttribute("data-path")
   var folder, folderPath
 
   // statically save the paths of open folders
-  for(folder of openFolders) {
+  for(folder of openFolders)
     paths.push(folder.childNodes[2].getAttribute("data-path"))
-  }
-
-  console.log(parentFolderPath)
 
   closeFolder(parentFolderPath)
   openFolder(parentFolderPath)
@@ -107,11 +105,14 @@ const reloadProject = function(filePath) {
     openFolder(folderPath)
   }
 
+  // save the active file
+  document.querySelectorAll('[data-path="' + activeFilePath + '"]').item(0).parentElement.classList.add("active")
+
 }
 
 const closeFolder = function(path) {
   var folder = document.querySelectorAll('[data-path="' + path + '"]').item(0).parentElement
-  var indicator = folder.childNodes[0]
+  var indicator = folder.children[0]
   var ol = folder.nextElementSibling
 
   indicator.classList.remove("fa-angle-down")
@@ -127,8 +128,7 @@ const openFolder = function(path) {
   var files = getFiles(path)
 
   var folder = document.querySelectorAll('[data-path="' + path + '"]').item(0).parentElement
-  var indicator = folder.childNodes[0]
-  console.log(folder)
+  var indicator = folder.children[0]
   var ol = folder.nextElementSibling
   folder.classList.add("open")
 
@@ -190,6 +190,23 @@ const writeFile = function(data) {
 
 // Boot it up
 openProject()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
