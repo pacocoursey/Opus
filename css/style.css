@@ -15,8 +15,13 @@ input[type="button"],
 input[type="text"],
 button,
 textarea,
-.ql-editor {
+.ql-editor,
+.sidebar ol {
 	-webkit-app-region: no-drag;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 body {
@@ -40,13 +45,14 @@ aside {
   max-width: 225px;
   min-width: 225px;
   max-height: 100vh;
+  user-select: none;
 
   overflow: auto;
 }
 
 .sidebar {
   padding: 40px 30px;
-  line-height: 2em;
+  line-height: 2.5em;
   font-size: 12px;
 }
 
@@ -60,7 +66,12 @@ aside {
 
 .file, .folder {
   padding-left: 10px;
+  padding-right: 5px;
   border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis !important;
 }
 
 .project span {
@@ -70,10 +81,10 @@ aside {
 }
 
 .sidebar i {
-  padding-right:5px;
+  padding-right: 5px;
 }
 
-.file:hover {
+.active {
   background-color: #343a40;
 }
 

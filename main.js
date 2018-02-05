@@ -32,7 +32,7 @@ function createWindow () {
   })
 
   settings.set('active', {
-    // project: '/Users/paco/Dropbox/school/opus/',
+    project: '/Users/paco/Dropbox/school/opus/',
     directory: '',
     file: ''
   })

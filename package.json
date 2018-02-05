@@ -12,6 +12,7 @@
   "dependencies": {
     "directory-tree": "^2.0.0",
     "electron-settings": "^3.1.4",
+    "node-watch": "^0.5.6",
     "open": "0.0.5"
   }
 }
