@@ -1,5 +1,27 @@
 # opus
 
+### todo
+
+General:
+
+- Error checking and cleanup of `files.js`
+
+Application:
+
+- Welcome screen: define default project directory
+- New File: define file name and location
+- Sidebar file interaction: move, rename, delete
+- Menu: define app menu items
+
+Configuration:
+
+- Store themes in `~/.opus/`, define which is active using electron-settings (`~/Library/Application Support/opus`)
+
+Editor:
+
+- Horizontal separator
+- Arrow replacement character `->`
+
 ### editing
 
 - bold : Cmd+B

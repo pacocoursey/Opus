@@ -16,7 +16,6 @@ watch(settings.get('active.project'),
     }
 })
 
-
 const getDirectories = p => fs.readdirSync(p).filter(f => fs.statSync(path.join(p, f)).isDirectory())
 const getFiles = p => fs.readdirSync(p).filter(f => fs.statSync(path.join(p, f)).isFile() && path.extname(f) === ".json")
 
