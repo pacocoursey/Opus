@@ -1,19 +1,19 @@
 # opus
 
-## Usage
+## Installation
 
 Want to try it out? Run the following from the command line.
 
 ```
-git clone https://github.com/pacocoursey/opus.git
-cd opus
-npm install
-npm start
+$ git clone https://github.com/pacocoursey/opus.git
+$ cd opus
+$ npm install
+$ npm start
 ```
 
 Keep in mind this project is still under development.
 
-### todo
+## Todo
 
 General:
 
@@ -35,7 +35,7 @@ Editor:
 - Horizontal separator
 - Arrow replacement character `->`
 
-### editing
+## Keybinds
 
 - bold : Cmd+B
 - italic : Cmd+I
@@ -58,3 +58,6 @@ Editor:
 - clear formatting : Cmd+0
 
 - hide sidebar : Cmd+\
+
+
+---
