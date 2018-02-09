@@ -1,5 +1,18 @@
 # opus
 
+## Usage
+
+Want to try it out? Run the following from the command line.
+
+```
+git clone https://github.com/pacocoursey/opus.git
+cd opus
+npm install
+npm start
+```
+
+Keep in mind this project is still under development.
+
 ### todo
 
 General:
