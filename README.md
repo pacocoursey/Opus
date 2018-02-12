@@ -13,11 +13,14 @@ $ npm start
 
 Keep in mind this project is still under development.
 
+![Opus Screenshot](https://pacocoursey.github.io/img/opus.png?raw=true)
+
 ## Todo
 
 General:
 
 - Error checking and cleanup of `files.js`
+- Watch on folders, in addition to `.json` files
 
 Application:
 
