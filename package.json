@@ -2,17 +2,26 @@
   "name": "Opus",
   "version": "0.0.1",
   "description": "hackable note-taking app",
-  "main": "./main.js",
+  "main": "./src/index.js",
   "scripts": {
-    "start": "/Applications/Electron.app/Contents/MacOS/Electron ."
+    "start": "/Applications/Electron.app/Contents/MacOS/Electron .",
+    "lint": "eslint --ignore-path .gitignore .",
+    "fix": "eslint --ignore-path .gitignore --fix .",
+    "files": "eslint --ignore-path .gitignore --fix src/files.js"
   },
   "repository": "https://github.com/pacocoursey/opus",
   "author": "Paco Coursey",
   "license": "MIT",
   "dependencies": {
-    "directory-tree": "^2.0.0",
+    "electron": "^2.0.2",
     "electron-settings": "^3.1.4",
+    "eslint": "^4.19.1",
     "node-watch": "^0.5.6",
-    "open": "0.0.5"
+    "quill": "^1.3.6",
+    "quill-delta": "^3.6.2"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0"
   }
 }

@@ -21,7 +21,12 @@ textarea,
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
+}
+
+::selection {
+  background: #000;
+  color: #fff;
 }
 
 body {
@@ -38,7 +43,7 @@ body {
 }
 
 aside {
-  background-color: #495057;
+  background-color: #000;
   color: #ffffff;
   display: block;
   width: 225px;
