@@ -17,11 +17,6 @@ Keep in mind this project is still under development.
 
 ## Todo
 
-General:
-
-- Error checking and cleanup of `files.js`
-- Watch on folders, in addition to `.json` files
-
 Application:
 
 - Welcome screen: define default project directory
@@ -40,27 +35,27 @@ Editor:
 
 ## Keybinds
 
-- bold : Cmd+B
-- italic : Cmd+I
-- underline : Cmd+U
-- strikethrough : Cmd+Shift+S
-- subscript : Cmd+Shift+-
-- superscript : Cmd+Shift++
-- header 1 : Cmd+1
-- header 2 : Cmd+2
-- header 3 : Cmd+3
+- bold : `Cmd+B`
+- italic : `Cmd+I`
+- underline : `Cmd+U`
+- strikethrough : `Cmd+Shift+S`
+- subscript : `Cmd+Shift+-`
+- superscript : `Cmd+Shift++`
+- header 1 : `Cmd+1`
+- header 2 : `Cmd+2`
+- header 3 : `Cmd+3`
 
-- unordered list : Cmd+L
-- ordered list : Cmd+Shift+L
-- blockquote : Cmd+Shift+.
-- code-block : Cmd+Shift+C
+- unordered list : `Cmd+L`
+- ordered list : `Cmd+Shift+L`
+- blockquote : `Cmd+Shift+.`
+- code-block : `Cmd+Shift+C`
 
-- indent : Cmd+]
-- outdent : Cmd+[
+- indent : `Cmd+]`
+- outdent : `Cmd+[`
 
-- clear formatting : Cmd+0
+- clear formatting : `Cmd+0`
 
-- hide sidebar : Cmd+\
+- hide sidebar : `Cmd+\`
 
 
 ---
