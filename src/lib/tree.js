@@ -1,8 +1,8 @@
-const dirTree = require('directory-tree');
+const dirTree = require('./bin/directoryTree.js');
 const { flatten, unflatten } = require('flat');
 
 const update = function getUpdatedProjectTree(p) {
-  if (!p || p === '') { throw new Error(); }
+  if (!p || p === '') { throw new Error('Path cannot be empty.'); }
 
   this.data = dirTree(p, {
     exclude: /(^|[/\\])\../,
@@ -16,6 +16,10 @@ const convert = function convertDotToReference(object, reference) {
 };
 
 const find = function findObjectBypath(p) {
+  if (!p || p === '') { throw new Error('Path cannot be empty.'); }
+
+  if (!this.data) { throw new Error('Reference object does not contain data value.'); }
+
   const obj = flatten(this.data);
   let ret = null;
 
@@ -36,11 +40,14 @@ const show = function showDisplayableProjectObject(p) {
     {
       path: p,
       type: 'directory',
+      root: true,
     },
   ];
 };
 
 const format = function formatObject(o) {
+  if (!o.path || !o.type) { throw new Error('Object does not contain path or type values.'); }
+
   return {
     path: o.path,
     type: o.type,
@@ -48,6 +55,8 @@ const format = function formatObject(o) {
 };
 
 const get = function getDisplayableObject(o) {
+  if (!o.children) { throw new Error('Object does not have children objects.'); }
+
   const arr = [];
 
   o.children.forEach((child) => {
@@ -57,14 +66,22 @@ const get = function getDisplayableObject(o) {
   return arr;
 };
 
+const parent = function getParentDirectory(p) {
+  if (!p || p === '') { throw new Error('Path cannot be empty.'); }
+
+  return p.substring(0, p.lastIndexOf('/'));
+};
+
 module.exports = {
   createTree(p) {
     const tree = {
       data: null,
     };
+
     tree.get = get;
     tree.find = find;
     tree.show = show;
+    tree.parent = parent;
     tree.update = update;
     tree.update(p);
 

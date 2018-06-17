@@ -1,7 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
-const settings = require('electron-settings');
 
 let win;
 
@@ -26,13 +25,6 @@ function createWindow() {
 
   webContents.on('new-window', (event) => {
     event.preventDefault();
-  });
-
-  // TODO directory preferences
-  settings.set('active', {
-    project: '/Users/paco/Dropbox/school/opus/',
-    directory: '',
-    file: '',
   });
 
   win.loadURL(url.format({

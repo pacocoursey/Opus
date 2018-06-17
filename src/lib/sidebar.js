@@ -1,42 +1,68 @@
-const chokidar = require('chokidar');
 const Tree = require('./lib/tree.js');
-const treeView = require('tree-view');
+const editor = require('./lib/editor.js');
+const treeView = require('./lib/bin/treeView.js');
+const chokidar = require('chokidar');
 
-// const activeFile = '/Users/paco/Dropbox/school/opus/new.json';
-const activeProject = '/Users/paco/Dropbox/school/opus/';
-// TODO remove this
+// TODO: electron-settings to remember editor state
+// TODO: re-write my own tree-view module
+
+const activeProject = '/Users/paco/Dropbox/school/opus';
 const log = console.log.bind(console);
 
 // Setup the document tree
 const tree = Tree.createTree(activeProject);
 
-const browser = treeView();
+const browser = treeView({ style: false });
 browser.on('directory', (p) => {
-  console.log('You clicked on a directory (%s)', p);
+  // console.log('You clicked on a directory (%s)', p);
 
-  // TODO error check that find returns !false
   const o = tree.find(p);
-  browser.directory(p, tree.get(o));
+  if (o) {
+    browser.directory(p, tree.get(o));
+  } else {
+    throw new Error(`Cannot find object in tree for this path: ${p}`);
+  }
 });
 
 browser.on('file', (p) => {
-  console.log('You clicked on a file (%s)', p);
+  // console.log('You clicked on a file (%s)', p);
 
-  // TODO editor.readFile
+  const f = editor.get();
+
+  // Save current file (if one is open) before opening new.
+  if (f && f !== p) { editor.write(editor.get()); }
+
+  editor.set(p);
+  editor.read(p);
 });
 
 browser.directory('/', tree.show(activeProject));
-
-browser.appendTo(document.body);
+browser.appendTo(document.getElementById('l'));
 
 const watcher = chokidar.watch(activeProject, {
   ignored: /(^|[/\\])\../,
   persistent: true,
 });
 
-// TODO re-render the appropriate sections on change
-
 watcher.on('ready', () => {
-  watcher.on('all', () => tree.update(activeProject));
+  // Check if removed file is active in the editor
+  // TODO: do something with editor when active file is removed
+  watcher.on('unlink', (p) => {
+    if (editor.get() === p) { editor.set(''); log('big problem'); }
+  });
+
+  watcher.on('all', ((e, p) => {
+    // Update the document object tree
+    tree.update(activeProject);
+
+    // Re-render the changed directory
+    // TODO: if cannot find parent either, go one step higher?
+    const o = tree.find(tree.parent(p));
+    if (o) {
+      browser.directory(tree.parent(p), tree.get(o));
+    } else {
+      throw new Error(`Cannot find object in tree for this path: ${p}`);
+    }
+  }));
   watcher.on('error', error => log(`Watcher error: ${error}`));
 });

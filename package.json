@@ -1,6 +1,6 @@
 {
   "name": "Opus",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "hackable note-taking app",
   "main": "./src/index.js",
   "scripts": {
@@ -13,14 +13,12 @@
   "license": "MIT",
   "dependencies": {
     "chokidar": "^2.0.3",
-    "directory-tree": "^2.1.0",
     "electron": "^2.0.2",
-    "electron-settings": "^3.1.4",
     "eslint": "^4.19.1",
     "flat": "^4.0.0",
     "quill": "^1.3.6",
     "quill-delta": "^3.6.2",
-    "tree-view": "^2.2.0"
+    "react": "^0.11.2"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^12.1.0",
