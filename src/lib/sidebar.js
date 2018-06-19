@@ -1,17 +1,22 @@
 const Tree = require('./lib/tree.js');
 const editor = require('./lib/editor.js');
 const treeView = require('./lib/bin/treeView.js');
-const t = require('./lib/bin/theme.js');
+const t = require('./lib/theme.js');
+const m = require('./lib/bin/menu.js');
 const chokidar = require('chokidar');
 
 // TODO: electron-settings to remember editor state
 // TODO: re-write my own tree-view module
+// TODO: :emoji: plugin
 
 const activeProject = '/Users/paco/Dropbox/school/opus';
 const log = console.log.bind(console);
 
 // Intialize themes
 t.start();
+
+// Initialize menu
+m.init();
 
 // Setup the document tree
 const tree = Tree.createTree(activeProject);
@@ -61,13 +66,13 @@ watcher.on('ready', () => {
     tree.update(activeProject);
 
     // Re-render the changed directory (or the appropriate parent)
-    const o = tree.parent(p);
-    log(o);
-    if (o) {
-      browser.directory(o, tree.get(o));
-    } else {
-      throw new Error(`Cannot find object in tree for this path: ${p}`);
-    }
+    // const o = tree.parent(p);
+    // log(o);
+    // if (o) {
+    //   browser.directory(o, tree.get(o));
+    // } else {
+    //   throw new Error(`Cannot find object in tree for this path: ${p}`);
+    // }
   }));
   watcher.on('error', error => log(`Watcher error: ${error}`));
 });

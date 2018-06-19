@@ -5,12 +5,16 @@ const url = require('url');
 let win;
 
 function createWindow() {
+  const image = path.join(__dirname, '../icon.png');
+
   win = new BrowserWindow({
     width: 960,
     height: 544,
     transparent: true,
     frame: false,
     show: false,
+    center: true,
+    icon: image,
     webPreferences: {
       experimentalFeatures: true,
     },

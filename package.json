@@ -1,14 +1,14 @@
 {
   "name": "Opus",
-  "version": "0.3.2",
-  "description": "hackable note-taking app",
+  "version": "0.3.4",
+  "description": "a minimalistic text-editor.",
   "main": "./src/index.js",
   "scripts": {
     "start": "electron .",
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --ignore-path .gitignore --fix ."
   },
-  "repository": "https://github.com/pacocoursey/opus",
+  "repository": "https://github.com/pacocoursey/Opus",
   "author": "Paco Coursey <paco@pacocoursey.com> (pacocoursey.com)",
   "license": "MIT",
   "dependencies": {

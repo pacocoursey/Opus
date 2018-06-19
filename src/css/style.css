@@ -56,7 +56,6 @@ body {
 
 aside {
   color: var(--f_med);
-  display: none;
   width: 225px;
   max-width: 225px;
   min-width: 225px;
@@ -146,6 +145,10 @@ main {
   -webkit-app-region: drag;
 }
 
+.footer b {
+  color: var(--f_high);
+}
+
 .ql-editor {
   max-width: 750px;
 }
@@ -155,23 +158,17 @@ main {
   border: none !important;
 }
 
-.ql-toolbar {
+.ql-toolbar, .ql-tooltip {
   display: none;
 }
 
-/*
-  • \2022
-  Ξ \039e
-  › \203A
-  ↳ \21B3
-  ⊦ \2228
-  〉\232A
-  □ \25A1
-  ○ \25CB
-*/
-
 .ql-editor blockquote {
   border-left: 4px solid var(--f_high) !important;
+}
+
+.ql-snow .ql-editor pre.ql-syntax {
+  background-color: var(--b_low);
+  color: var(--f_high);
 }
 
 .ql-editor ul > li::before,
