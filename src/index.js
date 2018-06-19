@@ -9,7 +9,7 @@ function createWindow() {
     width: 960,
     height: 544,
     transparent: true,
-    titleBarStyle: 'hidden',
+    frame: false,
     show: false,
     webPreferences: {
       experimentalFeatures: true,

@@ -55,13 +55,13 @@ const format = function formatObject(o) {
 };
 
 const get = function getDisplayableObject(o) {
-  if (!o.children) { throw new Error('Object does not have children objects.'); }
-
   const arr = [];
 
-  o.children.forEach((child) => {
-    arr.push(format(child));
-  });
+  if (o.children) {
+    o.children.forEach((child) => {
+      arr.push(format(child));
+    });
+  }
 
   return arr;
 };
@@ -69,7 +69,11 @@ const get = function getDisplayableObject(o) {
 const parent = function getParentDirectory(p) {
   if (!p || p === '') { throw new Error('Path cannot be empty.'); }
 
-  return p.substring(0, p.lastIndexOf('/'));
+  const parentDir = p.substring(0, p.lastIndexOf('/'));
+  const o = this.find(parentDir);
+
+  if (!o) return this.parent(parentDir);
+  return parentDir;
 };
 
 module.exports = {

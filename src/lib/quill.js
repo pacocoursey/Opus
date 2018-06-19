@@ -134,12 +134,15 @@ quill.keyboard.addBinding({
   shortKey: true,
   handler() {
     const sidebar = document.getElementsByClassName('sidebar')[0].parentElement;
-    if (sidebar.style.display === 'block' || !sidebar.style.display) {
+    if (sidebar.style.display === 'block') {
       sidebar.style.display = 'none';
     } else {
       sidebar.style.display = 'block';
     }
   },
 });
+
+// Automatically focus the editor
+quill.focus();
 
 module.exports = quill;

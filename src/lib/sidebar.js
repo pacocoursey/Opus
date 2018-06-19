@@ -1,6 +1,7 @@
 const Tree = require('./lib/tree.js');
 const editor = require('./lib/editor.js');
 const treeView = require('./lib/bin/treeView.js');
+const t = require('./lib/bin/theme.js');
 const chokidar = require('chokidar');
 
 // TODO: electron-settings to remember editor state
@@ -9,9 +10,13 @@ const chokidar = require('chokidar');
 const activeProject = '/Users/paco/Dropbox/school/opus';
 const log = console.log.bind(console);
 
+// Intialize themes
+t.start();
+
 // Setup the document tree
 const tree = Tree.createTree(activeProject);
 
+// Initialize tree view
 const browser = treeView({ style: false });
 browser.on('directory', (p) => {
   // console.log('You clicked on a directory (%s)', p);
@@ -55,11 +60,11 @@ watcher.on('ready', () => {
     // Update the document object tree
     tree.update(activeProject);
 
-    // Re-render the changed directory
-    // TODO: if cannot find parent either, go one step higher?
-    const o = tree.find(tree.parent(p));
+    // Re-render the changed directory (or the appropriate parent)
+    const o = tree.parent(p);
+    log(o);
     if (o) {
-      browser.directory(tree.parent(p), tree.get(o));
+      browser.directory(o, tree.get(o));
     } else {
       throw new Error(`Cannot find object in tree for this path: ${p}`);
     }

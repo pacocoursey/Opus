@@ -17,6 +17,10 @@ Keep in mind this project is still under development.
 
 ## Todo
 
+Theme:
+
+- Drag theme file into Opus to update the theme
+
 Application:
 
 - Welcome screen: define default project directory

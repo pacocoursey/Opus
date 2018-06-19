@@ -1,3 +1,15 @@
+:root {
+  --background: "#222";
+  --f_high: "#fff";
+  --f_med: "#777";
+  --f_low: "#444";
+  --f_inv: "#000";
+  --b_high: "#000";
+  --b_med: "#affec7";
+  --b_low: "#000";
+  --b_inv: "#affec7";
+}
+
 *, html, body {
   margin: 0;
   padding: 0;
@@ -24,14 +36,15 @@ textarea,
 }
 
 ::selection {
-  background: #000;
-  color: #fff;
+  background: var(--b_low);
+  color: var(--f_med);
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Lato', sans-serif !important;
-  background: #ffffff;
-  color: #495057;
+  background: var(--background);
+  color: var(--f_high);
+  font-size: 12px;
 
   min-height: 100vh;
   min-width: 100%;
@@ -42,20 +55,28 @@ body {
 }
 
 aside {
-  background-color: #000;
-  color: #ffffff;
-  display: block;
+  color: var(--f_med);
+  display: none;
   width: 225px;
   max-width: 225px;
   min-width: 225px;
   max-height: 100vh;
   user-select: none;
-
   overflow: scroll;
 }
 
+/* aside:after {
+  content: "";
+  position: absolute;
+  left: 225px;
+  top: 50px;
+  width: 2px;
+  height: 90vh;
+  border-right: 1px solid var(--f_low);
+} */
+
 .sidebar {
-  padding: 40px 20px;
+  padding: 50px 20px;
   line-height: 2.5em;
   font-size: 12px;
 }
@@ -76,6 +97,10 @@ aside {
   font-size: 16px;
   font-weight: bold;
   padding-bottom: 3px;
+}
+
+.name span {
+  padding-left: 2px;
 }
 
 .tree-view .directory, .tree-view .file {
@@ -99,24 +124,30 @@ aside {
 }
 
 .active {
-  background-color: #343a40;
+  color: var(--f_high);
 }
-
-
-
-
-
 
 main {
   flex-grow: 2;
   max-height: 100vh;
-  overflow: auto;
+  margin: 50px 50px 20px 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  font-family: Consolas;
+  color: var(--f_med) !important;
+  display: block;
+  line-height: 40px;
+  overflow: hidden;
+  margin: 0 inherit;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
 }
 
 .ql-editor {
   max-width: 750px;
-  margin: 0 auto;
-  padding: 50px !important;
 }
 
 .ql-container {
@@ -138,6 +169,10 @@ main {
   □ \25A1
   ○ \25CB
 */
+
+.ql-editor blockquote {
+  border-left: 4px solid var(--f_high) !important;
+}
 
 .ql-editor ul > li::before,
 .ql-editor ul li:before {
