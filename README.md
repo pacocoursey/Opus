@@ -1,4 +1,4 @@
-# opus
+# Opus
 
 ## Installation
 
@@ -15,47 +15,39 @@ Keep in mind this project is still under development.
 
 ![Opus Screenshot](https://pacocoursey.github.io/img/opus.png?raw=true)
 
-## Todo
-
-Application:
-
-- Welcome screen: define default project directory
-- New File: define file name and location
-- Sidebar file interaction: move, rename, delete
-- Menu: define app menu items
-
-Configuration:
-
-- Store themes in `~/.opus/`, define which is active using electron-settings (`~/Library/Application Support/opus`)
-
-Editor:
-
-- Horizontal separator
-- Arrow replacement character `->`
-
 ## Keybinds
 
-- bold : `Cmd+B`
-- italic : `Cmd+I`
-- underline : `Cmd+U`
-- strikethrough : `Cmd+Shift+S`
-- subscript : `Cmd+Shift+-`
-- superscript : `Cmd+Shift++`
-- header 1 : `Cmd+1`
-- header 2 : `Cmd+2`
-- header 3 : `Cmd+3`
+### Application
 
-- unordered list : `Cmd+L`
-- ordered list : `Cmd+Shift+L`
-- blockquote : `Cmd+Shift+.`
-- code-block : `Cmd+Shift+C`
+- Preferences: `CmdOrCtrl+,`
+- Close Window: `CmdOrCtrl+W`
+- Hide: `CmdOrCtrl+H`
+- Hide Others: `CmdOrCtrl+Option+H`
 
-- indent : `Cmd+]`
-- outdent : `Cmd+[`
+### Files
 
-- clear formatting : `Cmd+0`
+- New Window: `CmdOrCtrl+Shift+N`
+- New: `CmdOrCtrl+N`
+- Open: `CmdOrCtrl+O`
+- Save: `CmdOrCtrl+S`
+- Save As: `CmdOrCtrl+Shift+S`
+- Toggle Sidebar: `CmdOrCtrl+\`
 
-- hide sidebar : `Cmd+\`
+### Editor
 
-
----
+- Bold: `CmdOrCtrl+B`
+- Italic: `CmdOrCtrl+I`
+- Underline: `CmdOrCtrl+U`
+- Strikethrough: `CmdOrCtrl+Shift+S`
+- Subscript: `CmdOrCtrl+Shift+-`
+- Superscript: `CmdOrCtrl+Shift++`
+- Header 1: `CmdOrCtrl+1`
+- Header 2: `CmdOrCtrl+2`
+- Header 3: `CmdOrCtrl+3`
+- Unordered list: `CmdOrCtrl+L`
+- Ordered list: `CmdOrCtrl+Shift+L`
+- Blockquote: `CmdOrCtrl+Shift+.`
+- Code-block: `CmdOrCtrl+Shift+C`
+- Indent: `CmdOrCtrl+]`
+- Outdent: `CmdOrCtrl+[`
+- Clear formatting: `CmdOrCtrl+0`
