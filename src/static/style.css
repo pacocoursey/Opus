@@ -27,7 +27,8 @@ input[type="text"],
 button,
 textarea,
 .ql-editor,
-.sidebar ol {
+.sidebar ol,
+.handler {
 	-webkit-app-region: no-drag;
 }
 
@@ -48,34 +49,28 @@ body {
 
   min-height: 100vh;
   min-width: 100%;
+}
 
+.wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  min-height: 100vh;
+  min-width: 100%;
 }
 
 aside {
   color: var(--f_med);
   width: 225px;
-  max-width: 225px;
-  min-width: 225px;
+  max-width: 500px;
+  min-width: 200px;
   max-height: 100vh;
   user-select: none;
   overflow: scroll;
 }
 
-/* aside:after {
-  content: "";
-  position: absolute;
-  left: 225px;
-  top: 50px;
-  width: 2px;
-  height: 90vh;
-  border-right: 1px solid var(--f_low);
-} */
-
 .sidebar {
-  padding: 50px 20px;
+  padding: 50px 5px 50px 20px;
   line-height: 2.5em;
   font-size: 12px;
 }
@@ -132,6 +127,24 @@ main {
   margin: 50px 50px 20px 50px;
   display: flex;
   flex-direction: column;
+
+  flex: 1 1 auto;
+}
+
+.handler {
+  width: 5px;
+  padding: 0;
+  cursor: ew-resize;
+  flex: 0 0 auto;
+}
+
+.handler::before {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 100vh;
+  background: none;
+  margin: 0 auto;
 }
 
 .footer {

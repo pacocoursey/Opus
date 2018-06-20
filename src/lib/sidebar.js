@@ -47,7 +47,7 @@ browser.on('file', (p) => {
 });
 
 browser.directory('/', tree.show(activeProject));
-browser.appendTo(document.getElementById('l'));
+browser.appendTo(document.querySelector('#tree'));
 
 const watcher = chokidar.watch(activeProject, {
   ignored: /(^|[/\\])\../,
