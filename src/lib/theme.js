@@ -27,7 +27,7 @@ const isJSON = (text) => {
 };
 
 module.exports = {
-  start() {
+  init() {
     this.def = def;
     module.exports.load(localStorage.theme ? localStorage.theme : def, def);
     window.addEventListener('dragover', module.exports.dragEnter);

@@ -56,6 +56,7 @@ body {
   flex-direction: row;
   justify-content: center;
   min-height: 100vh;
+  max-height: 100vh;
   min-width: 100%;
 }
 
@@ -66,7 +67,17 @@ aside {
   min-width: 200px;
   max-height: 100vh;
   user-select: none;
-  overflow: scroll;
+  overflow: auto;
+}
+
+main {
+  flex-grow: 2;
+  max-height: calc(100vh - 20px);
+  max-width: calc(100vw - 225px);
+  margin: 50px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar {
@@ -121,16 +132,6 @@ aside {
   color: var(--f_high);
 }
 
-main {
-  flex-grow: 2;
-  max-height: 100vh;
-  margin: 50px 50px 20px 50px;
-  display: flex;
-  flex-direction: column;
-
-  flex: 1 1 auto;
-}
-
 .handler {
   width: 5px;
   padding: 0;
@@ -150,20 +151,21 @@ main {
 .footer {
   font-family: Consolas;
   color: var(--f_med) !important;
+  background: var(--background);
+  position: fixed;
+  bottom: 10px;
+  padding-left: 15px;
   display: block;
   line-height: 40px;
   overflow: hidden;
   margin: 0 inherit;
+  width: 540px;
   -webkit-user-select: none;
   -webkit-app-region: drag;
 }
 
 .footer b {
   color: var(--f_high);
-}
-
-.ql-editor {
-  max-width: 750px;
 }
 
 .ql-container {
@@ -173,6 +175,10 @@ main {
 
 .ql-toolbar, .ql-tooltip {
   display: none;
+}
+
+.ql-editor {
+  padding-bottom: 0;
 }
 
 .ql-editor blockquote {
