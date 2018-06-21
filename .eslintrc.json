@@ -2,7 +2,8 @@
     "extends": "airbnb-base",
     "rules": {
       "no-console": "off",
-      "import/no-unresolved": "off"
+      "import/no-unresolved": "off",
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
     },
     "env": {
       "browser": true,
