@@ -11,10 +11,24 @@ quill.init();
 editor.init();
 sidebar.init();
 
-ipcRenderer.on('save', (e) => {
-  editor.save();
-  e.sender.send('saved');
+// TODO: sidebar right click menu (rename, delete, new file, new folder)
+
+// TODO: Extras
+// summon keybind
+// :emoji: plugin
+
+// Save the state of active file and tree
+ipcRenderer.on('export', (e) => {
+  editor.export();
+  sidebar.export();
+  e.sender.send('done');
 });
 
-// TODO: electron-settings to remember editor state
-// TODO: :emoji: plugin
+// Save editor contents
+// then save state of active file and tree
+ipcRenderer.on('save', (e) => {
+  editor.save();
+  editor.export();
+  sidebar.export();
+  e.sender.send('done');
+});

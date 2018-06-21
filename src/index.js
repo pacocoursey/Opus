@@ -48,6 +48,8 @@ function createWindow() {
   });
 
   win.on('close', (e) => {
+    e.preventDefault();
+
     if (app.hasChanges) {
       const choice = dialog.showMessageBox({
         type: 'question',
@@ -58,19 +60,21 @@ function createWindow() {
         icon: `${app.image}`,
       });
 
-      if (choice === 1) {
-        e.preventDefault();
-      } else if (choice === 2) {
-        app.quit();
+      if (choice === 2) {
+        // Don't Save
+        app.exit();
       } else if (choice === 0) {
-        e.preventDefault();
+        // Save
         win.webContents.send('save');
       }
+    } else {
+      // Save the active file and tree state
+      win.webContents.send('export');
     }
   });
 }
 
-ipcMain.on('saved', () => {
+ipcMain.on('done', () => {
   app.exit();
 });
 

@@ -22,7 +22,6 @@ const convert = function convertDotToReference(object, reference) {
 };
 
 const find = function findObjectBypath(p) {
-  // TODO: dirTree.search exists
   if (!p || p === '') { throw new Error('Path cannot be empty.'); }
 
   if (!tree.data) { throw new Error('Tree does not contain data value.'); }
@@ -97,14 +96,30 @@ const reload = function reloadDocumentTree(p) {
   tree.data = unflatten(o);
 };
 
+const get = function getTreeObject() {
+  return tree.data;
+};
+
 module.exports = {
   createTree(p) {
     tree.update = update;
+    tree.get = get;
     tree.find = find;
     tree.open = open;
     tree.close = close;
     tree.reload = reload;
     tree.update(p);
+
+    return tree;
+  },
+  register(data) {
+    tree.data = data;
+    tree.update = update;
+    tree.get = get;
+    tree.find = find;
+    tree.open = open;
+    tree.close = close;
+    tree.reload = reload;
 
     return tree;
   },

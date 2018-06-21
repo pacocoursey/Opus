@@ -3,15 +3,18 @@ const footer = document.querySelector('#footer');
 module.exports = {
   update(line, char, selection) {
     if (!selection) {
-      footer.innerHTML = `${line}:${char}`;
+      footer.children[0].innerHTML = `${line}:${char}`;
     } else {
-      footer.innerHTML = `${line}:${char} <b>[${selection.lines}:${selection.chars}]</b>`;
+      footer.children[0].innerHTML = `${line}:${char} <b>[${selection.lines}:${selection.chars}]</b>`;
     }
   },
+  setFile(name) {
+    footer.children[1].innerHTML = `${name}`;
+  },
   hasChanges() {
-    footer.classList.add('unsaved');
+    footer.children[1].classList.add('unsaved');
   },
   noChanges() {
-    footer.classList.remove('unsaved');
+    footer.children[1].classList.remove('unsaved');
   },
 };

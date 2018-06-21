@@ -125,15 +125,24 @@ main {
 .footer {
   font-family: Consolas;
   color: var(--f_med) !important;
+  line-height: 40px;
   background: var(--background);
+
   position: fixed;
   bottom: 10px;
   padding: 0 15px;
-  display: block;
-  line-height: 40px;
   overflow: hidden;
   -webkit-user-select: none;
   -webkit-app-region: drag;
+
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+}
+
+.footer span {
+  width: 50%;
 }
 
 .footer b {
@@ -141,8 +150,7 @@ main {
 }
 
 .unsaved {
-  /* TODO: some sort of effect for unsaved */
-  color: red !important;
+  text-decoration: underline;
 }
 
 .ql-container {

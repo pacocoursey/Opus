@@ -2,14 +2,21 @@ const TreeView = require('./bin/tree.js');
 const Tree = require('./tree.js');
 const editor = require('./editor.js');
 const chokidar = require('chokidar');
+const settings = require('electron-settings');
+
+let tree;
 
 module.exports = {
   init() {
     const activeProject = '/Users/paco/Dropbox/school/opus';
-    const log = console.log.bind(console);
 
     // Get the folder data
-    const tree = Tree.createTree(activeProject);
+    if (settings.has('tree')) {
+      const data = settings.get('tree');
+      tree = Tree.register(data);
+    } else {
+      tree = Tree.createTree(activeProject);
+    }
 
     // Setup the tree-view
     const treeView = new TreeView([tree.data], 'tree');
@@ -43,9 +50,8 @@ module.exports = {
 
     watcher.on('ready', () => {
       // Check if removed file is active in the editor
-      // TODO: do something with editor when active file is removed
       watcher.on('unlink', (p) => {
-        if (editor.get() === p) { editor.set(''); log('big problem'); }
+        if (editor.get() === p) { editor.reset(); }
       });
 
       watcher.on('all', (() => {
@@ -55,7 +61,13 @@ module.exports = {
         // Update the DOM with new data (preserves open states)
         treeView.reload([tree.data], 'tree');
       }));
-      watcher.on('error', error => log(`Watcher error: ${error}`));
+
+      watcher.on('error', (error) => {
+        throw new Error(`Watcher error: ${error}`);
+      });
     });
+  },
+  export() {
+    settings.set('tree', tree.get());
   },
 };
