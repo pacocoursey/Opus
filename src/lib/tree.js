@@ -1,12 +1,18 @@
 const dirTree = require('./bin/directoryTree.js');
 const { flatten, unflatten } = require('flat');
 
+const tree = {
+  data: null,
+};
+
 const update = function getUpdatedProjectTree(p) {
   if (!p || p === '') { throw new Error('Path cannot be empty.'); }
 
-  this.data = dirTree(p, {
+  tree.data = null;
+  tree.data = dirTree(p, {
     exclude: /(^|[/\\])\../,
   });
+  tree.data.root = true;
 };
 
 const convert = function convertDotToReference(object, reference) {
@@ -16,11 +22,12 @@ const convert = function convertDotToReference(object, reference) {
 };
 
 const find = function findObjectBypath(p) {
+  // TODO: dirTree.search exists
   if (!p || p === '') { throw new Error('Path cannot be empty.'); }
 
-  if (!this.data) { throw new Error('Reference object does not contain data value.'); }
+  if (!tree.data) { throw new Error('Tree does not contain data value.'); }
 
-  const obj = flatten(this.data);
+  const obj = flatten(tree.data);
   let ret = null;
 
   Object.entries(obj).forEach(([key, value]) => {
@@ -28,65 +35,75 @@ const find = function findObjectBypath(p) {
   });
 
   if (ret) {
-    ret = ret.substring(0, ret.lastIndexOf('.'));
-    return convert(unflatten(obj), ret);
+    if (ret.includes('.')) {
+      ret = ret.substring(0, ret.lastIndexOf('.'));
+      return convert(tree.data, ret);
+    }
+
+    // Object is parent
+    return tree.data;
   }
 
   return false;
 };
 
-const show = function showDisplayableProjectObject(p) {
-  return [
-    {
-      path: p,
-      type: 'directory',
-      root: true,
-    },
-  ];
+const open = function openFolder(p) {
+  const o = find(p);
+  o.expanded = true;
 };
 
-const format = function formatObject(o) {
-  if (!o.path || !o.type) { throw new Error('Object does not contain path or type values.'); }
-
-  return {
-    path: o.path,
-    type: o.type,
-  };
+const close = function closeFolder(p) {
+  const o = find(p);
+  o.expanded = false;
 };
 
-const get = function getDisplayableObject(o) {
-  const arr = [];
-
-  if (o.children) {
-    o.children.forEach((child) => {
-      arr.push(format(child));
-    });
-  }
-
-  return arr;
+const parent = function getParent(key) {
+  return key.substring(0, key.lastIndexOf('.'));
 };
 
-const parent = function getParentDirectory(p) {
-  if (!p || p === '') { throw new Error('Path cannot be empty.'); }
+const reload = function reloadDocumentTree(p) {
+  // Deep copy and flatten the tree object
+  const old = flatten(JSON.parse(JSON.stringify(tree)).data);
 
-  const parentDir = p.substring(0, p.lastIndexOf('/'));
-  const o = this.find(parentDir);
+  // List the paths that are open
+  const paths = [];
+  let tmp;
 
-  if (!o) return this.parent(parentDir);
-  return parentDir;
+  Object.keys(old).forEach((key) => {
+    if (key.includes('expanded') && old[key] === true) {
+      if (key.includes('.')) {
+        tmp = `${parent(key)}.path`;
+      } else { tmp = 'path'; }
+      paths.push(old[tmp]);
+    }
+  });
+
+  // Update the tree object
+  tree.update(p);
+
+  // Flatten the updated tree object
+  const o = flatten(tree.data);
+
+  // Find the object with the same paths, add the expanded prop
+  Object.entries(o).forEach(([key, value]) => {
+    if (paths.includes(value)) {
+      if (key.includes('.')) {
+        o[`${parent(key)}.expanded`] = true;
+      } else { o.expanded = true; }
+    }
+  });
+
+  // Unflatten
+  tree.data = unflatten(o);
 };
 
 module.exports = {
   createTree(p) {
-    const tree = {
-      data: null,
-    };
-
-    tree.get = get;
-    tree.find = find;
-    tree.show = show;
-    tree.parent = parent;
     tree.update = update;
+    tree.find = find;
+    tree.open = open;
+    tree.close = close;
+    tree.reload = reload;
     tree.update(p);
 
     return tree;

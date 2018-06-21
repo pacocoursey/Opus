@@ -3,6 +3,11 @@ const Quill = require('quill');
 const quill = new Quill('.editor', {
   debug: 'error',
   theme: 'snow',
+  modules: {
+    history: {
+      userOnly: true,
+    },
+  },
 });
 
 module.exports = {

@@ -1,0 +1,47 @@
+.tree-leaf {
+  position: relative;
+}
+
+.tree-leaf .tree-child-leaves {
+  display: block;
+  margin-left: 15px;
+}
+
+.tree-leaf .hidden {
+  display: none;
+}
+
+.tree-leaf-content {
+  cursor: pointer;
+}
+
+.tree-leaf .tree-expando {
+  float: left;
+  position: relative;
+  text-align: center;
+}
+
+.tree-leaf .hidden {
+  visibility: hidden;
+}
+
+.tree-leaf .tree-leaf-text {
+  float: left;
+  margin-left: 5px;
+}
+
+.tree-leaf .tree-leaf-content:before,
+.tree-leaf .tree-leaf-content:after {
+  content: " ";
+  display: table;
+}
+
+.tree-leaf .tree-leaf-content:after {
+  clear: both;
+}
+
+#tree > .tree-leaf > .tree-leaf-content:first-child {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 3px;
+}

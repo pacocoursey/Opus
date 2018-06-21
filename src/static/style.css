@@ -90,38 +90,12 @@ main {
   list-style-type: none;
 }
 
-.tree-view ul {
-  list-style-type: none;
-}
-
-.tree-view ul li ul {
+#tree {
   margin-left: 10px;
-}
-
-.tree-view > ul > li > div > span:first-child {
-  font-size: 16px;
-  font-weight: bold;
-  padding-bottom: 3px;
 }
 
 .name span {
   padding-left: 2px;
-}
-
-.tree-view .directory, .tree-view .file {
-  padding-left: 10px;
-  padding-right: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis !important;
-}
-
-.project span {
-  font-size: 16px;
-  font-weight: bold;
-  padding-bottom: 3px;
 }
 
 .sidebar i {
@@ -154,18 +128,21 @@ main {
   background: var(--background);
   position: fixed;
   bottom: 10px;
-  padding-left: 15px;
+  padding: 0 15px;
   display: block;
   line-height: 40px;
   overflow: hidden;
-  margin: 0 inherit;
-  width: 540px;
   -webkit-user-select: none;
   -webkit-app-region: drag;
 }
 
 .footer b {
   color: var(--f_high);
+}
+
+.unsaved {
+  /* TODO: some sort of effect for unsaved */
+  color: red !important;
 }
 
 .ql-container {

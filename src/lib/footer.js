@@ -8,4 +8,10 @@ module.exports = {
       footer.innerHTML = `${line}:${char} <b>[${selection.lines}:${selection.chars}]</b>`;
     }
   },
+  hasChanges() {
+    footer.classList.add('unsaved');
+  },
+  noChanges() {
+    footer.classList.remove('unsaved');
+  },
 };

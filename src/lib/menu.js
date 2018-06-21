@@ -1,4 +1,5 @@
 const { remote, shell } = require('electron');
+const editor = require('./editor.js');
 
 const { Menu } = remote;
 
@@ -34,6 +35,9 @@ const template = [
         label: 'Quit',
         role: 'quit',
         accelerator: 'CmdOrCtrl+q',
+        // click() {
+        //   console.log('quit');
+        // },
       },
     ],
   },
@@ -44,28 +48,28 @@ const template = [
         label: 'Save',
         accelerator: 'CmdOrCtrl+S',
         click() {
-          // emitter.emit('file-save');
+          editor.save();
         },
       },
       {
         label: 'Save as',
         accelerator: 'CmdOrCtrl+Shift+S',
         click() {
-          // emitter.emit('file-save-as');
+          editor.saveAs();
         },
       },
       {
         label: 'Open',
         accelerator: 'CmdOrCtrl+O',
         click() {
-          // emitter.emit('file-open');
+          editor.open();
         },
       },
       {
         label: 'New',
         accelerator: 'CmdOrCtrl+N',
         click() {
-          // emitter.emit('editor-new');
+          editor.new();
         },
       },
     ],

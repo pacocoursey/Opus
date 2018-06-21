@@ -1,6 +1,6 @@
+const TreeView = require('./bin/tree.js');
 const Tree = require('./tree.js');
 const editor = require('./editor.js');
-const treeView = require('./bin/treeView.js');
 const chokidar = require('chokidar');
 
 module.exports = {
@@ -8,40 +8,37 @@ module.exports = {
     const activeProject = '/Users/paco/Dropbox/school/opus';
     const log = console.log.bind(console);
 
-    // Setup the document tree
+    // Get the folder data
     const tree = Tree.createTree(activeProject);
 
-    // Initialize tree view
-    const browser = treeView({ style: false });
-    browser.on('directory', (p) => {
-      // console.log('You clicked on a directory (%s)', p);
+    // Setup the tree-view
+    const treeView = new TreeView([tree.data], 'tree');
 
-      const o = tree.find(p);
-      if (o) {
-        browser.directory(p, tree.get(o));
-      } else {
-        throw new Error(`Cannot find object in tree for this path: ${p}`);
-      }
-    });
-
-    browser.on('file', (p) => {
-      // console.log('You clicked on a file (%s)', p);
-
-      const f = editor.get();
-
-      // Save current file (if one is open) before opening new.
-      if (f && f !== p) { editor.write(editor.get()); }
-
-      editor.set(p);
-      editor.read(p);
-    });
-
-    browser.directory('/', tree.show(activeProject));
-    browser.appendTo(document.querySelector('#tree'));
-
+    // Watch the file system for changes
     const watcher = chokidar.watch(activeProject, {
       ignored: /(^|[/\\])\../,
       persistent: true,
+    });
+
+    // Event listeners
+    treeView.on('select', (e) => {
+      const p = e.data.path;
+      const f = editor.get();
+
+      // Open the file if it is not already active
+      if (f !== p) {
+        editor.open(p);
+      }
+    });
+
+    treeView.on('expand', (e) => {
+      const name = JSON.parse(e.target.getAttribute('data-item')).path;
+      tree.open(name);
+    });
+
+    treeView.on('collapse', (e) => {
+      const name = JSON.parse(e.target.getAttribute('data-item')).path;
+      tree.close(name);
     });
 
     watcher.on('ready', () => {
@@ -51,18 +48,12 @@ module.exports = {
         if (editor.get() === p) { editor.set(''); log('big problem'); }
       });
 
-      watcher.on('all', ((e, p) => {
+      watcher.on('all', (() => {
         // Update the document object tree
-        tree.update(activeProject);
+        tree.reload(activeProject);
 
-        // Re-render the changed directory (or the appropriate parent)
-        // const o = tree.parent(p);
-        // log(o);
-        // if (o) {
-        //   browser.directory(o, tree.get(o));
-        // } else {
-        //   throw new Error(`Cannot find object in tree for this path: ${p}`);
-        // }
+        // Update the DOM with new data (preserves open states)
+        treeView.reload([tree.data], 'tree');
       }));
       watcher.on('error', error => log(`Watcher error: ${error}`));
     });

@@ -1,6 +1,7 @@
 const { quill } = require('./quill.js');
 const footer = require('./footer.js');
 const Delta = require('quill-delta');
+const { app, dialog } = require('electron').remote;
 const fs = require('fs');
 
 let activeFile = '';
@@ -8,13 +9,15 @@ let activeFile = '';
 module.exports = {
   init() {
     // On change, update the flag
-    let hasChanged = false;
     quill.on('text-change', () => {
-      console.log('change?');
-      hasChanged = true;
+      // Update footer
+      footer.hasChanges();
+
+      // Editor has unsaved changes
+      app.hasChanges = true;
     });
 
-    // On text selection, update footer
+    // On text selection or typing, update footer
     quill.on('editor-change', () => {
       const range = quill.getSelection();
 
@@ -33,53 +36,82 @@ module.exports = {
           };
           footer.update(lineCount, charPosition, selection);
         }
-      } else {
-        console.log('User cursor is not in editor');
       }
     });
-
-    // Every second, check if change has been made
-    // If it has, write the file
-    // setInterval(() => {
-    //   if (hasChanged && activeFile && activeFile !== '') {
-    //     module.exports.write(activeFile);
-    //   }
-    //   hasChanged = false;
-    // }, 1000);
-
-    // Check for unsaved data
-    window.onbeforeunload = () => {
-      if (hasChanged) {
-        console.log('There are unsaved changes. Are you sure you want to leave?');
-      }
-    };
   },
   read(p) {
     if (!p || p === '') { throw new Error('Cannot read from empty path.'); }
 
     const contents = fs.readFileSync(p).toString();
 
-    if (!contents || contents === '') {
-      quill.setContents(null, 'user');
-      throw new Error(`File ${p} is empty.`);
-    } else {
+    if (contents && contents !== '') {
       const delta = new Delta(JSON.parse(contents));
-      quill.setContents(delta, 'user');
+      quill.setContents(delta, 'silent');
     }
   },
   write(p) {
-    if (!p || p === '') { throw new Error('Cannot read to empty path.'); }
+    if (!p || p === '') { throw new Error('Cannot write to empty path.'); }
 
-    console.log('Writing file: ', p);
     const contents = JSON.stringify(quill.getContents());
     fs.writeFile(p, contents, (error) => {
-      if (error) { console.log(error); }
+      if (error) { throw new Error(error); }
     });
+  },
+  save() {
+    if (!activeFile || activeFile === '') { throw new Error('Cannot save unset active file.'); }
+
+    // Write the file contents
+    module.exports.write(activeFile);
+
+    // Editor has no unsaved changes
+    app.hasChanges = false;
+
+    // Update the footer
+    footer.noChanges();
+  },
+  open(p) {
+    if (!p || p === '') { throw new Error('Cannot open empty path.'); }
+
+    // Ask user to save changes to current file
+    if (app.hasChanges) {
+      const choice = dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Save', 'Cancel', 'Don\'t Save'],
+        title: 'Confirm',
+        message: 'This file has changes, do you want to save them?',
+        detail: 'Your changes will be lost if you close this item without saving.',
+        icon: `${app.image}`,
+      });
+
+      if (choice === 1) {
+        return;
+      } else if (choice === 2) {
+        app.hasChanges = false;
+        footer.noChanges();
+      } else if (choice === 0) {
+        module.exports.save();
+      }
+    }
+
+    // Reset editor contents
+    quill.setContents(null, 'silent');
+
+    // Clear history state
+    quill.history.clear();
+
+    // Read in the selected file contents
+    module.exports.read(p);
+
+    // Update the active file
+    activeFile = p;
+
+    // Focus the editor
+    quill.focus();
   },
   set(p) {
     // If path is empty, reset the editor
     if (!p || p === '') {
-      quill.setContents(null, 'user');
+      quill.setContents(null, 'silent');
       activeFile = '';
     } else {
       activeFile = p;

@@ -47,7 +47,6 @@ function directoryTree(path, options, onEachFile) {
     // Skip if it does not match the extension regex
     if (options && options.extensions && !options.extensions.test(ext)) { return null; }
 
-    // item.size = stats.size; // File size in bytes
     item.extension = ext;
     item.type = constants.FILE;
     if (onEachFile) {
@@ -65,7 +64,6 @@ function directoryTree(path, options, onEachFile) {
         if (a.type === constants.DIRECTORY) { return -1; } return 1;
       });
 
-    // item.size = item.children.reduce((prev, cur) => prev + cur.size, 0);
     item.type = constants.DIRECTORY;
   } else {
     return null; // Or set item.size = 0 for devices, FIFO and sockets ?

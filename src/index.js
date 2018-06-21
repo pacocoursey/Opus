@@ -1,12 +1,14 @@
-const { app, BrowserWindow } = require('electron');
+const {
+  app, ipcMain, BrowserWindow, dialog,
+} = require('electron');
 const path = require('path');
 const url = require('url');
 
+app.image = path.join(__dirname, '../icon.png');
+app.hasChanges = false;
+
 let win;
-
 function createWindow() {
-  const image = path.join(__dirname, '../icon.png');
-
   win = new BrowserWindow({
     width: 960,
     height: 544,
@@ -14,7 +16,7 @@ function createWindow() {
     frame: false,
     show: false,
     center: true,
-    icon: image,
+    icon: app.image,
     webPreferences: {
       experimentalFeatures: true,
     },
@@ -44,7 +46,33 @@ function createWindow() {
   win.on('closed', () => {
     win = null;
   });
+
+  win.on('close', (e) => {
+    if (app.hasChanges) {
+      const choice = dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Save', 'Cancel', 'Don\'t Save'],
+        title: 'Confirm',
+        message: 'This file has changes, do you want to save them?',
+        detail: 'Your changes will be lost if you close this item without saving.',
+        icon: `${app.image}`,
+      });
+
+      if (choice === 1) {
+        e.preventDefault();
+      } else if (choice === 2) {
+        app.quit();
+      } else if (choice === 0) {
+        e.preventDefault();
+        win.webContents.send('save');
+      }
+    }
+  });
 }
+
+ipcMain.on('saved', () => {
+  app.exit();
+});
 
 app.on('ready', createWindow);
 
@@ -53,7 +81,6 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-
 
 app.on('activate', () => {
   if (win === null) {
