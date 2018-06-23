@@ -10,6 +10,8 @@ const quill = new Quill('.editor', {
   },
 });
 
+const sidebar = document.querySelector('aside');
+
 module.exports = {
   init() {
     // Strikethrough
@@ -139,7 +141,6 @@ module.exports = {
       key: 220, // \
       shortKey: true,
       handler() {
-        const sidebar = document.getElementsByClassName('sidebar')[0].parentElement;
         if (sidebar.style.display === 'block') {
           sidebar.style.display = 'none';
         } else {

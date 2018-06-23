@@ -4,11 +4,19 @@ const editor = require('./editor.js');
 const chokidar = require('chokidar');
 const settings = require('electron-settings');
 
+const aside = document.querySelector('aside');
 let tree;
 
 module.exports = {
   init() {
+    // TODO: project stuff
     const activeProject = '/Users/paco/Dropbox/school/opus';
+
+    // Determine whether to show sidebar or not on load
+    if (settings.has('open')) {
+      const state = settings.get('open');
+      if (state) { aside.style.display = 'block'; } else { aside.style.display = 'none'; }
+    }
 
     // Get the folder data
     if (settings.has('tree')) {
@@ -68,6 +76,9 @@ module.exports = {
     });
   },
   export() {
+    if (aside.style.display === 'none') settings.set('open', false);
+    else settings.set('open', true);
+
     settings.set('tree', tree.get());
   },
 };

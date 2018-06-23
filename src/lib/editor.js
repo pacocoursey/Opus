@@ -26,7 +26,12 @@ module.exports = {
   read(p) {
     if (!p || p === '') { throw new Error('Cannot read from empty path.'); }
 
-    const contents = fs.readFileSync(p).toString();
+    let contents;
+    try {
+      contents = fs.readFileSync(p).toString();
+    } catch (error) {
+      throw new Error(error);
+    }
 
     if (contents && contents !== '') {
       const delta = new Delta(JSON.parse(contents));
@@ -43,16 +48,18 @@ module.exports = {
     });
   },
   saveDialog() {
+    // TODO: improve this
     const choice = dialog.showSaveDialog({
-      title: 'wtf',
-      defaultPath: '/Users/paco/Dropbox/school/opus/',
+      defaultPath: '/Users/paco/Dropbox/school/opus',
     });
 
     return choice;
   },
   save() {
     if (!activeFile || activeFile === '') {
-      activeFile = module.exports.saveDialog();
+      const choice = module.exports.saveDialog();
+      if (!choice || choice === '') return;
+      activeFile = choice;
     }
 
     // Write the file contents
@@ -60,6 +67,9 @@ module.exports = {
 
     // Editor has no unsaved changes
     noChanges();
+
+    // Update footer filename
+    footer.setFile(path.basename(activeFile));
   },
   open(p) {
     if (!p || p === '') { throw new Error('Cannot open empty path.'); }
@@ -91,7 +101,13 @@ module.exports = {
     quill.history.clear();
 
     // Read in the selected file contents
-    module.exports.read(p);
+    try {
+      module.exports.read(p);
+    } catch (error) {
+      console.log(error);
+    }
+
+    // TODO: highlight the file in the sidebar
 
     // Update the active file
     activeFile = p;
@@ -104,11 +120,15 @@ module.exports = {
   },
   reset() {
     noChanges();
+    footer.setFile('untitled');
     initial = '';
     quill.setContents(null, 'silent');
     quill.history.clear();
     quill.focus();
     activeFile = '';
+  },
+  set(p) {
+    activeFile = p;
   },
   get() {
     return activeFile;
@@ -120,7 +140,6 @@ module.exports = {
     // Setup activeFile
     if (settings.has('file')) {
       activeFile = settings.get('file');
-      console.log(`settings file: ${activeFile}`);
       if (!activeFile || activeFile === '') {
         module.exports.reset();
       } else {

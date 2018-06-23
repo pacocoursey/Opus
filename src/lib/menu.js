@@ -2,6 +2,7 @@ const { remote, shell } = require('electron');
 const editor = require('./editor.js');
 
 const { Menu } = remote;
+const sidebar = document.querySelector('aside');
 
 const template = [
   {
@@ -69,7 +70,7 @@ const template = [
         label: 'New',
         accelerator: 'CmdOrCtrl+N',
         click() {
-          editor.new();
+          editor.reset();
         },
       },
     ],
@@ -114,7 +115,6 @@ const template = [
         label: 'Toggle Sidebar',
         accelerator: 'CmdOrCtrl+\\',
         click() {
-          const sidebar = document.getElementsByClassName('sidebar')[0].parentElement;
           if (sidebar.style.display === 'block') {
             sidebar.style.display = 'none';
           } else {
@@ -132,6 +132,19 @@ const template = [
       { role: 'zoomout' },
       { type: 'separator' },
       { role: 'togglefullscreen' },
+    ],
+  },
+  {
+    label: 'Theme',
+    submenu: [
+      {
+        label: 'Apollo11',
+        click() { console.log('Apollo11'); },
+      },
+      {
+        label: 'Lotus',
+        click() { console.log('Lotus'); },
+      },
     ],
   },
   {

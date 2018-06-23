@@ -4,6 +4,7 @@ const {
 const path = require('path');
 const url = require('url');
 
+
 app.image = path.join(__dirname, '../icon.png');
 app.hasChanges = false;
 
@@ -78,7 +79,9 @@ ipcMain.on('done', () => {
   app.exit();
 });
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

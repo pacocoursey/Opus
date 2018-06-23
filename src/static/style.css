@@ -102,6 +102,10 @@ main {
   padding-right: 5px;
 }
 
+.selected {
+  background-color: var(--b_low);
+}
+
 .active {
   color: var(--f_high);
 }

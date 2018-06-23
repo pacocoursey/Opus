@@ -30,6 +30,11 @@
   margin-left: 5px;
 }
 
+.tree-leaf-content {
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
 .tree-leaf .tree-leaf-content:before,
 .tree-leaf .tree-leaf-content:after {
   content: " ";

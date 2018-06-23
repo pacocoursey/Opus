@@ -1,0 +1,11 @@
+// TODO: make sure saved tree reflects document tree (don't show deleted nodes)
+// TODO: move themes to menu bar items, allow for custom
+// TODO: allow drag and drop into editor for temporary editing
+
+// TODO: Extras
+// summon key bind
+// :emoji: plugin
+// magicUrl module
+// horizontal separator
+// arrow replacement character `->`
+// drag and drop to move files in sidebar
