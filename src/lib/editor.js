@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const settings = require('electron-settings');
 
+let plain = false;
 let activeFile = '';
 let initial = '';
 const empty = new Delta([
@@ -34,15 +35,31 @@ module.exports = {
     }
 
     if (contents && contents !== '') {
-      const delta = new Delta(JSON.parse(contents));
-      initial = delta;
-      quill.setContents(delta, 'silent');
+      try {
+        const delta = new Delta(JSON.parse(contents));
+        plain = false;
+        initial = delta;
+        quill.setContents(delta, 'silent');
+      } catch (error) {
+        // File is not JSON
+        plain = true;
+        // TODO: disable quill key bindings, put text in monospace
+        initial = contents;
+        quill.setText(contents, 'silent');
+      }
     }
   },
   write(p) {
     if (!p || p === '') { throw new Error('Cannot write to empty path.'); }
 
-    const contents = JSON.stringify(quill.getContents());
+    let contents;
+
+    if (plain) {
+      contents = quill.getText();
+    } else {
+      contents = JSON.stringify(quill.getContents());
+    }
+
     fs.writeFile(p, contents, (error) => {
       if (error) { throw new Error(error); }
     });
@@ -56,6 +73,7 @@ module.exports = {
     return choice;
   },
   save() {
+    // If file does not exist, save it somewhere
     if (!activeFile || activeFile === '') {
       const choice = module.exports.saveDialog();
       if (!choice || choice === '') return;
@@ -136,6 +154,21 @@ module.exports = {
   export() {
     settings.set('file', activeFile);
   },
+  dragEnter(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+  },
+  drag(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files[0];
+    if (!file.name || !file.path) {
+      throw new Error(`Cannot read this file: ${file}.`);
+    } else {
+      module.exports.open(file.path);
+    }
+  },
   init() {
     // Setup activeFile
     if (settings.has('file')) {
@@ -147,22 +180,30 @@ module.exports = {
       }
     } else { activeFile = ''; }
 
+    // Listen for dragged files
+    window.addEventListener('dragover', module.exports.dragEnter);
+    window.addEventListener('drop', module.exports.drag);
+
     // On change, update the flag
     quill.on('text-change', () => {
       let diff;
 
       // Check if contents are the same as when saved
       if (!initial || initial === '') {
-        diff = quill.getContents().diff(empty);
+        if (plain) {
+          diff = quill.getText() === '';
+        } else {
+          diff = quill.getContents().diff(empty);
+        }
+      } else if (plain) {
+        diff = quill.getText() === initial;
       } else {
         diff = quill.getContents().diff(initial);
       }
 
-      if (diff.ops.length === 0) {
-        noChanges();
-      } else {
-        hasChanges();
-      }
+      if (plain) {
+        if (diff.length === 0) { noChanges(); } else { hasChanges(); }
+      } else if (diff.ops.length === 0) { noChanges(); } else { hasChanges(); }
     });
 
     // On text selection or typing, update footer

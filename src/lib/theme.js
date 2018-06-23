@@ -30,8 +30,6 @@ module.exports = {
   init() {
     this.def = def;
     module.exports.load(localStorage.theme ? localStorage.theme : def, def);
-    window.addEventListener('dragover', module.exports.dragEnter);
-    window.addEventListener('drop', module.exports.drag);
     document.head.appendChild(style);
   },
   load(t, fallback) {
@@ -62,24 +60,5 @@ module.exports = {
   reset() {
     this.def = def;
     module.exports.load(def);
-  },
-  dragEnter(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-  },
-  drag(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const file = e.dataTransfer.files[0];
-
-    if (!file.name || !file.name.indexOf('.thm') < 0) { console.log('Theme', 'Not a theme'); return; }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      module.exports.load(event.target.result);
-    };
-    reader.readAsText(file);
   },
 };

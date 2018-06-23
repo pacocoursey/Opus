@@ -60,6 +60,42 @@ const parent = function getParent(key) {
   return key.substring(0, key.lastIndexOf('.'));
 };
 
+const getSettings = function getExpandedDataObjects() {
+  const data = flatten(JSON.parse(JSON.stringify(tree)).data);
+
+  const paths = [];
+  let tmp;
+
+  // Save the paths of the expanded directories
+  // this array should be exported
+  // then when the tree is created, add the prop
+  Object.keys(data).forEach((key) => {
+    if (key.includes('expanded') && data[key] === true) {
+      if (key.includes('.')) {
+        tmp = `${parent(key)}.path`;
+      } else { tmp = 'path'; }
+      paths.push(data[tmp]);
+    }
+  });
+
+  return paths;
+};
+
+const applySettings = function applyExtendedPropToFolders(paths) {
+  const o = flatten(tree.data);
+
+  Object.entries(o).forEach(([key, value]) => {
+    if (paths.includes(value)) {
+      if (key.includes('.')) {
+        o[`${parent(key)}.expanded`] = true;
+      } else { o.expanded = true; }
+    }
+  });
+
+  // Unflatten
+  tree.data = unflatten(o);
+};
+
 const reload = function reloadDocumentTree(p) {
   // Deep copy and flatten the tree object
   const old = flatten(JSON.parse(JSON.stringify(tree)).data);
@@ -96,30 +132,20 @@ const reload = function reloadDocumentTree(p) {
   tree.data = unflatten(o);
 };
 
-const get = function getTreeObject() {
-  return tree.data;
-};
-
 module.exports = {
-  createTree(p) {
+  createTree(p, paths) {
     tree.update = update;
-    tree.get = get;
     tree.find = find;
     tree.open = open;
     tree.close = close;
     tree.reload = reload;
+    tree.getSettings = getSettings;
+    tree.applySettings = applySettings;
     tree.update(p);
 
-    return tree;
-  },
-  register(data) {
-    tree.data = data;
-    tree.update = update;
-    tree.get = get;
-    tree.find = find;
-    tree.open = open;
-    tree.close = close;
-    tree.reload = reload;
+    if (paths && paths.length !== 0) {
+      tree.applySettings(paths);
+    }
 
     return tree;
   },

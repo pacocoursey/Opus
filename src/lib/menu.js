@@ -1,5 +1,7 @@
 const { remote, shell } = require('electron');
 const editor = require('./editor.js');
+const theme = require('./theme.js');
+const themes = require('./themes/themes.js');
 
 const { Menu } = remote;
 const sidebar = document.querySelector('aside');
@@ -36,9 +38,6 @@ const template = [
         label: 'Quit',
         role: 'quit',
         accelerator: 'CmdOrCtrl+q',
-        // click() {
-        //   console.log('quit');
-        // },
       },
     ],
   },
@@ -139,11 +138,23 @@ const template = [
     submenu: [
       {
         label: 'Apollo11',
-        click() { console.log('Apollo11'); },
+        click() { theme.load(themes.get('Apollo11')); },
+      },
+      {
+        label: 'Coal',
+        click() { theme.load(themes.get('Coal')); },
       },
       {
         label: 'Lotus',
-        click() { console.log('Lotus'); },
+        click() { theme.load(themes.get('Lotus')); },
+      },
+      {
+        label: 'Raspberry',
+        click() { theme.load(themes.get('Raspberry')); },
+      },
+      {
+        label: 'Swiss',
+        click() { theme.load(themes.get('Swiss')); },
       },
     ],
   },

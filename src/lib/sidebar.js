@@ -20,10 +20,9 @@ module.exports = {
 
     // Get the folder data
     if (settings.has('tree')) {
-      const data = settings.get('tree');
-      tree = Tree.register(data);
+      tree = Tree.createTree(activeProject, settings.get('tree'));
     } else {
-      tree = Tree.createTree(activeProject);
+      tree = Tree.createTree(activeProject, null);
     }
 
     // Setup the tree-view
@@ -79,6 +78,6 @@ module.exports = {
     if (aside.style.display === 'none') settings.set('open', false);
     else settings.set('open', true);
 
-    settings.set('tree', tree.get());
+    settings.set('tree', tree.getSettings());
   },
 };
