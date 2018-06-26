@@ -13,7 +13,7 @@ $ npm start
 
 Keep in mind this project is still under development.
 
-![Opus Screenshot](https://pacocoursey.github.io/img/opus.png?raw=true)
+![Opus Screenshot](screenshot.png)
 
 ## Keybinds
 

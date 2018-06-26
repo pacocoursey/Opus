@@ -67,7 +67,7 @@ module.exports = {
   saveDialog() {
     // TODO: improve this
     const choice = dialog.showSaveDialog({
-      defaultPath: '/Users/paco/Dropbox/school/opus',
+      defaultPath: settings.get('project'),
     });
 
     return choice;
@@ -137,6 +137,13 @@ module.exports = {
     footer.setFile(path.basename(activeFile));
   },
   reset() {
+    const elems = document.querySelectorAll('.active');
+    if (elems && elems.length !== 0) {
+      [].forEach.call(elems, (el) => {
+        el.classList.remove('active');
+      });
+    }
+
     noChanges();
     footer.setFile('untitled');
     initial = '';

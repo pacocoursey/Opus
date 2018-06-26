@@ -1,3 +1,5 @@
+// TODO: if plain, set font monospace
+
 // TODO: Extras
 // summon key bind
 // :emoji: plugin
@@ -5,3 +7,4 @@
 // horizontal separator
 // arrow replacement character `->`
 // drag and drop to move files in sidebar
+// markdown sidebar with hyperlinks

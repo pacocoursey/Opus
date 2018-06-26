@@ -67,8 +67,6 @@ const getSettings = function getExpandedDataObjects() {
   let tmp;
 
   // Save the paths of the expanded directories
-  // this array should be exported
-  // then when the tree is created, add the prop
   Object.keys(data).forEach((key) => {
     if (key.includes('expanded') && data[key] === true) {
       if (key.includes('.')) {
@@ -103,6 +101,7 @@ const reload = function reloadDocumentTree(p) {
   // List the paths that are open
   const paths = [];
   let tmp;
+  let active;
 
   Object.keys(old).forEach((key) => {
     if (key.includes('expanded') && old[key] === true) {
@@ -110,6 +109,9 @@ const reload = function reloadDocumentTree(p) {
         tmp = `${parent(key)}.path`;
       } else { tmp = 'path'; }
       paths.push(old[tmp]);
+    } else if (key.includes('active') && old[key] === true) {
+      tmp = parent(key);
+      active = old[`${tmp}.path`];
     }
   });
 
@@ -121,6 +123,8 @@ const reload = function reloadDocumentTree(p) {
 
   // Find the object with the same paths, add the expanded prop
   Object.entries(o).forEach(([key, value]) => {
+    if (value === active) { o[`${parent(key)}.active`] = true; }
+
     if (paths.includes(value)) {
       if (key.includes('.')) {
         o[`${parent(key)}.expanded`] = true;

@@ -88,6 +88,7 @@
           leaf.setAttribute('class', 'tree-leaf');
           content.setAttribute('class', 'tree-leaf-content');
           content.setAttribute('data-item', JSON.stringify(item));
+          if (item.active) { content.classList.add('active'); }
           text.setAttribute('class', 'tree-leaf-text');
           text.textContent = item.name;
           expando.setAttribute('class', 'tree-expando ' + (item.expanded ? 'expanded' : ''));

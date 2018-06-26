@@ -9,8 +9,7 @@ let tree;
 
 module.exports = {
   init() {
-    // TODO: project stuff
-    const activeProject = '/Users/paco/Dropbox/school/opus';
+    const activeProject = settings.get('project');
 
     // Determine whether to show sidebar or not on load
     if (settings.has('open')) {
@@ -25,6 +24,12 @@ module.exports = {
       tree = Tree.createTree(activeProject, null);
     }
 
+    // Ensure the active prop on the active file
+    if (settings.has('file')) {
+      const file = settings.get('file');
+      if (file && file !== '') { tree.find(file).active = true; }
+    }
+
     // Setup the tree-view
     const treeView = new TreeView([tree.data], 'tree');
 
@@ -36,12 +41,31 @@ module.exports = {
 
     // Event listeners
     treeView.on('select', (e) => {
-      const p = e.data.path;
-      const f = editor.get();
+      const newPath = e.data.path;
+      const oldPath = editor.get();
+
+      const element = e.target.target.closest('.tree-leaf-content');
 
       // Open the file if it is not already active
-      if (f !== p) {
-        editor.open(p);
+      if (oldPath !== newPath) {
+        editor.open(newPath);
+
+        // Remove active state from old file
+        if (oldPath && oldPath !== '') { tree.find(oldPath).active = false; }
+
+        // Apply active state to new file
+        tree.find(newPath).active = true;
+
+        // Remove active class from other things
+        const elems = document.querySelectorAll('.active');
+        if (elems && elems.length !== 0) {
+          [].forEach.call(elems, (el) => {
+            el.classList.remove('active');
+          });
+        }
+
+        // Update CSS class
+        element.classList.add('active');
       }
     });
 
