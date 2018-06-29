@@ -1,12 +1,13 @@
 {
   "name": "Opus",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "a minimalistic text-editor.",
   "main": "./src/index.js",
   "scripts": {
     "start": "electron .",
     "lint": "eslint --ignore-path .gitignore .",
-    "fix": "eslint --ignore-path .gitignore --fix ."
+    "fix": "eslint --ignore-path .gitignore --fix .",
+    "build_osx": "electron-packager . Opus --platform=darwin --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.icns && echo 'Built for OSX'"
   },
   "repository": "https://github.com/pacocoursey/Opus",
   "author": "Paco Coursey <paco@pacocoursey.com> (pacocoursey.com)",
@@ -22,6 +23,7 @@
     "quill-delta": "^3.6.2"
   },
   "devDependencies": {
+    "electron-packager": "^12.1.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0"
