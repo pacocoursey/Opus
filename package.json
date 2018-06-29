@@ -1,6 +1,6 @@
 {
   "name": "Opus",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "a minimalistic text-editor.",
   "main": "./src/index.js",
   "scripts": {
