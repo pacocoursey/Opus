@@ -1,4 +1,7 @@
 // TODO: if plain, set font monospace
+// TODO: word count
+// TODO: exports
+// TODO: filter files: file.type.match(/text.*/))
 
 // TODO: Extras
 // summon key bind
@@ -8,3 +11,4 @@
 // arrow replacement character `->`
 // drag and drop to move files in sidebar
 // markdown sidebar with hyperlinks
+// word count
