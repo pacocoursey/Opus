@@ -1,15 +1,57 @@
 const {
   app, ipcMain, BrowserWindow, dialog,
 } = require('electron');
+const home = require('os').homedir();
 const path = require('path');
 const url = require('url');
-
+const fs = require('fs-extra');
 
 app.image = path.join(__dirname, '../icon.png');
 app.hasChanges = false;
 
 let win;
-function createWindow() {
+
+function createStartWindow() {
+  win = new BrowserWindow({
+    width: 960,
+    height: 544,
+    transparent: true,
+    frame: false,
+    show: false,
+    center: true,
+    icon: app.image,
+    webPreferences: {
+      experimentalFeatures: true,
+    },
+  });
+
+  const { webContents } = win;
+  webContents.on('did-finish-load', () => {
+    webContents.setZoomFactor(1);
+    webContents.setVisualZoomLevelLimits(1, 1);
+    webContents.setLayoutZoomLevelLimits(0, 0);
+  });
+
+  webContents.on('new-window', (event) => {
+    event.preventDefault();
+  });
+
+  win.loadURL(url.format({
+    pathname: path.join(__dirname, 'init/index.html'),
+    protocol: 'file:',
+    slashes: true,
+  }));
+
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+
+  win.on('closed', () => {
+    win = null;
+  });
+}
+
+function createMainWindow() {
   win = new BrowserWindow({
     width: 960,
     height: 544,
@@ -75,12 +117,26 @@ function createWindow() {
   });
 }
 
+// Listen for renderer close event
 ipcMain.on('done', () => {
   app.exit();
 });
 
+// Listen for load main event (after init)
+ipcMain.on('main', () => {
+  win.close();
+  createMainWindow();
+});
+
 app.on('ready', () => {
-  createWindow();
+  // Check if application has been started before
+  const str = path.join(home, '.opus');
+  if (!fs.existsSync(str)) {
+    createStartWindow();
+    fs.ensureDirSync(str);
+  } else {
+    createMainWindow();
+  }
 });
 
 app.on('window-all-closed', () => {
@@ -91,6 +147,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (win === null) {
-    createWindow();
+    createMainWindow();
   }
 });

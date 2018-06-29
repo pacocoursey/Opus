@@ -2,15 +2,15 @@ const style = document.createElement('style');
 const def = {
   meta: {},
   data: {
-    background: '#222',
-    f_high: '#fff',
-    f_med: '#777',
-    f_low: '#444',
-    f_inv: '#000',
-    b_high: '#000',
-    b_med: '#affec7',
-    b_low: '#000',
-    b_inv: '#affec7',
+    background: '#161616',
+    f_high: '#f0c098',
+    f_med: '#999999',
+    f_low: '#555555',
+    f_inv: '#222222',
+    b_high: '#ffffff',
+    b_med: '#333333',
+    b_low: '#000000',
+    b_inv: '#f0c098',
   },
 };
 let active = def;

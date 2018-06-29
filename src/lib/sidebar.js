@@ -48,7 +48,10 @@ module.exports = {
 
       // Open the file if it is not already active
       if (oldPath !== newPath) {
-        editor.open(newPath);
+        const ret = editor.open(newPath);
+
+        // New file was not opened
+        if (!ret) { return; }
 
         // Remove active state from old file
         if (oldPath && oldPath !== '') { tree.find(oldPath).active = false; }

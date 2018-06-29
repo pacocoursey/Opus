@@ -23,6 +23,15 @@ const noChanges = function noChanges() {
   footer.noChanges();
 };
 
+const removeActive = function removeActiveClassFromSidebar() {
+  const elems = document.querySelectorAll('.active');
+  if (elems && elems.length !== 0) {
+    elems.forEach((el) => {
+      el.classList.remove('active');
+    });
+  }
+};
+
 module.exports = {
   read(p) {
     if (!p || p === '') { throw new Error('Cannot read from empty path.'); }
@@ -43,9 +52,10 @@ module.exports = {
       } catch (error) {
         // File is not JSON
         plain = true;
-        // TODO: disable quill key bindings, put text in monospace
         initial = contents;
         quill.setText(contents, 'silent');
+        // TODO: disable quill key bindings, put text in monospace
+        // quill.formatText(0, quill.getLength(), 'font', 'monospace', 'silent');
       }
     }
   },
@@ -65,7 +75,6 @@ module.exports = {
     });
   },
   saveDialog() {
-    // TODO: improve this
     const choice = dialog.showSaveDialog({
       defaultPath: settings.get('project'),
     });
@@ -104,7 +113,7 @@ module.exports = {
       });
 
       if (choice === 1) {
-        return;
+        return false;
       } else if (choice === 2) {
         noChanges();
       } else if (choice === 0) {
@@ -125,8 +134,6 @@ module.exports = {
       console.log(error);
     }
 
-    // TODO: highlight the file in the sidebar
-
     // Update the active file
     activeFile = p;
 
@@ -135,15 +142,11 @@ module.exports = {
 
     // Update the footer
     footer.setFile(path.basename(activeFile));
+
+    return true;
   },
   reset() {
-    const elems = document.querySelectorAll('.active');
-    if (elems && elems.length !== 0) {
-      [].forEach.call(elems, (el) => {
-        el.classList.remove('active');
-      });
-    }
-
+    removeActive();
     noChanges();
     footer.setFile('untitled');
     initial = '';
@@ -173,6 +176,7 @@ module.exports = {
     if (!file.name || !file.path) {
       throw new Error(`Cannot read this file: ${file}.`);
     } else {
+      removeActive();
       module.exports.open(file.path);
     }
   },
@@ -183,6 +187,7 @@ module.exports = {
       if (!activeFile || activeFile === '') {
         module.exports.reset();
       } else {
+        removeActive();
         module.exports.open(activeFile);
       }
     } else { activeFile = ''; }

@@ -18,6 +18,13 @@ const parent = function getParentPath(p) {
   return path.dirname(p);
 };
 
+const removeActive = function removeActiveClassFromSidebar() {
+  const elems = document.querySelectorAll('.selected');
+  [].forEach.call(elems, (el) => {
+    el.classList.remove('selected');
+  });
+};
+
 const newFile = function createNewFile(p) {
   const choice = dialog.showSaveDialog({
     defaultPath: p,
@@ -140,10 +147,7 @@ function buildFolderMenu(m) {
   }));
 
   m.on('menu-will-close', () => {
-    const elems = document.querySelectorAll('.selected');
-    [].forEach.call(elems, (el) => {
-      el.classList.remove('selected');
-    });
+    removeActive();
   });
 }
 
@@ -173,10 +177,7 @@ function buildFileMenu(m) {
   }));
 
   m.on('menu-will-close', () => {
-    const elems = document.querySelectorAll('.selected');
-    [].forEach.call(elems, (el) => {
-      el.classList.remove('selected');
-    });
+    removeActive();
   });
 }
 
@@ -201,10 +202,7 @@ function buildRootMenu(m) {
   }));
 
   m.on('menu-will-close', () => {
-    const elems = document.querySelectorAll('.selected');
-    [].forEach.call(elems, (el) => {
-      el.classList.remove('selected');
-    });
+    removeActive();
   });
 }
 

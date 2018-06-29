@@ -136,6 +136,15 @@ module.exports = {
       },
     });
 
+    // Plain text mode
+    quill.keyboard.addBinding({
+      key: 55, // 7
+      shortKey: true,
+      handler() {
+        this.quill.format('font', 'monospace');
+      },
+    });
+
     // Hide tree
     quill.keyboard.addBinding({
       key: 220, // \

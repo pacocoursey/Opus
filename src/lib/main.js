@@ -5,9 +5,6 @@ const quill = require('./lib/quill.js');
 const editor = require('./lib/editor.js');
 const sidebar = require('./lib/sidebar.js');
 const { ipcRenderer } = require('electron');
-const settings = require('electron-settings');
-
-settings.set('project', '/Users/paco/Dropbox/school/opus');
 
 quill.init();
 editor.init();
