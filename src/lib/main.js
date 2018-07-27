@@ -1,10 +1,10 @@
+const { ipcRenderer } = require('electron');
 const menu = require('./lib/menu.js');
 const contextMenu = require('./lib/contextMenu.js');
 const theme = require('./lib/theme.js');
 const quill = require('./lib/quill.js');
 const editor = require('./lib/editor.js');
 const sidebar = require('./lib/sidebar.js');
-const { ipcRenderer } = require('electron');
 
 quill.init();
 editor.init();

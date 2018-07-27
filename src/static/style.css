@@ -1,22 +1,25 @@
 :root {
   --background: #161616;
   --f_high: #f0c098;
-  --f_med: #999999;
-  --f_low: #555555;
-  --f_inv: #222222;
-  --b_high: #ffffff;
-  --b_med: #333333;
-  --b_low: #000000;
+  --f_med: #999;
+  --f_low: #555;
+  --f_inv: #222;
+  --b_high: #fff;
+  --b_med: #333;
+  --b_low: #000;
   --b_inv: #f0c098;
 }
 
-*, html, body {
+*,
+html,
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   -webkit-app-region: drag;
 }
 
@@ -29,7 +32,7 @@ textarea,
 .ql-editor,
 .sidebar ol,
 .handler {
-	-webkit-app-region: no-drag;
+  -webkit-app-region: no-drag;
 }
 
 ::-webkit-scrollbar {
@@ -46,7 +49,6 @@ body {
   background: var(--background);
   color: var(--f_high);
   font-size: 12px;
-
   min-height: 100vh;
   min-width: 100%;
 }
@@ -127,18 +129,16 @@ main {
 }
 
 .footer {
-  font-family: Consolas;
+  font-family: "Consolas", monospace;
   color: var(--f_med) !important;
   line-height: 40px;
   background: var(--background);
-
   position: fixed;
   bottom: 10px;
   padding: 0 15px;
   overflow: hidden;
   -webkit-user-select: none;
   -webkit-app-region: drag;
-
   width: 300px;
   display: flex;
   flex-direction: row;
@@ -162,7 +162,8 @@ main {
   border: none !important;
 }
 
-.ql-toolbar, .ql-tooltip {
+.ql-toolbar,
+.ql-tooltip {
   display: none;
 }
 
@@ -175,7 +176,7 @@ main {
 }
 
 .ql-font-monospace {
-  font-family: Consolas !important;
+  font-family: "Consolas", monospace !important;
 }
 
 .ql-snow .ql-editor pre.ql-syntax {
@@ -184,22 +185,22 @@ main {
 }
 
 .ql-editor ul > li::before,
-.ql-editor ul li:before {
+.ql-editor ul li::before {
   content: '\2022 ' !important; /* • */
 }
 
-.ql-editor ul li.ql-indent-1:before {
+.ql-editor ul li.ql-indent-1::before {
   content: '- ' !important; /* - */
 }
 
-.ql-editor ul li.ql-indent-2:before {
+.ql-editor ul li.ql-indent-2::before {
   content: '\21B3 ' !important; /* ↳ */
 }
 
-.ql-editor ul li.ql-indent-3:before {
+.ql-editor ul li.ql-indent-3::before {
   content: '\203A ' !important; /* ○ */
 }
 
-.ql-editor ul li.ql-indent-4:before {
+.ql-editor ul li.ql-indent-4::before {
   content: '\25A1 ' !important; /* □ */
 }

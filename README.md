@@ -2,7 +2,9 @@
 
 ## Installation
 
-Want to try it out? Run the following from the command line.
+You can download the latest macOS binary from [releases](https://github.com/pacocoursey/Opus/releases/latest).
+
+Alternatively, you can run Opus locally from the command line:
 
 ```
 $ git clone https://github.com/pacocoursey/opus.git

@@ -1,10 +1,10 @@
-const { quill } = require('./quill.js');
-const footer = require('./footer.js');
 const { app, dialog } = require('electron').remote;
 const Delta = require('quill-delta');
 const fs = require('fs');
 const path = require('path');
 const settings = require('electron-settings');
+const { quill } = require('./quill.js');
+const footer = require('./footer.js');
 
 let plain = false;
 let activeFile = '';
@@ -114,7 +114,9 @@ module.exports = {
 
       if (choice === 1) {
         return false;
-      } else if (choice === 2) {
+      }
+
+      if (choice === 2) {
         noChanges();
       } else if (choice === 0) {
         module.exports.save();

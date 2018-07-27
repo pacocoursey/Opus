@@ -9,10 +9,13 @@
 
 .tree-leaf .hidden {
   display: none;
+  visibility: hidden;
 }
 
 .tree-leaf-content {
   cursor: pointer;
+  border-radius: 5px;
+  padding: 0 5px;
 }
 
 .tree-leaf .tree-expando {
@@ -21,27 +24,18 @@
   text-align: center;
 }
 
-.tree-leaf .hidden {
-  visibility: hidden;
-}
-
 .tree-leaf .tree-leaf-text {
   float: left;
   margin-left: 5px;
 }
 
-.tree-leaf-content {
-  border-radius: 5px;
-  padding: 0 5px;
-}
-
-.tree-leaf .tree-leaf-content:before,
-.tree-leaf .tree-leaf-content:after {
+.tree-leaf .tree-leaf-content::before,
+.tree-leaf .tree-leaf-content::after {
   content: " ";
   display: table;
 }
 
-.tree-leaf .tree-leaf-content:after {
+.tree-leaf .tree-leaf-content::after {
   clear: both;
 }
 

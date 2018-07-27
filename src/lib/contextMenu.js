@@ -1,7 +1,7 @@
-const editor = require('./editor.js');
 const { remote, shell } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
+const editor = require('./editor.js');
 
 const {
   Menu, MenuItem, dialog, app,

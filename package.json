@@ -1,21 +1,19 @@
 {
   "name": "Opus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a minimalistic text-editor.",
   "main": "./src/index.js",
   "scripts": {
     "start": "electron .",
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --ignore-path .gitignore --fix .",
-    "build_osx": "electron-packager . Opus --platform=darwin --arch=x64 --out ~/Desktop/ --overwrite --icon=icon.icns && echo 'Built for OSX'"
+    "dist": "build"
   },
   "repository": "https://github.com/pacocoursey/Opus",
   "author": "Paco Coursey <paco@pacocoursey.com> (pacocoursey.com)",
   "license": "MIT",
   "dependencies": {
     "chokidar": "^2.0.3",
-    "electron": "^2.0.2",
-    "electron-context-menu": "^0.10.0",
     "electron-settings": "^3.2.0",
     "flat": "^4.0.0",
     "fs-extra": "^6.0.1",
@@ -23,9 +21,18 @@
     "quill-delta": "^3.6.2"
   },
   "devDependencies": {
-    "electron-packager": "^12.1.0",
+    "electron": "^2.0.2",
+    "electron-builder": "^20.18.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0"
+  },
+  "build": {
+    "appId": "com.electron.opus",
+    "productName": "Opus",
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "windows": {}
   }
 }

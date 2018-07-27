@@ -1,12 +1,12 @@
 :root {
   --background: #161616;
   --f_high: #f0c098;
-  --f_med: #999999;
-  --f_low: #555555;
-  --f_inv: #222222;
-  --b_high: #ffffff;
-  --b_med: #333333;
-  --b_low: #000000;
+  --f_med: #999;
+  --f_low: #555;
+  --f_inv: #222;
+  --b_high: #fff;
+  --b_med: #333;
+  --b_low: #000;
   --b_inv: #f0c098;
 }
 
@@ -20,7 +20,8 @@ a {
   color: inherit;
 }
 
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
   -webkit-app-region: drag;
@@ -31,10 +32,8 @@ body {
   background: var(--background);
   color: var(--f_high);
   font-size: 12px;
-
   min-height: 100vh;
   min-width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,7 +55,6 @@ body::after {
 
 section {
   text-align: center;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
