@@ -1,5 +1,7 @@
 # Opus
 
+a minimalistic text-editor.
+
 ## Installation
 
 You can download the latest macOS binary from [releases](https://github.com/pacocoursey/Opus/releases/latest).
