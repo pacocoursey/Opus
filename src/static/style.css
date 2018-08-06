@@ -169,6 +169,8 @@ main {
 
 .ql-editor {
   padding-bottom: 0;
+  font-weight: 300;
+  tab-size: 2;
 }
 
 .ql-editor blockquote {
@@ -182,6 +184,11 @@ main {
 .ql-snow .ql-editor pre.ql-syntax {
   background-color: var(--b_low);
   color: var(--f_high);
+}
+
+.ql-editor ul,
+.ql-editor ol {
+  padding-left: 0;
 }
 
 .ql-editor ul > li::before,
