@@ -1,0 +1,36 @@
+.tree-leaf .tree-child-leaves {
+  display: block;
+  margin-left: 15px;
+}
+
+.tree-leaf .hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.tree-leaf-content {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 0 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tree-leaf-text {
+  margin-left: 5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#tree > .tree-leaf > .tree-leaf-content:first-child {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding-bottom: 3px;
+}
