@@ -76,8 +76,8 @@ body.dark {
 }
 
 aside {
-  color: var(--gray-3);
-  width: 225px;
+  color: var(--gray-4);
+  width: 200px;
   max-width: 500px;
   min-width: 100px;
   max-height: 100vh;
@@ -117,16 +117,12 @@ main {
   padding-left: 2px;
 }
 
-.sidebar i {
-  padding-right: 5px;
-}
-
 .selected {
-  background-color: var(--b_low);
+  background-color: var(--gray-2);
 }
 
 .active {
-  color: var(--fg);
+  color: var(--dark-text);
 }
 
 .handler {
@@ -141,7 +137,7 @@ main {
   display: block;
   width: 1px;
   height: 100vh;
-  background: none;
+  background: var(--gray-1);
   margin: 0 auto;
 }
 
@@ -167,7 +163,7 @@ main {
 }
 
 .footer b {
-  color: var(--gray-4);
+  color: var(--dark-text);
 }
 
 .unsaved {
