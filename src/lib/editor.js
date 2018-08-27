@@ -3,8 +3,8 @@ const Delta = require('quill-delta');
 const fs = require('fs');
 const path = require('path');
 const settings = require('electron-settings');
-const { quill } = require('./quill.js');
-const footer = require('./footer.js');
+const { quill } = require('./quill');
+const footer = require('./footer');
 
 let plain = false;
 let activeFile = '';

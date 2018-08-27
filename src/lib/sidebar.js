@@ -1,8 +1,8 @@
 const chokidar = require('chokidar');
 const settings = require('electron-settings');
-const TreeView = require('./bin/tree.js');
-const Tree = require('./tree.js');
-const editor = require('./editor.js');
+const TreeView = require('./bin/tree');
+const Tree = require('./tree');
+const editor = require('./editor');
 
 const aside = document.querySelector('aside');
 let tree;
