@@ -15,8 +15,6 @@ function createStartWindow() {
   win = new BrowserWindow({
     width: 960,
     height: 544,
-    minWidth: 600,
-    minHeight: 500,
     transparent: true,
     frame: false,
     show: false,
@@ -54,6 +52,8 @@ function createMainWindow() {
   win = new BrowserWindow({
     width: 960,
     height: 544,
+    minWidth: 500,
+    minHeight: 400,
     transparent: true,
     frame: false,
     show: false,
