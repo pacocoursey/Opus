@@ -20,7 +20,9 @@ const template = [
       {
         label: 'Preferences',
         accelerator: 'CmdOrCtrl+,',
-        click() {},
+        click() {
+          // TODO: preferences window
+        },
       },
       { type: 'separator' },
       {
@@ -55,14 +57,14 @@ const template = [
         label: 'Save as',
         accelerator: 'CmdOrCtrl+Shift+S',
         click() {
-          editor.saveAs();
+          // TODO: editor.saveAs();
         },
       },
       {
         label: 'Open',
         accelerator: 'CmdOrCtrl+O',
         click() {
-          editor.open();
+          // TODO: editor.open();
         },
       },
       {
@@ -70,25 +72,6 @@ const template = [
         accelerator: 'CmdOrCtrl+N',
         click() {
           editor.reset();
-        },
-      },
-    ],
-  },
-  {
-    label: 'Export',
-    submenu: [
-      {
-        label: 'Export HTML',
-        // accelerator: ,
-        click() {
-          // emitter.emit('export-html');
-        },
-      },
-      {
-        label: 'Export PDF',
-        // accelerator: ,
-        click() {
-          // emitter.emit('export-pdf');
         },
       },
     ],
@@ -126,11 +109,11 @@ const template = [
       { role: 'forcereload' },
       { role: 'toggledevtools' },
       { type: 'separator' },
-      { role: 'resetzoom' },
-      { role: 'zoomin' },
-      { role: 'zoomout' },
       { type: 'separator' },
-      { role: 'togglefullscreen' },
+      {
+        role: 'togglefullscreen',
+        accelerator: 'CmdOrCtrl+Shift+F',
+      },
     ],
   },
   {

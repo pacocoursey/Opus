@@ -182,22 +182,6 @@ module.exports = {
   export() {
     settings.set('file', activeFile);
   },
-  dragEnter(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-  },
-  drag(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    const file = e.dataTransfer.files[0];
-    if (!file.name || !file.path) {
-      throw new Error(`Cannot read this file: ${file}.`);
-    } else {
-      removeActive();
-      module.exports.open(file.path);
-    }
-  },
   init() {
     // Setup activeFile
     if (settings.has('file')) {
@@ -209,10 +193,6 @@ module.exports = {
         module.exports.open(activeFile);
       }
     } else { activeFile = ''; }
-
-    // Listen for dragged files
-    window.addEventListener('dragover', module.exports.dragEnter);
-    window.addEventListener('drop', module.exports.drag);
 
     // On change, update the flag
     quill.on('text-change', () => {

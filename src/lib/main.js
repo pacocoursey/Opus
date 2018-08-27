@@ -6,6 +6,9 @@ const quill = require('./lib/quill.js');
 const editor = require('./lib/editor.js');
 const sidebar = require('./lib/sidebar.js');
 
+// Disable file drop redirect
+require('electron-disable-file-drop');
+
 quill.init();
 editor.init();
 menu.init();
