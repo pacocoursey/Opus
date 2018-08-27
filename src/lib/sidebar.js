@@ -70,16 +70,20 @@ module.exports = {
         // Update CSS class
         element.classList.add('active');
       }
+
+      module.exports.export();
     });
 
     treeView.on('expand', (e) => {
       const name = JSON.parse(e.target.getAttribute('data-item')).path;
       tree.open(name);
+      module.exports.export();
     });
 
     treeView.on('collapse', (e) => {
       const name = JSON.parse(e.target.getAttribute('data-item')).path;
       tree.close(name);
+      module.exports.export();
     });
 
     watcher.on('ready', () => {

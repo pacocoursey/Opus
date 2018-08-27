@@ -162,7 +162,13 @@ const template = [
     role: 'window',
     submenu: [
       { role: 'minimize' },
-      { role: 'close' },
+      {
+        label: 'Close Window',
+        accelerator: 'CmdOrCtrl+W',
+        click() {
+          editor.reset();
+        },
+      },
     ],
   },
   {

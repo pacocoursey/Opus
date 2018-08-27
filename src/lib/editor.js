@@ -62,13 +62,13 @@ module.exports = {
   write(p) {
     if (!p || p === '') { throw new Error('Cannot write to empty path.'); }
 
-    let contents;
+    const contents = JSON.stringify(quill.getContents());
 
-    if (plain) {
-      contents = quill.getText();
-    } else {
-      contents = JSON.stringify(quill.getContents());
-    }
+    // if (plain) {
+    //   contents = quill.getText();
+    // } else {
+    //   contents = JSON.stringify(quill.getContents());
+    // }
 
     fs.writeFile(p, contents, (error) => {
       if (error) { throw new Error(error); }
@@ -81,26 +81,7 @@ module.exports = {
 
     return choice;
   },
-  save() {
-    // If file does not exist, save it somewhere
-    if (!activeFile || activeFile === '') {
-      const choice = module.exports.saveDialog();
-      if (!choice || choice === '') return;
-      activeFile = choice;
-    }
-
-    // Write the file contents
-    module.exports.write(activeFile);
-
-    // Editor has no unsaved changes
-    noChanges();
-
-    // Update footer filename
-    footer.setFile(path.basename(activeFile));
-  },
-  open(p) {
-    if (!p || p === '') { throw new Error('Cannot open empty path.'); }
-
+  checkChanges() {
     // Ask user to save changes to current file
     if (app.hasChanges) {
       const choice = dialog.showMessageBox({
@@ -112,16 +93,37 @@ module.exports = {
         icon: `${app.image}`,
       });
 
-      if (choice === 1) {
-        return false;
-      }
-
       if (choice === 2) {
         noChanges();
       } else if (choice === 0) {
         module.exports.save();
       }
     }
+  },
+  save() {
+    // If file does not exist, save it somewhere
+    if (!activeFile || activeFile === '') {
+      const choice = module.exports.saveDialog();
+      if (!choice || choice === '') return;
+      activeFile = choice;
+    }
+
+    // Write the file contents
+    module.exports.write(activeFile);
+
+    // Reset the intial state to compare changes with
+    initial = new Delta(quill.getContents());
+
+    // Editor has no unsaved changes
+    noChanges();
+
+    // Update footer filename
+    footer.setFile(path.basename(activeFile));
+  },
+  open(p) {
+    if (!p || p === '') { throw new Error('Cannot open empty path.'); }
+
+    module.exports.checkChanges();
 
     // Reset editor contents
     quill.setContents(null, 'silent');
@@ -139,6 +141,9 @@ module.exports = {
     // Update the active file
     activeFile = p;
 
+    // Update the settings
+    module.exports.export();
+
     // Focus the editor
     quill.focus();
 
@@ -148,6 +153,7 @@ module.exports = {
     return true;
   },
   reset() {
+    module.exports.checkChanges();
     removeActive();
     noChanges();
     footer.setFile('untitled');
@@ -216,8 +222,16 @@ module.exports = {
       }
 
       if (plain) {
-        if (diff.length === 0) { noChanges(); } else { hasChanges(); }
-      } else if (diff.ops.length === 0) { noChanges(); } else { hasChanges(); }
+        if (diff.length === 0) {
+          noChanges();
+        } else {
+          hasChanges();
+        }
+      } else if (diff.ops.length === 0) {
+        noChanges();
+      } else {
+        hasChanges();
+      }
     });
 
     // On text selection or typing, update footer

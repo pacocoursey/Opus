@@ -45,7 +45,7 @@ textarea,
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Lato', sans-serif !important;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background: var(--background);
   color: var(--f_high);
   font-size: 12px;
@@ -134,7 +134,7 @@ main {
   line-height: 40px;
   background: var(--background);
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   padding: 0 15px;
   overflow: hidden;
   -webkit-user-select: none;
@@ -158,7 +158,7 @@ main {
 }
 
 .ql-container {
-  font-family: -apple-system, BlinkMacSystemFont, 'Lato', sans-serif !important;
+  font-family: 'SF Mono', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   border: none !important;
 }
 

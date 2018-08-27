@@ -20,9 +20,6 @@ function createStartWindow() {
     show: false,
     center: true,
     icon: app.image,
-    webPreferences: {
-      experimentalFeatures: true,
-    },
   });
 
   const { webContents } = win;
@@ -60,9 +57,6 @@ function createMainWindow() {
     show: false,
     center: true,
     icon: app.image,
-    webPreferences: {
-      experimentalFeatures: true,
-    },
   });
 
   const { webContents } = win;
