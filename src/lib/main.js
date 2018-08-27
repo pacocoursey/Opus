@@ -15,8 +15,6 @@ contextMenu.init();
 
 // Save the state of active file and tree
 ipcRenderer.on('export', (e) => {
-  // editor.export();
-  // sidebar.export();
   e.sender.send('done');
 });
 

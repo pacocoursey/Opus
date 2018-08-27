@@ -93,12 +93,18 @@ module.exports = {
         icon: `${app.image}`,
       });
 
+      if (choice === 1) {
+        return false;
+      }
+
       if (choice === 2) {
         noChanges();
       } else if (choice === 0) {
         module.exports.save();
       }
     }
+
+    return true;
   },
   save() {
     // If file does not exist, save it somewhere
@@ -153,7 +159,11 @@ module.exports = {
     return true;
   },
   reset() {
-    module.exports.checkChanges();
+    const canReset = module.exports.checkChanges();
+    if (!canReset) {
+      return;
+    }
+
     removeActive();
     noChanges();
     footer.setFile('untitled');
