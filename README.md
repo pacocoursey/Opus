@@ -19,6 +19,13 @@ Keep in mind this project is still under development.
 
 ![Opus Screenshot](screenshot.png)
 
+## Features
+
+Features I'd like to implement:
+
+- [ ] Find (and replace)
+- [ ] Dark Mode
+
 ## Keybinds
 
 ### Application

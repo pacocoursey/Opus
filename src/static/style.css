@@ -1,13 +1,20 @@
 :root {
-  --background: #161616;
-  --f_high: #f0c098;
-  --f_med: #999;
-  --f_low: #555;
-  --f_inv: #222;
-  --b_high: #fff;
-  --b_med: #333;
-  --b_low: #000;
-  --b_inv: #f0c098;
+  --white: rgb(255, 255, 255);
+  --black: rgb(20, 23, 26);
+  --gray-1: rgb(248, 249, 250);
+  --gray-2: rgb(222, 226, 230);
+  --gray-3: rgb(173, 181, 189);
+  --gray-4: rgb(134, 142, 150);
+  --dark-text: rgb(73, 80, 87);
+
+  --fg: var(--black);
+  --bg: var(--white);
+
+  background-color: #161616;
+}
+
+* {
+  background-color: inherit;
 }
 
 *,
@@ -40,17 +47,23 @@ textarea,
 }
 
 ::selection {
-  background: var(--b_low);
-  color: var(--f_med);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background: var(--background);
-  color: var(--f_high);
+  background: var(--bg);
+  color: var(--fg);
   font-size: 12px;
   min-height: 100vh;
   min-width: 100%;
+  transition: filter 400ms;
+}
+
+body.dark {
+  filter: invert(100%);
+  transition: filter 400ms;
 }
 
 .wrapper {
@@ -63,13 +76,17 @@ body {
 }
 
 aside {
-  color: var(--f_med);
+  color: var(--gray-3);
   width: 225px;
   max-width: 500px;
   min-width: 200px;
   max-height: 100vh;
   user-select: none;
   overflow: auto;
+}
+
+aside.hide {
+  display: none;
 }
 
 main {
@@ -109,7 +126,7 @@ main {
 }
 
 .active {
-  color: var(--f_high);
+  color: var(--fg);
 }
 
 .handler {
@@ -130,9 +147,9 @@ main {
 
 .footer {
   font-family: "Consolas", monospace;
-  color: var(--f_med) !important;
+  color: var(--gray-3) !important;
   line-height: 40px;
-  background: var(--background);
+  background: var(--bg);
   position: fixed;
   bottom: 0;
   padding: 0 15px;
@@ -150,7 +167,7 @@ main {
 }
 
 .footer b {
-  color: var(--f_high);
+  color: var(--gray-4);
 }
 
 .unsaved {
@@ -158,7 +175,7 @@ main {
 }
 
 .ql-container {
-  font-family: 'SF Mono', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   border: none !important;
 }
 
@@ -174,7 +191,7 @@ main {
 }
 
 .ql-editor blockquote {
-  border-left: 4px solid var(--f_high) !important;
+  border-left: 4px solid var(--gray-2) !important;
 }
 
 .ql-font-monospace {
@@ -182,8 +199,8 @@ main {
 }
 
 .ql-snow .ql-editor pre.ql-syntax {
-  background-color: var(--b_low);
-  color: var(--f_high);
+  background-color: var(--gray-2);
+  color: var(--dark-text);
 }
 
 .ql-editor ul,

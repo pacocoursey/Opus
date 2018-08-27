@@ -1,10 +1,9 @@
 const { remote, shell } = require('electron');
-const editor = require('./editor.js');
-const theme = require('./theme.js');
-const themes = require('./themes/themes.js');
+const editor = require('./editor');
+const theme = require('./theme');
+const sidebar = require('./sidebar');
 
 const { Menu } = remote;
-const sidebar = document.querySelector('aside');
 
 const template = [
   {
@@ -97,11 +96,14 @@ const template = [
         label: 'Toggle Sidebar',
         accelerator: 'CmdOrCtrl+\\',
         click() {
-          if (sidebar.style.display === 'block') {
-            sidebar.style.display = 'none';
-          } else {
-            sidebar.style.display = 'block';
-          }
+          sidebar.toggle();
+        },
+      },
+      {
+        label: 'Toggle Dark Mode',
+        accelerator: 'CmdOrCtrl+D',
+        click() {
+          theme.toggle();
         },
       },
       { type: 'separator' },
@@ -113,31 +115,6 @@ const template = [
       {
         role: 'togglefullscreen',
         accelerator: 'CmdOrCtrl+Shift+F',
-      },
-    ],
-  },
-  {
-    label: 'Theme',
-    submenu: [
-      {
-        label: 'Apollo11',
-        click() { theme.load(themes.get('Apollo11')); },
-      },
-      {
-        label: 'Coal',
-        click() { theme.load(themes.get('Coal')); },
-      },
-      {
-        label: 'Lotus',
-        click() { theme.load(themes.get('Lotus')); },
-      },
-      {
-        label: 'Raspberry',
-        click() { theme.load(themes.get('Raspberry')); },
-      },
-      {
-        label: 'Swiss',
-        click() { theme.load(themes.get('Swiss')); },
       },
     ],
   },

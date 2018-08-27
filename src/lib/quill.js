@@ -10,8 +10,6 @@ const quill = new Quill('.editor', {
   },
 });
 
-const sidebar = document.querySelector('aside');
-
 module.exports = {
   init() {
     // Strikethrough
@@ -142,19 +140,6 @@ module.exports = {
       shortKey: true,
       handler() {
         this.quill.format('font', 'monospace');
-      },
-    });
-
-    // Hide tree
-    quill.keyboard.addBinding({
-      key: 220, // \
-      shortKey: true,
-      handler() {
-        if (sidebar.style.display === 'block') {
-          sidebar.style.display = 'none';
-        } else {
-          sidebar.style.display = 'block';
-        }
       },
     });
 

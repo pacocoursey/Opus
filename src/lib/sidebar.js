@@ -11,10 +11,12 @@ module.exports = {
   init() {
     const activeProject = settings.get('project');
 
-    // Determine whether to show sidebar or not on load
-    if (settings.has('open')) {
-      const state = settings.get('open');
-      if (state) { aside.style.display = 'block'; } else { aside.style.display = 'none'; }
+    // Determine whether to show aside or not on load
+    if (settings.has('aside')) {
+      const isHidden = settings.get('aside');
+      if (isHidden) {
+        aside.classList.add('hide');
+      }
     }
 
     // Get the folder data
@@ -106,9 +108,12 @@ module.exports = {
     });
   },
   export() {
-    if (aside.style.display === 'none') settings.set('open', false);
-    else settings.set('open', true);
-
     settings.set('tree', tree.getSettings());
+  },
+  toggle() {
+    aside.classList.toggle('hide');
+    const isHidden = aside.classList.contains('hide');
+    settings.set('aside', isHidden);
+    console.log(settings.get('aside'));
   },
 };
