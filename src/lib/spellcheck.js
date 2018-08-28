@@ -72,6 +72,7 @@ window.addEventListener('contextmenu', (e) => {
   const isMisspelled = selectedText && simpleChecker.isMisspelled(selectedText);
   const suggestions = isMisspelled && simpleChecker.getSuggestions(selectedText).slice(0, 5);
   const menu = spellcheckerContextMenu({
+    word: selectedText,
     isMisspelled,
     suggestions,
   });

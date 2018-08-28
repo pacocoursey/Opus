@@ -12,139 +12,69 @@ const quill = new Quill('.editor', {
 
 module.exports = {
   init() {
-    // Strikethrough
-    quill.keyboard.addBinding({
-      key: 'S',
-      shiftKey: true,
-      shortKey: true,
-      handler(range, context) {
-        this.quill.format('strike', !context.format.strike);
-      },
-    });
-
-    // Heading 1
-    quill.keyboard.addBinding({
-      key: '1',
-      shortKey: true,
-      handler() {
-        this.quill.format('header', '1');
-      },
-    });
-
-    // Heading 2
-    quill.keyboard.addBinding({
-      key: '2',
-      shortKey: true,
-      handler() {
-        this.quill.format('header', '2');
-      },
-    });
-
-    // Heading 3
-    quill.keyboard.addBinding({
-      key: '3',
-      shortKey: true,
-      handler() {
-        this.quill.format('header', '3');
-      },
-    });
-
-    // Clear formatting
-    quill.keyboard.addBinding({
-      key: '0',
-      shortKey: true,
-      handler() {
-        this.quill.removeFormat(this.quill.getSelection());
-      },
-    });
-
-    // Ordered list
-    quill.keyboard.addBinding({
-      key: 'L',
-      shortKey: true,
-      handler() {
-        this.quill.format('list', 'ordered');
-      },
-    });
-
-    // Unordered list
-    quill.keyboard.addBinding({
-      key: 'L',
-      shiftKey: true,
-      shortKey: true,
-      handler() {
-        this.quill.format('list', 'bullet');
-      },
-    });
-
-    // Subscript
-    quill.keyboard.addBinding({
-      key: 189, // -
-      shiftKey: true,
-      shortKey: true,
-      handler() {
-        this.quill.format('script', 'sub', true);
-      },
-    });
-
-    // Superscript
-    quill.keyboard.addBinding({
-      key: 187, // =
-      shiftKey: true,
-      shortKey: true,
-      handler() {
-        this.quill.format('script', 'super', true);
-      },
-    });
-
-    // Code-block
-    quill.keyboard.addBinding({
-      key: 'C',
-      shiftKey: true,
-      shortKey: true,
-      handler(range, context) {
-        this.quill.format('code-block', !context.format['code-block']);
-      },
-    });
-
-    // Blockquote
-    quill.keyboard.addBinding({
-      key: 190, // .
-      shortKey: true,
-      handler(range, context) {
-        this.quill.format('blockquote', !context.format.blockquote);
-      },
-    });
-
-    // Indent
-    quill.keyboard.addBinding({
-      key: 221, // ]
-      shortKey: true,
-      handler() {
-        this.quill.format('indent', '+1');
-      },
-    });
-
-    // Outdent
-    quill.keyboard.addBinding({
-      key: 219, // ]
-      shortKey: true,
-      handler() {
-        this.quill.format('indent', '-1');
-      },
-    });
-
-    // Plain text mode
-    quill.keyboard.addBinding({
-      key: 55, // 7
-      shortKey: true,
-      handler() {
-        this.quill.format('font', 'monospace');
-      },
-    });
-
     // Automatically focus the editor
     quill.focus();
   },
   quill,
+  h1() {
+    this.quill.format('header', '1', 'user');
+  },
+  h2() {
+    this.quill.format('header', '2', 'user');
+  },
+  h3() {
+    this.quill.format('header', '3', 'user');
+  },
+  bold() {
+    this.quill.format('bold', !this.quill.getFormat().bold, 'user');
+  },
+  italic() {
+    this.quill.format('italic', !this.quill.getFormat().italic, 'user');
+  },
+  underline() {
+    this.quill.format('underline', !this.quill.getFormat().underline, 'user');
+  },
+  strikethrough() {
+    this.quill.format('strike', !this.quill.getFormat().strike, 'user');
+  },
+  list() {
+    this.quill.format('list', 'bullet', 'user');
+  },
+  orderedList() {
+    this.quill.format('list', 'ordered', 'user');
+  },
+  quote() {
+    this.quill.format('blockquote', !this.quill.getFormat().blockquote, 'user');
+  },
+  code() {
+    this.quill.format('code', !this.quill.getFormat().code, 'user');
+  },
+  codeblock() {
+    this.quill.format('code-block', !this.quill.getFormat()['code-block'], 'user');
+  },
+  superscript() {
+    const result = this.quill.getFormat().script;
+    if (result === 'super') {
+      module.exports.clear();
+    } else {
+      this.quill.format('script', 'super', 'user');
+    }
+  },
+  subscript() {
+    const result = this.quill.getFormat().script;
+    if (result === 'sub') {
+      module.exports.clear();
+    } else {
+      this.quill.format('script', 'sub', 'user');
+    }
+  },
+  indent() {
+    this.quill.format('indent', '+1', 'user');
+  },
+  outdent() {
+    this.quill.format('indent', '-1', 'user');
+  },
+  clear() {
+    this.quill.removeFormat(this.quill.getSelection(), 'user');
+  },
 };

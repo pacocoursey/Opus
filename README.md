@@ -24,6 +24,11 @@ Keep in mind this project is still under development.
 Features I'd like to implement:
 
 - [ ] Find (and replace)
+- [ ] Improve Tree-view (React?)
+- [ ] Ability to have multiple projects (folders) open at once
+- [ ] Drag and drop to move files in the tree-view
+- [ ] Improve footer (show word count, theme toggle)
+- [ ] Filter files by regex to match only text-based files
 - [X] Dark Mode
 - [X] Spellchecker
 
@@ -51,8 +56,8 @@ Features I'd like to implement:
 - Italic: `CmdOrCtrl+I`
 - Underline: `CmdOrCtrl+U`
 - Strikethrough: `CmdOrCtrl+Shift+S`
-- Subscript: `CmdOrCtrl+Shift+-`
-- Superscript: `CmdOrCtrl+Shift++`
+- Subscript: `CmdOrCtrl+Alt+Minus`
+- Superscript: `CmdOrCtrl+Alt+Plus`
 - Header 1: `CmdOrCtrl+1`
 - Header 2: `CmdOrCtrl+2`
 - Header 3: `CmdOrCtrl+3`
@@ -63,9 +68,3 @@ Features I'd like to implement:
 - Indent: `CmdOrCtrl+]`
 - Outdent: `CmdOrCtrl+[`
 - Clear formatting: `CmdOrCtrl+0`
-
-#
-
-<p align="center">
-  <a href="http://paco.sh"><img src="https://raw.githubusercontent.com/pacocoursey/pacocoursey.github.io/master/footer.png" height="300"></a>
-</p>

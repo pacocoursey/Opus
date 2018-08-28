@@ -21,31 +21,13 @@ const buildMenu = (menu) => {
   }));
 
   menu.append(new MenuItem({
+    role: 'delete',
+  }));
+
+  menu.append(new MenuItem({
     role: 'selectall',
     accelerator: 'CmdOrCtrl+A',
   }));
-
-  menu.append(new MenuItem({ type: 'separator' }));
-
-  menu.append(new MenuItem({
-    label: 'Bold',
-    accelerator: 'CmdOrCtrl+B',
-    click: () => { console.log('bold'); },
-  }));
-
-  menu.append(new MenuItem({
-    label: 'Italic',
-    accelerator: 'CmdOrCtrl+I',
-    click: () => { console.log('italic'); },
-  }));
-
-  menu.append(new MenuItem({
-    label: 'Underline',
-    accelerator: 'CmdOrCtrl+U',
-    click: () => { console.log('underline'); },
-  }));
-
-  /* TODO: the rest... */
 };
 
 const replace = (text) => {
@@ -64,6 +46,10 @@ const replace = (text) => {
   }
 };
 
+const add = (text) => {
+  window.spellChecker.add(text);
+};
+
 module.exports = (selection) => {
   const menu = new Menu();
 
@@ -76,6 +62,16 @@ module.exports = (selection) => {
         },
       }));
     });
+
+    menu.append(new MenuItem({ type: 'separator' }));
+
+    // Add the word to the dictionary
+    menu.append(new MenuItem({
+      label: 'Learn Word',
+      click: () => {
+        add(selection.word);
+      },
+    }));
 
     menu.append(new MenuItem({ type: 'separator' }));
   }
