@@ -3,7 +3,7 @@ const Delta = require('quill-delta');
 const fs = require('fs');
 const path = require('path');
 const settings = require('electron-settings');
-// const { quill } = require('./quill');
+const { quill } = require('./quill');
 const footer = require('./footer');
 
 let plain = false;
@@ -183,67 +183,67 @@ module.exports = {
     settings.set('file', activeFile);
   },
   init() {
-    // // Setup activeFile
-    // if (settings.has('file')) {
-    //   activeFile = settings.get('file');
-    //   if (!activeFile || activeFile === '') {
-    //     module.exports.reset();
-    //   } else {
-    //     removeActive();
-    //     module.exports.open(activeFile);
-    //   }
-    // } else { activeFile = ''; }
-    //
-    // // On change, update the flag
-    // quill.on('text-change', () => {
-    //   let diff;
-    //
-    //   // Check if contents are the same as when saved
-    //   if (!initial || initial === '') {
-    //     if (plain) {
-    //       diff = quill.getText() === '';
-    //     } else {
-    //       diff = quill.getContents().diff(empty);
-    //     }
-    //   } else if (plain) {
-    //     diff = quill.getText() === initial;
-    //   } else {
-    //     diff = quill.getContents().diff(initial);
-    //   }
-    //
-    //   if (plain) {
-    //     if (diff.length === 0) {
-    //       noChanges();
-    //     } else {
-    //       hasChanges();
-    //     }
-    //   } else if (diff.ops.length === 0) {
-    //     noChanges();
-    //   } else {
-    //     hasChanges();
-    //   }
-    // });
-    //
-    // // On text selection or typing, update footer
-    // quill.on('editor-change', () => {
-    //   const range = quill.getSelection();
-    //
-    //   if (range) {
-    //     const lines = quill.getText(0, range.index).split('\n');
-    //     const lineCount = lines.length;
-    //     const charPosition = lines[lineCount - 1].length + 1;
-    //
-    //     if (range.length === 0) {
-    //       footer.update(lineCount, charPosition, null);
-    //     } else {
-    //       const text = quill.getText(range.index, range.length);
-    //       const selection = {
-    //         lines: text.split('\n').length,
-    //         chars: text.length,
-    //       };
-    //       footer.update(lineCount, charPosition, selection);
-    //     }
-    //   }
-    // });
+    // Setup activeFile
+    if (settings.has('file')) {
+      activeFile = settings.get('file');
+      if (!activeFile || activeFile === '') {
+        module.exports.reset();
+      } else {
+        removeActive();
+        module.exports.open(activeFile);
+      }
+    } else { activeFile = ''; }
+
+    // On change, update the flag
+    quill.on('text-change', () => {
+      let diff;
+
+      // Check if contents are the same as when saved
+      if (!initial || initial === '') {
+        if (plain) {
+          diff = quill.getText() === '';
+        } else {
+          diff = quill.getContents().diff(empty);
+        }
+      } else if (plain) {
+        diff = quill.getText() === initial;
+      } else {
+        diff = quill.getContents().diff(initial);
+      }
+
+      if (plain) {
+        if (diff.length === 0) {
+          noChanges();
+        } else {
+          hasChanges();
+        }
+      } else if (diff.ops.length === 0) {
+        noChanges();
+      } else {
+        hasChanges();
+      }
+    });
+
+    // On text selection or typing, update footer
+    quill.on('editor-change', () => {
+      const range = quill.getSelection();
+
+      if (range) {
+        const lines = quill.getText(0, range.index).split('\n');
+        const lineCount = lines.length;
+        const charPosition = lines[lineCount - 1].length + 1;
+
+        if (range.length === 0) {
+          footer.update(lineCount, charPosition, null);
+        } else {
+          const text = quill.getText(range.index, range.length);
+          const selection = {
+            lines: text.split('\n').length,
+            chars: text.length,
+          };
+          footer.update(lineCount, charPosition, selection);
+        }
+      }
+    });
   },
 };

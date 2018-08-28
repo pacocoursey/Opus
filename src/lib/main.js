@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron');
 const menu = require('./lib/menu');
 const contextMenu = require('./lib/contextMenu');
 const theme = require('./lib/theme');
-// const quill = require('./lib/quill');
+const quill = require('./lib/quill');
 const editor = require('./lib/editor');
 const sidebar = require('./lib/sidebar');
 
@@ -13,7 +13,7 @@ require('./lib/spellcheck');
 require('electron-disable-file-drop');
 
 theme.init();
-// quill.init();
+quill.init();
 editor.init();
 sidebar.init();
 menu.init();

@@ -57,7 +57,9 @@ const replace = (text) => {
     if (selection.rangeCount) {
       range = selection.getRangeAt(0);
       range.deleteContents();
-      range.insertNode(document.createTextNode(text));
+      const node = document.createTextNode(text);
+      range.insertNode(node);
+      range.selectNodeContents(node);
     }
   }
 };
