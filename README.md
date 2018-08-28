@@ -24,7 +24,9 @@ Keep in mind this project is still under development.
 Features I'd like to implement:
 
 - [ ] Find (and replace)
-- [ ] Dark Mode
+- [ ] Remove Quill dependency
+- [X] Dark Mode
+- [X] Spellchecker
 
 ## Keybinds
 

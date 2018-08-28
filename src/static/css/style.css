@@ -110,6 +110,12 @@ main {
   flex-direction: column;
 }
 
+.editor {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
 .sidebar {
   padding: 50px 5px 50px 20px;
   line-height: 2.5em;
