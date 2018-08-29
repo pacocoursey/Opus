@@ -128,6 +128,5 @@ module.exports = {
     aside.classList.toggle('hide');
     const isHidden = aside.classList.contains('hide');
     settings.set('aside', isHidden);
-    console.log(settings.get('aside'));
   },
 };
