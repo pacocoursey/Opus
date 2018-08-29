@@ -168,6 +168,7 @@ module.exports = {
     removeActive();
     noChanges();
     footer.setFile('untitled');
+    footer.updateFileStats();
     initial = '';
     quill.setContents(null, 'silent');
     quill.history.clear();

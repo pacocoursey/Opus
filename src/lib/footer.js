@@ -4,8 +4,19 @@ const position = document.querySelector('.position');
 const selection = document.querySelector('.selection');
 const fileStats = document.querySelector('.file-stats');
 const file = document.querySelector('.file-name');
+const time = document.querySelector('.time');
 
 module.exports = {
+  init() {
+    module.exports.updateFileStats();
+
+    module.exports.updateTime();
+    setInterval(module.exports.updateTime, 10000);
+  },
+  updateTime() {
+    const date = new Date();
+    time.textContent = `${date.getHours()}:${date.getMinutes()}`;
+  },
   updateCursorStats() {
     const range = quill.getSelection();
 

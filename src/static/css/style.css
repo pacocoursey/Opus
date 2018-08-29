@@ -6,7 +6,6 @@
   --gray-3: rgb(173, 181, 189);
   --gray-4: rgb(134, 142, 150);
   --dark-text: rgb(73, 80, 87);
-
   --fg: var(--black);
   --bg: var(--white);
 
@@ -22,10 +21,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-}
-
-html,
-body {
   -webkit-app-region: drag;
 }
 
@@ -166,6 +161,7 @@ main {
 
 .selection {
   margin-left: 10px;
+  color: var(--dark-text);
 }
 
 .file-stats {
@@ -176,8 +172,8 @@ main {
   justify-content: flex-end;
 }
 
-.selection {
-  color: var(--dark-text);
+.time {
+  justify-content: flex-end;
 }
 
 .unsaved {

@@ -19,9 +19,7 @@ editor.init();
 sidebar.init();
 menu.init();
 contextMenu.init();
-
-// Update file stats on load
-footer.updateFileStats();
+footer.init();
 
 // Save the state of active file and tree
 ipcRenderer.on('export', (e) => {
