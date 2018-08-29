@@ -5,6 +5,7 @@ const theme = require('./lib/theme');
 const quill = require('./lib/quill');
 const editor = require('./lib/editor');
 const sidebar = require('./lib/sidebar');
+const footer = require('./lib/footer');
 
 // Spellcheck in texteditor
 require('./lib/spellcheck');
@@ -18,6 +19,9 @@ editor.init();
 sidebar.init();
 menu.init();
 contextMenu.init();
+
+// Update file stats on load
+footer.updateFileStats();
 
 // Save the state of active file and tree
 ipcRenderer.on('export', (e) => {

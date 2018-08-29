@@ -155,6 +155,7 @@ module.exports = {
 
     // Update the footer
     footer.setFile(path.basename(activeFile));
+    footer.updateFileStats();
 
     return true;
   },
