@@ -69,19 +69,17 @@ body.dark {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  align-items: stretch;
   min-height: 100vh;
   max-height: 100vh;
-  min-width: 100%;
 }
 
 aside {
   color: var(--gray-4);
-  width: 200px;
-  max-width: 500px;
+  flex-basis: 200px;
   min-width: 100px;
-  max-height: 100vh;
+  max-width: 500px;
   user-select: none;
-  overflow: auto;
 }
 
 aside.hide {
@@ -92,6 +90,7 @@ aside.hide {
   padding: 60px 5px 50px 20px;
   line-height: 2.5em;
   font-size: 12px;
+  overflow: auto;
 }
 
 .sidebar ol {
@@ -130,7 +129,6 @@ main {
   position: relative;
   flex-grow: 2;
   max-height: calc(100vh - 20px);
-  width: calc(100vw);
   margin: 50px 50px 0 50px;
   padding-bottom: 40px;
   overflow: auto;

@@ -25,6 +25,7 @@ footer.updateFileStats();
 
 // Save the state of active file and tree
 ipcRenderer.on('export', (e) => {
+  sidebar.export();
   e.sender.send('done');
 });
 

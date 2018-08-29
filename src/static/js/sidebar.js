@@ -3,19 +3,14 @@ const wrapper = document.querySelector('.wrapper');
 const aside = wrapper.querySelector('aside');
 let isHandlerDragging = false;
 
-document.addEventListener('mousedown', (e) => {
-  if (e.target === handler) {
-    isHandlerDragging = true;
-  }
+handler.addEventListener('mousedown', () => {
+  isHandlerDragging = true;
 });
 
 document.addEventListener('mousemove', (e) => {
   if (!isHandlerDragging) { return; }
 
-  const containerOffsetLeft = wrapper.offsetLeft;
-  const pointerRelativeXpos = e.clientX - containerOffsetLeft;
-
-  aside.style.width = `${pointerRelativeXpos - 2}px`;
+  aside.style.flexBasis = `${e.clientX}px`;
 });
 
 document.addEventListener('mouseup', () => {

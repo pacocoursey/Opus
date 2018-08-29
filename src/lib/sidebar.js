@@ -19,6 +19,12 @@ module.exports = {
       }
     }
 
+    // Apply a saved width to the sidebar if one was saved
+    if (settings.has('asideWidth')) {
+      const width = settings.get('asideWidth');
+      aside.style.flexBasis = width;
+    }
+
     // Get the folder data
     if (settings.has('tree')) {
       tree = Tree.createTree(activeProject, settings.get('tree'));
@@ -108,7 +114,15 @@ module.exports = {
     });
   },
   export() {
+    // Save the tree state
     settings.set('tree', tree.getSettings());
+
+    // Save the width of the sidebar
+    if (aside.style.flexBasis) {
+      settings.set('asideWidth', aside.style.flexBasis);
+    } else {
+      settings.set('asideWidth', 200);
+    }
   },
   toggle() {
     aside.classList.toggle('hide');
