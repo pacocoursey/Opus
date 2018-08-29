@@ -1,20 +1,24 @@
-const footer = document.querySelector('#footer');
+const position = document.querySelector('.position');
+const selection = document.querySelector('.selection');
+const file = document.querySelector('.file-name');
 
 module.exports = {
-  update(line, char, selection) {
-    if (!selection) {
-      footer.children[0].innerHTML = `${line}:${char}`;
+  update(line, char, s) {
+    if (!s) {
+      position.textContent = `${line}:${char}`;
+      selection.textContent = '';
     } else {
-      footer.children[0].innerHTML = `${line}:${char} <b>[${selection.lines}:${selection.chars}]</b>`;
+      position.textContent = `${line}:${char}`;
+      selection.textContent = `[${selection.lines}:${selection.chars}]`;
     }
   },
   setFile(name) {
-    footer.children[1].innerHTML = `${name}`;
+    file.textContent = `${name}`;
   },
   hasChanges() {
-    footer.children[1].classList.add('unsaved');
+    file.classList.add('unsaved');
   },
   noChanges() {
-    footer.children[1].classList.remove('unsaved');
+    file.classList.remove('unsaved');
   },
 };

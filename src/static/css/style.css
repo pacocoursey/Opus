@@ -26,14 +26,13 @@
 
 * {
   background-color: inherit;
+  box-sizing: border-box;
 }
 
-*,
 html,
 body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html,
@@ -100,22 +99,6 @@ aside.hide {
   display: none;
 }
 
-main {
-  flex-grow: 2;
-  max-height: calc(100vh - 20px);
-  max-width: 100vw;
-  margin: 50px;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.editor {
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-}
-
 .sidebar {
   padding: 50px 5px 50px 20px;
   line-height: 2.5em;
@@ -124,10 +107,6 @@ main {
 
 .sidebar ol {
   list-style-type: none;
-}
-
-#tree {
-  margin-left: 10px;
 }
 
 .name span {
@@ -158,28 +137,55 @@ main {
   margin: 0 auto;
 }
 
+main {
+  position: relative;
+  flex-grow: 2;
+  max-height: calc(100vh - 20px);
+  max-width: 100vw;
+  margin: 50px 50px 0 50px;
+  padding-bottom: 40px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
 .footer {
-  font-family: "Consolas", monospace;
-  color: var(--gray-3) !important;
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+  user-select: none;
+  -webkit-app-region: drag;
+  color: var(--gray-3);
   line-height: 40px;
-  background: var(--bg);
-  position: fixed;
+  position: absolute;
   bottom: 0;
+  width: 100%;
   padding: 0 15px;
   overflow: hidden;
-  -webkit-user-select: none;
-  -webkit-app-region: drag;
-  width: 300px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.footer span {
-  width: 50%;
+.footer > div {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-.footer b {
+.cursor-stats {
+  justify-content: flex-start;
+}
+
+.file-stats {
+  justify-content: center;
+}
+
+.file-name {
+  justify-content: flex-end;
+}
+
+.selection {
   color: var(--dark-text);
 }
 
