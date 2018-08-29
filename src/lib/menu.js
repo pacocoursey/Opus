@@ -93,7 +93,11 @@ const template = [
       { type: 'separator' },
       { role: 'cut' },
       { role: 'copy' },
-      { role: 'paste' },
+      {
+        label: 'Paste',
+        role: 'pasteandmatchstyle',
+        accelerator: 'CmdOrCtrl+V',
+      },
       { role: 'delete' },
       { role: 'selectall' },
       { type: 'separator' },

@@ -8,21 +8,24 @@ const file = document.querySelector('.file-name');
 module.exports = {
   updateCursorStats() {
     const range = quill.getSelection();
-    const lines = quill.getText(0, range.index).trim().split('\n');
-    const line = lines.length;
-    const char = lines[line - 1].length + 1;
 
-    // Update the cursor position stats
-    position.textContent = `${line}:${char}`;
+    if (range) {
+      const lines = quill.getText(0, range.index).trim().split('\n');
+      const line = lines.length;
+      const char = lines[line - 1].length + 1;
 
-    // Update the selection stats
-    if (range.length !== 0) {
-      const text = quill.getText(range.index, range.length).trim();
-      const sLines = text.split('\n').length;
-      const sChars = text.length;
-      selection.textContent = `[${sLines}, ${sChars}]`;
-    } else {
-      selection.textContent = '';
+      // Update the cursor position stats
+      position.textContent = `${line}:${char}`;
+
+      // Update the selection stats
+      if (range.length !== 0) {
+        const text = quill.getText(range.index, range.length).trim();
+        const sLines = text.split('\n').length;
+        const sChars = text.length;
+        selection.textContent = `[${sLines}, ${sChars}]`;
+      } else {
+        selection.textContent = '';
+      }
     }
   },
   updateFileStats() {

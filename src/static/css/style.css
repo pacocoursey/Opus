@@ -141,7 +141,7 @@ main {
   position: relative;
   flex-grow: 2;
   max-height: calc(100vh - 20px);
-  max-width: 100vw;
+  width: calc(100vw);
   margin: 50px 50px 0 50px;
   padding-bottom: 40px;
   overflow: auto;
@@ -198,7 +198,7 @@ main {
 }
 
 .ql-container {
-  font-family: 'InterUI', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   border: none !important;
 }
 
@@ -209,8 +209,9 @@ main {
 
 .ql-editor {
   padding-bottom: 0;
-  font-weight: 300;
+  font-weight: 400;
   tab-size: 2;
+  line-height: 1.5rem;
 }
 
 .ql-editor blockquote {

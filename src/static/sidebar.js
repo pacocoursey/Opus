@@ -16,7 +16,6 @@ document.addEventListener('mousemove', (e) => {
   const pointerRelativeXpos = e.clientX - containerOffsetLeft;
 
   aside.style.width = `${pointerRelativeXpos - 2}px`;
-  aside.style.flexGrow = 0;
 });
 
 document.addEventListener('mouseup', () => {
