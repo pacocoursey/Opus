@@ -100,7 +100,7 @@ aside.hide {
 }
 
 .sidebar {
-  padding: 50px 5px 50px 20px;
+  padding: 60px 5px 50px 20px;
   line-height: 2.5em;
   font-size: 12px;
 }
@@ -175,6 +175,10 @@ main {
 
 .cursor-stats {
   justify-content: flex-start;
+}
+
+.selection {
+  margin-left: 10px;
 }
 
 .file-stats {

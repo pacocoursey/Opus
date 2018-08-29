@@ -224,26 +224,16 @@ module.exports = {
       }
     });
 
-    // On text selection or typing, update footer
+    // On text-change, update file stats
+    // does not trigger on selection change (faster)
+    quill.on('text-change', () => {
+      footer.updateFileStats();
+    });
+
+    // On text selection or typing, update cursor stats
+    // triggers on both text-change and editor change
     quill.on('editor-change', () => {
-      const range = quill.getSelection();
-
-      if (range) {
-        const lines = quill.getText(0, range.index).split('\n');
-        const lineCount = lines.length;
-        const charPosition = lines[lineCount - 1].length + 1;
-
-        if (range.length === 0) {
-          footer.update(lineCount, charPosition, null);
-        } else {
-          const text = quill.getText(range.index, range.length);
-          const selection = {
-            lines: text.split('\n').length,
-            chars: text.length,
-          };
-          footer.update(lineCount, charPosition, selection);
-        }
-      }
+      footer.updateCursorStats();
     });
   },
 };

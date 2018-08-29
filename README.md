@@ -27,7 +27,7 @@ Features I'd like to implement:
 - [ ] Improve Tree-view (React?)
 - [ ] Ability to have multiple projects (folders) open at once
 - [ ] Drag and drop to move files in the tree-view
-- [ ] Improve footer (show word count, theme toggle)
+- [X] Improve footer (show word count, theme toggle)
 - [ ] Filter files by regex to match only text-based files
 - [X] Dark Mode
 - [X] Spellchecker
