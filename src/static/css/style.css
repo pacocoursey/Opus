@@ -1,14 +1,3 @@
-@font-face {
-  font-family: "InterUI";
-  src: url("../fonts/Inter-UI-Regular.ttf") format('truetype'),
-       url("../fonts/Inter-UI-Bold.ttf") format('truetype'),
-       url("../fonts/Inter-UI-Italic.ttf") format('truetype'),
-       url("../fonts/Inter-UI-Black.ttf") format('truetype'),
-       url("../fonts/Inter-UI-BlackItalic.ttf") format('truetype'),
-       url("../fonts/Inter-UI-Medium.ttf") format('truetype'),
-       url("../fonts/Inter-UI-MediumItalic.ttf") format('truetype');
-}
-
 :root {
   --white: rgb(255, 255, 255);
   --black: rgb(20, 23, 26);
