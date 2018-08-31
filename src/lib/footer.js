@@ -1,5 +1,6 @@
 const { quill } = require('./quill');
 
+const editor = document.querySelector('.ql-editor');
 const position = document.querySelector('.position');
 const selection = document.querySelector('.selection');
 const fileStats = document.querySelector('.file-stats');
@@ -21,7 +22,7 @@ module.exports = {
     const range = quill.getSelection();
 
     if (range) {
-      const lines = quill.getText(0, range.index).trim().split('\n');
+      const lines = quill.getText(0, range.index).split('\n');
       const line = lines.length;
       const char = lines[line - 1].length + 1;
 
@@ -41,7 +42,7 @@ module.exports = {
   },
   updateFileStats() {
     const text = quill.getText().trim();
-    const lines = text.split('\n').length;
+    const lines = editor.children.length;
     const words = text.length > 0 ? text.split(/\s+/).length : 0;
 
     // Update the file stats

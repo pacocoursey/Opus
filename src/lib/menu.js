@@ -98,6 +98,11 @@ const template = [
         role: 'pasteandmatchstyle',
         accelerator: 'CmdOrCtrl+V',
       },
+      {
+        label: 'Paste with Style',
+        role: 'paste',
+        accelerator: 'CmdOrCtrl+Shift+V',
+      },
       { role: 'delete' },
       { role: 'selectall' },
       { type: 'separator' },
