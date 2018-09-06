@@ -4,6 +4,7 @@
   "description": "a minimalistic text-editor.",
   "main": "./src/index.js",
   "scripts": {
+    "rebuild": "electron-rebuild",
     "start": "electron .",
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --ignore-path .gitignore --fix .",

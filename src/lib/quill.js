@@ -1,5 +1,20 @@
 const Quill = require('quill');
 
+const Inline = Quill.import('blots/inline');
+
+class HighlightBlot extends Inline {
+  static create() {
+    const node = super.create();
+    node.classList.add('highlight');
+    return node;
+  }
+}
+
+HighlightBlot.blotName = 'highlight';
+HighlightBlot.tagName = 'label';
+
+Quill.register(HighlightBlot);
+
 const quill = new Quill('.editor', {
   debug: 'error',
   theme: 'snow',

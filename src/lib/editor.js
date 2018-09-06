@@ -238,4 +238,7 @@ module.exports = {
       footer.updateCursorStats();
     });
   },
+  find() {
+    footer.find();
+  },
 };

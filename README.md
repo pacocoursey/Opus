@@ -8,10 +8,11 @@ You can download the latest macOS binary from [releases](https://github.com/paco
 
 Alternatively, you can run Opus locally from the command line:
 
-```
-$ git clone https://github.com/pacocoursey/opus.git
+```bash
+$ git clone https://github.com/pacocoursey/Opus.git
 $ cd opus
 $ npm install
+$ npm run rebuild     # rebuild native spellchecker module
 $ npm start
 ```
 
@@ -23,6 +24,7 @@ Keep in mind this project is still under development.
 
 Features I'd like to implement:
 
+- [ ] Improve design
 - [ ] Find (and replace)
 - [ ] Improve Tree-view (React?)
 - [ ] Ability to have multiple projects (folders) open at once

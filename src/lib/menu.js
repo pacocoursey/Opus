@@ -113,7 +113,7 @@ const template = [
             label: 'Find...',
             accelerator: 'CmdOrCtrl+F',
             click() {
-              // TODO: editor.find();
+              editor.find();
             },
           },
           {

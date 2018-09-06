@@ -86,6 +86,7 @@ aside.hide {
   line-height: 2.5em;
   font-size: 12px;
   overflow: auto;
+  -webkit-app-region: no-drag;
 }
 
 .sidebar ol {
@@ -144,11 +145,41 @@ main {
   overflow: hidden;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.stats {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.footer > div {
+.find {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  display: none;
+}
+
+.find > form > input {
+  margin-left: 10px;
+  height: 40px;
+  line-height: 40px;
+  padding: 0;
+  width: 100%;
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+  border: none;
+  outline: none;
+}
+
+.stats > div {
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -178,6 +209,10 @@ main {
 
 .unsaved {
   text-decoration: underline;
+}
+
+.highlight {
+  background: yellow;
 }
 
 .ql-container {
