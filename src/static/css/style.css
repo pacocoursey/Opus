@@ -11,6 +11,8 @@
   --fg: var(--black);
   --bg: var(--white);
 
+  --highlight: #42A5F5;
+
   background-color: #161616;
 }
 
@@ -43,7 +45,7 @@ textarea,
 }
 
 ::selection {
-  background: var(--fg);
+  background: var(--highlight);
   color: var(--bg);
 }
 
@@ -90,7 +92,7 @@ aside {
 }
 
 .sidebar {
-  padding: 10px 5px 10px 10px;
+  padding: 10px;
   line-height: 2.5em;
   font-size: 12px;
   overflow: auto;
@@ -110,7 +112,8 @@ aside {
 }
 
 .active {
-  color: var(--fg);
+  color: var(--bg);
+  background-color: var(--highlight);
 }
 
 .handler {
