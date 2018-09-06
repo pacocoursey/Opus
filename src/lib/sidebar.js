@@ -4,7 +4,7 @@ const TreeView = require('./bin/tree');
 const Tree = require('./tree');
 const editor = require('./editor');
 
-const aside = document.querySelector('aside');
+const wrapper = document.querySelector('.wrapper');
 let tree;
 
 module.exports = {
@@ -12,17 +12,11 @@ module.exports = {
     const activeProject = settings.get('project');
 
     // Determine whether to show aside or not on load
-    if (settings.has('aside')) {
-      const isHidden = settings.get('aside');
-      if (isHidden) {
-        aside.classList.add('hide');
+    if (settings.has('slide')) {
+      const isSlid = settings.get('slide');
+      if (isSlid) {
+        wrapper.classList.add('slide');
       }
-    }
-
-    // Apply a saved width to the sidebar if one was saved
-    if (settings.has('asideWidth')) {
-      const width = settings.get('asideWidth');
-      aside.style.flexBasis = width;
     }
 
     // Get the folder data
@@ -116,17 +110,10 @@ module.exports = {
   export() {
     // Save the tree state
     settings.set('tree', tree.getSettings());
-
-    // Save the width of the sidebar
-    if (aside.style.flexBasis) {
-      settings.set('asideWidth', aside.style.flexBasis);
-    } else {
-      settings.set('asideWidth', 200);
-    }
   },
   toggle() {
-    aside.classList.toggle('hide');
-    const isHidden = aside.classList.contains('hide');
-    settings.set('aside', isHidden);
+    wrapper.classList.toggle('slide');
+    const isSlid = wrapper.classList.contains('slide');
+    settings.set('slide', isSlid);
   },
 };

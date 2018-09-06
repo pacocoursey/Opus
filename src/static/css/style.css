@@ -6,6 +6,8 @@
   --gray-3: rgb(173, 181, 189);
   --gray-4: rgb(134, 142, 150);
   --dark-text: rgb(73, 80, 87);
+  --separator: #ddd;
+  --aside: #fbfbfb;
   --fg: var(--black);
   --bg: var(--white);
 
@@ -67,22 +69,28 @@ body.dark {
   align-items: stretch;
   min-height: 100vh;
   max-height: 100vh;
+  transition: transform 200ms;
+}
+
+.wrapper.slide {
+  transform: translateX(-215px);
+  width: calc(100vw + 215px);
+  transition: transform 200ms;
 }
 
 aside {
-  color: var(--gray-4);
-  flex-basis: 200px;
-  min-width: 100px;
+  color: var(--dark-text);
+  background: var(--aside);
+  flex-basis: 215px;
+  min-width: 215px;
   max-width: 500px;
   user-select: none;
-}
-
-aside.hide {
-  display: none;
+  border-right: 1px solid var(--separator);
+  padding-top: 30px;
 }
 
 .sidebar {
-  padding: 60px 5px 50px 20px;
+  padding: 10px 5px 10px 10px;
   line-height: 2.5em;
   font-size: 12px;
   overflow: auto;
@@ -102,11 +110,11 @@ aside.hide {
 }
 
 .active {
-  color: var(--dark-text);
+  color: var(--fg);
 }
 
 .handler {
-  width: 5px;
+  width: 1px;
   padding: 0;
   cursor: ew-resize;
   flex: 0 0 auto;
@@ -117,15 +125,15 @@ aside.hide {
   display: block;
   width: 1px;
   height: 100vh;
-  background: var(--gray-1);
+  background: var(--separator);
   margin: 0 auto;
 }
 
 main {
   position: relative;
-  flex-grow: 2;
+  flex-basis: 100%;
   max-height: calc(100vh - 20px);
-  margin: 50px 50px 0 50px;
+  margin: 30px 50px 0 50px;
   padding-bottom: 40px;
   overflow: auto;
   display: flex;
@@ -233,7 +241,7 @@ main {
 }
 
 .ql-editor blockquote {
-  border-left: 4px solid var(--gray-2) !important;
+  border-left: 4px solid 1(--gray-2) !important;
 }
 
 .ql-editor pre {
