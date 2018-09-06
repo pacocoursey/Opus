@@ -31,9 +31,9 @@ Features I'd like to implement:
 - [ ] Drag and drop to move files in the tree-view
 - [ ] Filter files by regex to match only text-based files (or custom file extension?)
 - [ ] Add Escape keybind to clear current cursor formatting
+- [ ] Dark Mode (change CSS variables)
 - [X] Show current time in the footer
-- [X] Improve footer (show word count, theme toggle)
-- [X] Dark Mode
+- [X] Show document stats in the footer, improve cursor position stats
 - [X] Spellchecker
 
 ## Keybinds
