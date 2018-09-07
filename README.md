@@ -26,7 +26,9 @@ Features I'd like to implement:
 
 - [ ] Add custom scroll bar to editor (+ scroll indicator?)
 - [ ] Improve design
-- [ ] Find (and replace)
+- [X] Find
+- [ ] Replace
+- [ ] Goto
 - [ ] Improve Tree-view (React?)
 - [ ] Ability to have multiple projects (folders) open at once
 - [ ] Drag and drop to move files in the tree-view
@@ -57,19 +59,21 @@ Features I'd like to implement:
 
 ### Editor
 
+- Separator: `CmdOrCtrl+Shift+H`
+- Header 1: `CmdOrCtrl+1`
+- Header 2: `CmdOrCtrl+2`
+- Header 3: `CmdOrCtrl+3`
 - Bold: `CmdOrCtrl+B`
 - Italic: `CmdOrCtrl+I`
 - Underline: `CmdOrCtrl+U`
 - Strikethrough: `CmdOrCtrl+Shift+S`
-- Subscript: `CmdOrCtrl+Alt+Minus`
-- Superscript: `CmdOrCtrl+Alt+Plus`
-- Header 1: `CmdOrCtrl+1`
-- Header 2: `CmdOrCtrl+2`
-- Header 3: `CmdOrCtrl+3`
 - Unordered list: `CmdOrCtrl+L`
 - Ordered list: `CmdOrCtrl+Shift+L`
-- Blockquote: `CmdOrCtrl+Shift+.`
-- Code-block: `CmdOrCtrl+Shift+C`
+- Quote: `CmdOrCtrl+Shift+.`
+- Code: `CmdOrCtrl+Shift+C`
+- Code-block: `CmdOrCtrl+Alt+C`
+- Superscript: `CmdOrCtrl+Alt+Plus`
+- Subscript: `CmdOrCtrl+Alt+Minus`
 - Indent: `CmdOrCtrl+]`
 - Outdent: `CmdOrCtrl+[`
 - Clear formatting: `CmdOrCtrl+0`

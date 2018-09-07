@@ -146,6 +146,12 @@ const template = [
     label: 'Format',
     submenu: [
       {
+        label: 'Separator',
+        accelerator: 'CmdOrCtrl+Shift+H',
+        click() { quill.separator(); },
+      },
+      { type: 'separator' },
+      {
         label: 'Heading 1',
         accelerator: 'CmdOrCtrl+1',
         click() { quill.h1(); },
@@ -200,12 +206,12 @@ const template = [
       },
       {
         label: 'Code',
-        accelerator: 'CmdOrCtrl+Alt+C',
+        accelerator: 'CmdOrCtrl+Shift+C',
         click() { quill.code(); },
       },
       {
         label: 'Codeblock',
-        accelerator: 'CmdOrCtrl+Shift+C',
+        accelerator: 'CmdOrCtrl+Alt+C',
         click() { quill.codeblock(); },
       },
       { type: 'separator' },
