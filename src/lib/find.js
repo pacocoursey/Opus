@@ -116,7 +116,13 @@ module.exports = {
     // Highlight the found occurence
     quill.formatText(position, str.length, 'highlight', true, 'api');
 
-    // TODO: scroll to the given element!
+    // Scroll the highlighted element into view smoothly!
+    // Damn, scrollIntoView() is amazing.
+    const hl = document.querySelector('.highlight');
+    hl.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+    });
   },
   toggle() {
     el.classList.toggle('show');
