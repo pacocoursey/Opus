@@ -54,6 +54,12 @@ module.exports = (selection) => {
   const menu = new Menu();
 
   if (selection.isMisspelled) {
+    if (selection.suggestions.length === 0) {
+      menu.append(new MenuItem({
+        label: 'No Guesses Found',
+        enabled: false,
+      }));
+    }
     selection.suggestions.forEach((suggestion) => {
       menu.append(new MenuItem({
         label: suggestion,
