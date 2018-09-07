@@ -1,17 +1,12 @@
 const { quill } = require('./quill');
 
-const editor = document.querySelector('.ql-editor');
 const stats = document.querySelector('.stats');
+const editor = document.querySelector('.ql-editor');
 const position = document.querySelector('.position');
 const selection = document.querySelector('.selection');
 const fileStats = document.querySelector('.file-stats');
 const file = document.querySelector('.file-name');
-const find = document.querySelector('.find');
-const findForm = document.querySelector('.find > form');
-const findInput = document.querySelector('.find > form > input');
 const time = document.querySelector('.time');
-
-let findFlag = false;
 
 module.exports = {
   init() {
@@ -20,58 +15,8 @@ module.exports = {
     module.exports.updateTime();
     setInterval(module.exports.updateTime, 10000);
   },
-  find() {
-    // If find is already active do nothing
-    if (findFlag) {
-      return;
-    }
-
-    findFlag = true;
-    stats.style.display = 'none';
-    find.style.display = 'flex';
-    findInput.value = '';
-    findInput.focus();
-
-    // Listen for escape key to close find
-    window.addEventListener('keydown', module.exports.escape);
-
-    // Listen for enter key to search document
-    findForm.addEventListener('submit', module.exports.submit);
-  },
-  escape(e) {
-    // Close and reset the find form when escape is pressed
-    if (e.keyCode === 27) {
-      stats.style.display = 'flex';
-      find.style.display = 'none';
-      findFlag = false;
-      document.querySelectorAll('.highlight').forEach((el) => {
-        console.log(el.parentNode);
-      });
-      findForm.removeEventListener('submit', module.exports.submit, true);
-      window.removeEventListener('keydown', module.exports.escape, false);
-    }
-  },
-  submit(e) {
-    console.log('Callback.');
-    e.preventDefault();
-    const str = findInput.value;
-
-    if (!str || str === '') {
-      return;
-    }
-
-    const text = quill.getText();
-    const pos = text.search(str);
-
-    // Search string was not found
-    if (pos === -1) {
-      console.log('No results found.');
-      return;
-    }
-
-    quill.deleteText(pos, str.length, 'api');
-    quill.insertText(pos, str, 'highlight', true, 'api');
-    // const el = window.getSelection().anchorNode.parentNode;
+  toggle() {
+    stats.classList.toggle('hide');
   },
   updateTime() {
     const date = new Date();

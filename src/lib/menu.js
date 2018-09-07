@@ -3,6 +3,7 @@ const editor = require('./editor');
 const theme = require('./theme');
 const sidebar = require('./sidebar');
 const quill = require('./quill');
+const find = require('./find');
 
 const { Menu } = remote;
 
@@ -113,7 +114,7 @@ const template = [
             label: 'Find...',
             accelerator: 'CmdOrCtrl+F',
             click() {
-              editor.find();
+              find.activate();
             },
           },
           {
