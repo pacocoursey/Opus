@@ -59,15 +59,16 @@ module.exports = (selection) => {
         label: 'No Guesses Found',
         enabled: false,
       }));
+    } else {
+      selection.suggestions.forEach((suggestion) => {
+        menu.append(new MenuItem({
+          label: suggestion,
+          click: () => {
+            replace(suggestion);
+          },
+        }));
+      });
     }
-    selection.suggestions.forEach((suggestion) => {
-      menu.append(new MenuItem({
-        label: suggestion,
-        click: () => {
-          replace(suggestion);
-        },
-      }));
-    });
 
     menu.append(new MenuItem({ type: 'separator' }));
 
@@ -81,6 +82,7 @@ module.exports = (selection) => {
 
     menu.append(new MenuItem({ type: 'separator' }));
   }
+
 
   buildMenu(menu);
   return menu;
