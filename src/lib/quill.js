@@ -1,12 +1,12 @@
 const Quill = require('quill');
 
+// Define custom inline blot for find highlighting
 const Inline = Quill.import('blots/inline');
-
 class HighlightBlot extends Inline {
   static create() {
     const node = super.create();
     node.classList.add('highlight');
-    node.style.backgroundColor = '#ffee58';
+    node.style.backgroundColor = 'var(--warning)';
     node.style.boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';
     return node;
   }
@@ -14,9 +14,10 @@ class HighlightBlot extends Inline {
 
 HighlightBlot.blotName = 'highlight';
 HighlightBlot.tagName = 'span';
-
 Quill.register(HighlightBlot);
 
+
+// Initialize the editor
 const quill = new Quill('.editor', {
   debug: 'error',
   theme: 'snow',

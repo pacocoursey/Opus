@@ -12,6 +12,8 @@
   --bg: var(--white);
 
   --highlight: #42A5F5;
+  --error: #e53935;
+  --warning: #ffee58;
 
   background-color: #161616;
 }
@@ -188,18 +190,42 @@ footer {
 }
 
 .find-form {
+  margin-left: 10px;
   width: 100%;
+  height: 100%;
 }
 
 .find-input {
-  margin-left: 10px;
-  height: 40px;
-  line-height: 40px;
   padding: 0;
   width: 100%;
   font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
   border: none;
   outline: none;
+  transition: color 200ms;
+}
+
+.find-input.error {
+  animation: shake 1s linear;
+  color: var(--error);
+  transition: color 200ms;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(2px, 0, 0);
+  }
 }
 
 .stats > div {
