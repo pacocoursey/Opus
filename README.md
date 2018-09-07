@@ -24,6 +24,7 @@ Keep in mind this project is still under development.
 
 Features I'd like to implement:
 
+- [ ] Add custom scroll bar to editor (+ scroll indicator?)
 - [ ] Improve design
 - [ ] Find (and replace)
 - [ ] Improve Tree-view (React?)

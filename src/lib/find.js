@@ -76,6 +76,10 @@ module.exports = {
       return;
     }
 
+    // TODO: count total number of occurences right away
+    // will make this logic easier. Then, update the div
+    // with indication of what occurence is active: [current/total]
+
     // If looking for a new string, reset
     if (str !== currentString) {
       currentString = str;
