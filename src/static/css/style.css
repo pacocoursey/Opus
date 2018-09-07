@@ -10,8 +10,7 @@
   --aside: #fbfbfb;
   --fg: var(--black);
   --bg: var(--white);
-
-  --highlight: #42A5F5;
+  --highlight: #42a5f5;
   --error: #e53935;
   --warning: #ffee58;
   --select: #29b6f6;
@@ -59,6 +58,7 @@ body {
   font-size: 12px;
   min-height: 100vh;
   min-width: 100%;
+  overflow: hidden;
   transition: filter 400ms;
 }
 
@@ -212,19 +212,24 @@ footer {
 }
 
 @keyframes shake {
-  10%, 90% {
+  10%,
+  90% {
     transform: translate3d(-1px, 0, 0);
   }
 
-  20%, 80% {
+  20%,
+  80% {
     transform: translate3d(1px, 0, 0);
   }
 
-  30%, 50%, 70% {
+  30%,
+  50%,
+  70% {
     transform: translate3d(-2px, 0, 0);
   }
 
-  40%, 60% {
+  40%,
+  60% {
     transform: translate3d(2px, 0, 0);
   }
 }
