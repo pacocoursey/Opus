@@ -3,12 +3,14 @@ const { quill } = require('./quill');
 const el = document.querySelector('.find');
 const input = document.querySelector('.find-input');
 const form = document.querySelector('.find-form');
+const stats = document.querySelector('.find-stats');
 const editor = document.querySelector('.ql-editor');
 
 let active = false;
-let startPosition = 0;
-let counter = 0;
 let currentString = '';
+let isFirst = true;
+let indeces = [];
+let index = 0;
 
 module.exports = {
   // If find is already active, do nothing
@@ -48,10 +50,10 @@ module.exports = {
       module.exports.clear();
 
       // Reset everything
-      startPosition = 0;
-      counter = 0;
+      stats.innerText = '';
       currentString = '';
       active = false;
+      isFirst = true;
 
       // Remove the event listeners now that find mode is inactive
       form.removeEventListener('submit', module.exports.submit, true);
@@ -68,6 +70,18 @@ module.exports = {
       element.removeAttribute('style');
     });
   },
+  indeces(source, find) {
+    const results = [];
+    let i = 0;
+
+    for (i = 0; i < source.length; i += 1) {
+      if (source.substring(i, i + find.length).toLowerCase() === find) {
+        results.push(i);
+      }
+    }
+
+    return results;
+  },
   find() {
     const str = input.value;
     module.exports.clear();
@@ -76,49 +90,41 @@ module.exports = {
       return;
     }
 
-    // TODO: count total number of occurences right away
-    // will make this logic easier. Then, update the div
-    // with indication of what occurence is active: [current/total]
-
     // If looking for a new string, reset
     if (str !== currentString) {
       currentString = str;
-      startPosition = 0;
-      counter = 0;
+      isFirst = true;
+      stats.innerText = '';
+    } else {
+      // Looking for the same string, not first
+      isFirst = false;
     }
 
-    const text = quill.getText(startPosition);
-    const reg = new RegExp(str, 'i');
-    let position = text.search(reg);
+    if (isFirst) {
+      const text = quill.getText();
+      indeces = module.exports.indeces(text, str);
+      index = 0;
+    } else {
+      // Increment the index, wrapping back to start
+      index += 1;
+      index %= indeces.length;
+    }
 
-    // Search string was not found
-    if (position === -1) {
-      // We had at least one match
-      // start search over!
-      if (counter !== 0) {
-        counter = 0;
-        startPosition = 0;
-        module.exports.find();
-      } else {
-        console.log('No results found.');
-        input.classList.add('error');
-        setTimeout(() => {
-          input.classList.remove('error');
-        }, 1000);
-      }
+    // No occurences found
+    if (indeces.length === 0) {
+      console.log('No results found.');
+      input.classList.add('error');
+      setTimeout(() => {
+        input.classList.remove('error');
+      }, 1000);
       return;
     }
 
-    // Increment the counter
-    counter += 1;
-    position += startPosition;
-
-    // Increment the startPosition so we know where
-    // to start looking from next time
-    startPosition = position + str.length;
+    // Update the find stats
+    stats.innerText = `${index + 1}/${indeces.length}`;
 
     // Highlight the found occurence
-    quill.formatText(position, str.length, 'highlight', true, 'api');
+    quill.formatText(indeces[index], str.length, 'highlight', true, 'api');
 
     // Scroll the highlighted element into view smoothly!
     // Damn, scrollIntoView() is amazing.
