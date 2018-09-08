@@ -9,6 +9,7 @@ class HighlightBlot extends Inline {
     node.style.backgroundColor = 'var(--select)';
     node.style.color = '#fff';
     node.style.boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';
+    node.style.animation = 'highlight 200ms';
     return node;
   }
 }
@@ -17,8 +18,8 @@ HighlightBlot.blotName = 'highlight';
 HighlightBlot.tagName = 'span';
 
 // Custom embedded block blot for line separator
-const BlockEmbed = Quill.import('blots/block/embed');
-class HrBlot extends BlockEmbed {}
+const Block = Quill.import('blots/block');
+class HrBlot extends Block {}
 HrBlot.blotName = 'separator';
 HrBlot.tagName = 'hr';
 

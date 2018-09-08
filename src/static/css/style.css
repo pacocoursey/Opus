@@ -211,29 +211,6 @@ footer {
   transition: color 200ms;
 }
 
-@keyframes shake {
-  10%,
-  90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-
-  20%,
-  80% {
-    transform: translate3d(1px, 0, 0);
-  }
-
-  30%,
-  50%,
-  70% {
-    transform: translate3d(-2px, 0, 0);
-  }
-
-  40%,
-  60% {
-    transform: translate3d(2px, 0, 0);
-  }
-}
-
 .stats > div {
   flex: 1;
   display: flex;
@@ -264,10 +241,6 @@ footer {
 
 .unsaved {
   text-decoration: underline;
-}
-
-.highlight {
-  background: yellow;
 }
 
 .ql-container {
@@ -325,4 +298,41 @@ footer {
 
 .ql-editor ul li.ql-indent-4::before {
   content: '\25A1 ' !important; /* □ */
+}
+
+.ql-editor hr {
+  border: none;
+  background: var(--gray-2);
+  width: 100%;
+  height: 1px;
+}
+
+@keyframes highlight {
+  0% {
+    background: none;
+    color: var(--fg);
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(2px, 0, 0);
+  }
 }
