@@ -4,6 +4,7 @@ const theme = require('./theme');
 const sidebar = require('./sidebar');
 const quill = require('./quill');
 const find = require('./find');
+const goTo = require('./goto');
 
 const { Menu } = remote;
 
@@ -127,6 +128,7 @@ const template = [
           {
             label: 'Find Next',
             accelerator: 'CmdOrCtrl+G',
+            enabled: false,
             click() {
               // TODO: editor.findNext();
             },
@@ -134,11 +136,18 @@ const template = [
           {
             label: 'Find Previous',
             accelerator: 'CmdOrCtrl+Shift+G',
+            enabled: false,
             click() {
               // TODO: editor.findPrevious();
             },
           },
         ],
+      },
+      { type: 'separator' },
+      {
+        label: 'Go To',
+        accelerator: 'CmdOrCtrl+Shift+G',
+        click() { goTo.activate(); },
       },
     ],
   },

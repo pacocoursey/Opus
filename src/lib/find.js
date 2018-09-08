@@ -31,7 +31,6 @@ module.exports = {
     // TODO: add it to the menu?
     window.addEventListener('keydown', module.exports.escape);
 
-
     // Listen for editor click to clear the highlights
     editor.addEventListener('click', () => {
       module.exports.clear();
@@ -56,7 +55,7 @@ module.exports = {
       isFirst = true;
 
       // Remove the event listeners now that find mode is inactive
-      form.removeEventListener('submit', module.exports.submit, true);
+      form.removeEventListener('submit', module.exports.submit, false);
       window.removeEventListener('keydown', module.exports.escape, false);
     }
   },
