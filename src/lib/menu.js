@@ -129,14 +129,14 @@ const template = [
             label: 'Find Next',
             accelerator: 'CmdOrCtrl+G',
             click() {
-              // TODO: editor.findNext();
+              find.find(1);
             },
           },
           {
             label: 'Find Previous',
             accelerator: 'CmdOrCtrl+Shift+G',
             click() {
-              // TODO: editor.findPrevious();
+              find.find(-1);
             },
           },
         ],

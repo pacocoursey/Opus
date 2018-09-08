@@ -81,7 +81,7 @@ module.exports = {
 
     return results;
   },
-  find() {
+  find(increment = 1) {
     const str = input.value;
     module.exports.clear();
 
@@ -104,9 +104,13 @@ module.exports = {
       indeces = module.exports.indeces(text, str);
       index = 0;
     } else {
-      // Increment the index, wrapping back to start
-      index += 1;
-      index %= indeces.length;
+      // Change the index, wrapping at ends
+      index += increment;
+      if (index === -1) {
+        index = indeces.length - 1;
+      } else {
+        index %= indeces.length;
+      }
     }
 
     // No occurences found
