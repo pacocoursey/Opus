@@ -1,7 +1,9 @@
 const { quill } = require('./quill');
+const find = require('./find');
+
+const editor = document.querySelector('.ql-editor');
 
 const el = document.querySelector('.goto');
-const editor = document.querySelector('.ql-editor');
 const input = document.querySelector('.goto-input');
 const form = document.querySelector('.goto-form');
 
@@ -13,7 +15,8 @@ module.exports = {
       input.focus();
     }
 
-    module.exports.toggle();
+    find.deactivate();
+    el.classList.add('show');
     input.value = '';
     input.focus();
     active = true;
@@ -30,7 +33,7 @@ module.exports = {
     form.removeEventListener('submit', module.exports.submit, false);
     window.removeEventListener('keydown', module.exports.keydown, false);
 
-    module.exports.toggle();
+    el.classList.remove('show');
     input.value = '';
     active = false;
   },

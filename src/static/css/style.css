@@ -191,16 +191,33 @@ footer {
 }
 
 .find-form, .goto-form {
-  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
 
-.find-input, .goto-input {
-  padding: 0;
+.find-submit {
+  display: none;
+}
+
+.find-stats {
+  height: 100%;
+  flex-basis: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.find-input, .find-replace-input, .goto-input {
+  margin: 0 10px;
   width: 100%;
   font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
   border: none;
+  border-bottom: 1px solid var(--gray-2);
   outline: none;
   transition: color 200ms;
 }
@@ -209,6 +226,14 @@ footer {
   animation: shake 1s linear;
   color: var(--error);
   transition: color 200ms;
+}
+
+.find-replace {
+  display: none;
+}
+
+.find-replace.show {
+  display: flex;
 }
 
 .stats > div {

@@ -1,31 +1,45 @@
 const { quill } = require('./quill');
 
+const editor = document.querySelector('.ql-editor');
+const go = document.querySelector('.goto');
+
 const el = document.querySelector('.find');
 const input = document.querySelector('.find-input');
 const form = document.querySelector('.find-form');
 const stats = document.querySelector('.find-stats');
-const editor = document.querySelector('.ql-editor');
+const replaceInput = document.querySelector('.find-replace-input');
+const replaceEls = document.querySelectorAll('.find-replace');
 
 let active = false;
 let currentString = '';
 let isFirst = true;
 let indeces = [];
 let index = 0;
+let replace = false;
 
 module.exports = {
-  // If find is already active, do nothing
-  activate() {
-    if (active) {
+  activate(isReplace = false) {
+    // If find is already active, do nothing
+    if (active && !isReplace) {
       input.focus();
       return;
     }
 
     // Show, reset, and focus the input
     // set find state to active
-    module.exports.toggle();
+    el.classList.add('show');
+    go.classList.remove('show');
+
+    // If we are in replace mode, show the replace input
+    if (isReplace) {
+      replaceEls.forEach(e => e.classList.add('show'));
+    }
+
     input.value = '';
+    replaceInput.value = '';
     input.focus();
     active = true;
+    replace = isReplace;
 
     // Listen for escape key to close find
     window.addEventListener('keydown', module.exports.escape);
@@ -44,7 +58,7 @@ module.exports = {
     window.removeEventListener('keydown', module.exports.escape, false);
 
     // Hide the find element, clear the highlights
-    module.exports.toggle();
+    el.classList.remove('show');
     module.exports.clear();
 
     // Reset everything
@@ -61,7 +75,7 @@ module.exports = {
   },
   submit(e) {
     e.preventDefault();
-    module.exports.find();
+    module.exports.find(1);
   },
   clear() {
     // Remove the style from all find matches
@@ -126,8 +140,19 @@ module.exports = {
     // Update the find stats
     stats.innerText = `${index + 1}/${indeces.length}`;
 
-    // Highlight the found occurence
-    quill.formatText(indeces[index], str.length, 'highlight', true, 'api');
+    if (replace) {
+      // Insert the replacement text
+      quill.deleteText(indeces[index], str.length, 'user');
+      quill.insertText(indeces[index], replaceInput.value, 'user');
+
+      // Must adjust indeces values for
+      // differences in replacement string length
+      /* eslint-disable-next-line */
+      indeces = indeces.map(i => i += replaceInput.value.length - str.length);
+    } else {
+      // Highlight the found occurence
+      quill.formatText(indeces[index], str.length, 'highlight', true, 'silent');
+    }
 
     // Scroll the highlighted element into view smoothly!
     // Damn, scrollIntoView() is amazing.
@@ -144,8 +169,5 @@ module.exports = {
       behavior: 'smooth',
       inline: 'center',
     });
-  },
-  toggle() {
-    el.classList.toggle('show');
   },
 };

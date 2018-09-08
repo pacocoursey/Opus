@@ -122,7 +122,7 @@ const template = [
             label: 'Find and Replace...',
             accelerator: 'CmdOrCtrl+Shift+F',
             click() {
-              // TODO: editor.findAndReplace();
+              find.activate(true);
             },
           },
           {
