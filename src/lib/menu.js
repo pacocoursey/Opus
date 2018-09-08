@@ -128,7 +128,6 @@ const template = [
           {
             label: 'Find Next',
             accelerator: 'CmdOrCtrl+G',
-            enabled: false,
             click() {
               // TODO: editor.findNext();
             },
@@ -136,7 +135,6 @@ const template = [
           {
             label: 'Find Previous',
             accelerator: 'CmdOrCtrl+Shift+G',
-            enabled: false,
             click() {
               // TODO: editor.findPrevious();
             },
@@ -145,8 +143,8 @@ const template = [
       },
       { type: 'separator' },
       {
-        label: 'Go To',
-        accelerator: 'CmdOrCtrl+Shift+G',
+        label: 'Go to Line',
+        accelerator: 'CmdOrCtrl+Alt+G',
         click() { goTo.activate(); },
       },
     ],
@@ -303,4 +301,5 @@ module.exports = {
     const menu = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(menu);
   },
+  template,
 };

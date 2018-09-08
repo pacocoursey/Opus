@@ -42,20 +42,35 @@ module.exports = {
     el.classList.toggle('show');
   },
   goto() {
-    const line = input.value - 1;
+    const line = parseInt(input.value, 10) - 1;
 
     if (line >= editor.children.length || line < 0) {
-      console.log('Early exit');
+      input.classList.add('error');
+      setTimeout(() => {
+        input.classList.remove('error');
+      }, 1000);
       return;
     }
 
     const element = editor.children[line];
-    console.log(element);
-    const text = quill.getText();
-    const pos = text.search(element.innerText);
 
+    // The line was not found in the editor (somehow)
+    if (!element || element === '') {
+      throw new Error(`Goto element not found. Looking for line ${line}.`);
+    }
+
+    const text = quill.getText();
+    const pos = text.indexOf(element.innerText);
+
+    // The index of the line's text could not be found
+    if (pos === -1) {
+      throw new Error(`The index of line ${line} text could not be found.`);
+    }
+
+    // Set the editor selection
     quill.setSelection(pos, element.innerText.length, 'api');
 
+    // Deactivate the goto element
     module.exports.deactivate();
   },
 };

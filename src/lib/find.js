@@ -28,7 +28,6 @@ module.exports = {
     active = true;
 
     // Listen for escape key to close find
-    // TODO: add it to the menu?
     window.addEventListener('keydown', module.exports.escape);
 
     // Listen for editor click to clear the highlights
@@ -39,24 +38,25 @@ module.exports = {
     // Listen for enter key to start searching document
     form.addEventListener('submit', module.exports.submit);
   },
+  deactivate() {
+    // Remove the event listeners now that find mode is inactive
+    form.removeEventListener('submit', module.exports.submit, false);
+    window.removeEventListener('keydown', module.exports.escape, false);
+
+    // Hide the find element, clear the highlights
+    module.exports.toggle();
+    module.exports.clear();
+
+    // Reset everything
+    stats.innerText = '';
+    currentString = '';
+    active = false;
+    isFirst = true;
+  },
   escape(e) {
     // Escape key was pressed
     if (e.keyCode === 27) {
-      // Hide the find element
-      module.exports.toggle();
-
-      // Clear the highlights
-      module.exports.clear();
-
-      // Reset everything
-      stats.innerText = '';
-      currentString = '';
-      active = false;
-      isFirst = true;
-
-      // Remove the event listeners now that find mode is inactive
-      form.removeEventListener('submit', module.exports.submit, false);
-      window.removeEventListener('keydown', module.exports.escape, false);
+      module.exports.deactivate();
     }
   },
   submit(e) {
@@ -128,6 +128,14 @@ module.exports = {
     // Scroll the highlighted element into view smoothly!
     // Damn, scrollIntoView() is amazing.
     const hl = document.querySelector('.highlight');
+
+    // For some reason the highlight class could not be applied
+    // i.e. found text is inside a <pre> tag codeblock
+    if (!hl || hl === '') {
+      console.warn('The occurence of the found word is inside an element that could not be highlighted. Sorry, fix soon?');
+      return;
+    }
+
     hl.scrollIntoView({
       behavior: 'smooth',
       inline: 'center',
