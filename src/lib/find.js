@@ -16,6 +16,7 @@ let isFirst = true;
 let indeces = [];
 let index = 0;
 let replace = false;
+let done = false;
 
 module.exports = {
   activate(isReplace = false) {
@@ -116,6 +117,15 @@ module.exports = {
       input.classList.remove('error');
     }, 1000);
   },
+  replaceAll() {
+    if (!replace || !active) {
+      return;
+    }
+
+    while (!done) {
+      module.exports.find();
+    }
+  },
   find(increment = 1) {
     const str = input.value;
     let replaceValue = '';
@@ -153,6 +163,7 @@ module.exports = {
       } else {
         // At the end of occurences, no more replacements to be made
         module.exports.error();
+        done = true;
         return;
       }
     } else {

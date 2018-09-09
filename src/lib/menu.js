@@ -114,30 +114,26 @@ const template = [
           {
             label: 'Find...',
             accelerator: 'CmdOrCtrl+F',
-            click() {
-              find.activate(false);
-            },
+            click() { find.activate(false); },
           },
           {
             label: 'Find and Replace...',
             accelerator: 'CmdOrCtrl+Shift+F',
-            click() {
-              find.activate(true);
-            },
+            click() { find.activate(true); },
+          },
+          {
+            label: 'Replace All',
+            click() { find.replaceAll(); },
           },
           {
             label: 'Find Next',
             accelerator: 'CmdOrCtrl+G',
-            click() {
-              find.find(1);
-            },
+            click() { find.find(1); },
           },
           {
             label: 'Find Previous',
             accelerator: 'CmdOrCtrl+Shift+G',
-            click() {
-              find.find(-1);
-            },
+            click() { find.find(-1); },
           },
         ],
       },
@@ -256,16 +252,12 @@ const template = [
       {
         label: 'Toggle Sidebar',
         accelerator: 'CmdOrCtrl+\\',
-        click() {
-          sidebar.toggle();
-        },
+        click() { sidebar.toggle(); },
       },
       {
         label: 'Toggle Dark Mode',
         accelerator: 'CmdOrCtrl+D',
-        click() {
-          theme.toggle();
-        },
+        click() { theme.toggle(); },
       },
       { type: 'separator' },
       { role: 'reload' },
