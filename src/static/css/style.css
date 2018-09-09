@@ -1,28 +1,21 @@
 :root {
   --font-stack: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-stack-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
-
   --text: rgb(20, 23, 26);
   --bg: rgb(255, 255, 255);
   --bright-text: rgb(73, 80, 87);
   --accent: #42a5f5;
   --error: #e53935;
   --separator: #ddd;
-
   --aside-text: var(--bright-text);
   --aside-bg: #fbfbfb;
-
   --aside-active-bg: var(--accent);
   --aside-active-text: var(--bg);
-
   --aside-selected-bg: rgb(222, 226, 230);
-
   --highlight-text: var(--bg);
   --highlight-bg: var(--accent);
-
   --footer-text: rgb(173, 181, 189);
   --input-border: rgb(222, 226, 230);
-
   --editor-bg: var(--bg);
   --editor-text: var(--text);
 
@@ -30,27 +23,21 @@
 }
 
 .dark {
-  --text: #ffffff;
+  --text: #fff;
   --bg: #1e1e1e;
   --bright-text: rgb(173, 181, 189);
   --accent: #f9aa33;
   --error: #e53935;
-  --separator: #2D2D2D;
-
+  --separator: #2d2d2d;
   --aside-text: var(--bright-text);
   --aside-bg: #141414;
-
   --aside-active-bg: var(--accent);
   --aside-active-text: var(--bg);
-
   --aside-selected-bg: #474747;
-
   --highlight-text: var(--text);
   --highlight-bg: var(--accent);
-
-  --footer-text: #888888;
-  --input-border: #444444;
-
+  --footer-text: #888;
+  --input-border: #444;
   --editor-bg: var(--fg);
   --editor-text: var(--text);
 }
@@ -159,7 +146,7 @@ aside {
 .highlight {
   color: var(--bg);
   background-color: var(--highlight-bg);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   animation: highlight 200ms;
 }
 
@@ -200,7 +187,8 @@ footer {
   align-items: center;
 }
 
-.find, .goto {
+.find,
+.goto {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -213,12 +201,14 @@ footer {
   transition: transform 200ms cubic-bezier(0.95, 0.05, 0.795, 0.035);
 }
 
-.find.show, .goto.show {
+.find.show,
+.goto.show {
   transform: translateY(0);
   transition: transform 200ms cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-.find-form, .goto-form {
+.find-form,
+.goto-form {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -240,7 +230,9 @@ footer {
   align-items: center;
 }
 
-.find-input, .find-replace-input, .goto-input {
+.find-input,
+.find-replace-input,
+.goto-input {
   margin: 0 10px;
   width: 100%;
   color: var(--footer-text);
@@ -251,7 +243,8 @@ footer {
   transition: color 200ms;
 }
 
-.find-input.error, .goto-input.error {
+.find-input.error,
+.goto-input.error {
   animation: shake 1s linear;
   color: var(--error);
   transition: color 200ms;
