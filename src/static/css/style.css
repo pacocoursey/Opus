@@ -1,8 +1,9 @@
 :root {
   --font-stack: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --font-stack-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
-  --text: rgb(20, 23, 26);
-  --bg: rgb(255, 255, 255);
+  --transition: color 400ms, background-color 400ms, border 400ms;
+  --text: #000;
+  --bg: #fff;
   --bright-text: rgb(73, 80, 87);
   --accent: #42a5f5;
   --error: #e53935;
@@ -24,20 +25,20 @@
 
 .dark {
   --text: #fff;
-  --bg: #1e1e1e;
+  --bg: #1c1a1d;
   --bright-text: rgb(173, 181, 189);
-  --accent: #f9aa33;
+  --accent: #4598f7;
   --error: #e53935;
   --separator: #2d2d2d;
-  --aside-text: var(--bright-text);
-  --aside-bg: #141414;
+  --aside-text: var(--text);
+  --aside-bg: #100f11;
   --aside-active-bg: var(--accent);
-  --aside-active-text: var(--bg);
+  --aside-active-text: var(--text);
   --aside-selected-bg: #474747;
   --highlight-text: var(--text);
   --highlight-bg: var(--accent);
   --footer-text: #888;
-  --input-border: #444;
+  --input-border: #232223;
   --editor-bg: var(--fg);
   --editor-text: var(--text);
 }
@@ -96,11 +97,11 @@ body {
   min-height: 100vh;
   min-width: 100%;
   overflow: hidden;
-  transition: color 400ms, background-color 400ms, border 400ms;
+  transition: var(--transition);
 }
 
 body.dark {
-  transition: color 400ms, background-color 400ms, border 400ms;
+  transition: var(--transition);
 }
 
 .wrapper {
@@ -128,7 +129,7 @@ aside {
   user-select: none;
   border-right: 1px solid var(--separator);
   padding-top: 30px;
-  transition: color 400ms, background-color 400ms, border 400ms;
+  transition: var(--transition);
 }
 
 .sidebar {
@@ -157,7 +158,7 @@ aside {
 }
 
 .highlight {
-  color: var(--bg);
+  color: var(--highlight-text);
   background-color: var(--highlight-bg);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   animation: highlight 200ms;
@@ -253,7 +254,8 @@ footer {
   border: none;
   border-bottom: 1px solid var(--input-border);
   outline: none;
-  transition: color 200ms;
+  background-color: transparent;
+  transition: var(--transition);
 }
 
 .find-input.error,
@@ -321,7 +323,10 @@ footer {
 }
 
 .ql-editor blockquote {
-  border-left: 4px solid 1(--gray-2) !important;
+  background: transparent;
+  color: var(--text);
+  border-left: 4px solid var(--accent) !important;
+  transition: var(--transition);
 }
 
 .ql-editor pre {
@@ -329,9 +334,11 @@ footer {
   font-family: var(--font-stack-mono);
 }
 
-.ql-snow .ql-editor pre.ql-syntax {
+.ql-snow .ql-editor pre.ql-syntax,
+.ql-snow .ql-editor code {
   background-color: var(--input-border);
   color: var(--editor-text);
+  transition: var(--transition);
 }
 
 .ql-editor ul,
