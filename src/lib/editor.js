@@ -200,6 +200,9 @@ module.exports = {
     quill.on('text-change', () => {
       let diff;
 
+      // On text-change, update file stats
+      footer.updateFileStats();
+
       // Check if contents are the same as when saved
       if (!initial || initial === '') {
         if (plain) {
@@ -226,14 +229,8 @@ module.exports = {
       }
     });
 
-    // On text-change, update file stats
-    // does not trigger on selection change (faster)
-    quill.on('text-change', () => {
-      footer.updateFileStats();
-    });
-
     // On text selection or typing, update cursor stats
-    // triggers on both text-change and editor change
+    // triggers on both text-change and selection change
     quill.on('editor-change', () => {
       footer.updateCursorStats();
     });
