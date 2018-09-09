@@ -2,20 +2,10 @@ const Quill = require('quill');
 
 // Define custom inline blot for find highlighting
 const Inline = Quill.import('blots/inline');
-class HighlightBlot extends Inline {
-  static create() {
-    const node = super.create();
-    node.classList.add('highlight');
-    node.style.backgroundColor = 'var(--select)';
-    node.style.color = '#fff';
-    node.style.boxShadow = '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)';
-    node.style.animation = 'highlight 200ms';
-    return node;
-  }
-}
-
+class HighlightBlot extends Inline {}
 HighlightBlot.blotName = 'highlight';
-HighlightBlot.tagName = 'span';
+HighlightBlot.className = 'highlight';
+HighlightBlot.tagName = 'hl';
 
 // Custom embedded block blot for line separator
 const Block = Quill.import('blots/block');

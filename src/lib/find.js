@@ -33,13 +33,16 @@ module.exports = {
     // If we are in replace mode, show the replace input
     if (isReplace) {
       replaceEls.forEach(e => e.classList.add('show'));
+    } else {
+      replaceEls.forEach(e => e.classList.remove('show'));
     }
+
+    replace = isReplace;
 
     input.value = '';
     replaceInput.value = '';
     input.focus();
     active = true;
-    replace = isReplace;
 
     // Listen for escape key to close find
     window.addEventListener('keydown', module.exports.escape);
@@ -71,6 +74,17 @@ module.exports = {
     // Escape key was pressed
     if (e.keyCode === 27) {
       module.exports.deactivate();
+    } else if (e.keyCode === 9) {
+      // Tab key was pressed, shift focus manually
+      // between the two input fields
+      e.preventDefault();
+      if (replace) {
+        if (document.activeElement === input) {
+          replaceInput.focus();
+        } else {
+          input.focus();
+        }
+      }
     }
   },
   submit(e) {
@@ -78,10 +92,10 @@ module.exports = {
     module.exports.find(1);
   },
   clear() {
-    // Remove the style from all find matches
-    document.querySelectorAll('.highlight').forEach((element) => {
-      element.removeAttribute('style');
-    });
+    // Clear all highlight format from the entire document
+    quill.formatText(0, quill.getLength(), {
+      highlight: false,
+    }, 'silent');
   },
   indeces(source, find) {
     const results = [];
@@ -95,12 +109,27 @@ module.exports = {
 
     return results;
   },
+  error() {
+    console.log('No results found.');
+    input.classList.add('error');
+    setTimeout(() => {
+      input.classList.remove('error');
+    }, 1000);
+  },
   find(increment = 1) {
     const str = input.value;
+    let replaceValue = '';
     module.exports.clear();
 
     if (!str || str === '') {
       return;
+    }
+
+    if (replace) {
+      replaceValue = replaceInput.value;
+      if (!replaceValue || replaceValue === '') {
+        return;
+      }
     }
 
     // If looking for a new string, reset
@@ -117,7 +146,17 @@ module.exports = {
       const text = quill.getText();
       indeces = module.exports.indeces(text, str);
       index = 0;
+    } else if (replace) {
+      // Don't wrap the beginning if replace mode is active
+      if (index <= indeces.length - 2) {
+        index += 1;
+      } else {
+        // At the end of occurences, no more replacements to be made
+        module.exports.error();
+        return;
+      }
     } else {
+      // Not first search, not replace mode
       // Change the index, wrapping at ends
       index += increment;
       if (index === -1) {
@@ -129,11 +168,7 @@ module.exports = {
 
     // No occurences found
     if (indeces.length === 0) {
-      console.log('No results found.');
-      input.classList.add('error');
-      setTimeout(() => {
-        input.classList.remove('error');
-      }, 1000);
+      module.exports.error();
       return;
     }
 
@@ -143,7 +178,9 @@ module.exports = {
     if (replace) {
       // Insert the replacement text
       quill.deleteText(indeces[index], str.length, 'user');
-      quill.insertText(indeces[index], replaceInput.value, 'user');
+      quill.insertText(indeces[index], replaceValue, 'user');
+
+      quill.formatText(indeces[index], replaceValue.length, 'highlight', true, 'silent');
 
       // Must adjust indeces values for
       // differences in replacement string length
@@ -151,7 +188,9 @@ module.exports = {
       indeces = indeces.map(i => i += replaceInput.value.length - str.length);
     } else {
       // Highlight the found occurence
-      quill.formatText(indeces[index], str.length, 'highlight', true, 'silent');
+      quill.formatText(indeces[index], str.length, {
+        highlight: true,
+      }, 'silent');
     }
 
     // Scroll the highlighted element into view smoothly!

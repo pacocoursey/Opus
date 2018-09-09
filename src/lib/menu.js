@@ -115,7 +115,7 @@ const template = [
             label: 'Find...',
             accelerator: 'CmdOrCtrl+F',
             click() {
-              find.activate();
+              find.activate(false);
             },
           },
           {
