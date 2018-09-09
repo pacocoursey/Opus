@@ -27,7 +27,7 @@ Features I'd like to implement:
 - [ ] Ability to have multiple projects (folders) open at once
 - [ ] Drag and drop to move files in the tree-view
 - [ ] Filter files by regex to match only text-based files (or custom file extension?)
-- [ ] Add Escape keybind to clear current cursor formatting
+- [X] Add Escape keybind to clear current cursor formatting
 - [X] Add custom scroll bar to editor
 - [X] Dark Mode
 - [X] Find

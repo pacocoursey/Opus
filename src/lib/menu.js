@@ -149,6 +149,12 @@ const template = [
     label: 'Format',
     submenu: [
       {
+        label: 'Escape Current',
+        accelerator: 'esc',
+        click() { quill.escape(); },
+      },
+      { type: 'separator' },
+      {
         label: 'Separator',
         accelerator: 'CmdOrCtrl+Shift+H',
         click() { quill.separator(); },
