@@ -55,23 +55,19 @@ module.exports = {
       return;
     }
 
-    const element = editor.children[line];
-
-    // The line was not found in the editor (somehow)
-    if (!element || element === '') {
-      throw new Error(`Goto element not found. Looking for line ${line}.`);
-    }
-
     const text = quill.getText();
-    const pos = text.indexOf(element.innerText);
+    const lines = text.split('\n');
 
-    // The index of the line's text could not be found
-    if (pos === -1) {
-      throw new Error(`The index of line ${line} text could not be found.`);
+    // This is pretty hacky, have to count all the characters
+    // up to the current line to find the correct start position
+    let i = 0;
+    let total = 0;
+    for (i = 0; i < line; i += 1) {
+      total += lines[i].length + 1;
     }
 
     // Set the editor selection
-    quill.setSelection(pos, element.innerText.length, 'api');
+    quill.setSelection(total, lines[line].length);
 
     // Deactivate the goto element
     module.exports.deactivate();
