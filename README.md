@@ -25,16 +25,15 @@ Keep in mind this project is still under development.
 Features I'd like to implement:
 
 - [ ] Add custom scroll bar to editor (+ scroll indicator?)
-- [ ] Improve design
-- [X] Find
-- [ ] Replace
-- [X] Goto
-- [ ] Improve Tree-view (React?)
 - [ ] Ability to have multiple projects (folders) open at once
 - [ ] Drag and drop to move files in the tree-view
 - [ ] Filter files by regex to match only text-based files (or custom file extension?)
 - [ ] Add Escape keybind to clear current cursor formatting
-- [ ] Dark Mode (change CSS variables)
+- [X] Dark Mode
+- [X] Find
+- [X] Replace
+- [X] Goto
+- [X] Improve sidebar design and general application feel
 - [X] Show current time in the footer
 - [X] Show document stats in the footer, improve cursor position stats
 - [X] Spellchecker

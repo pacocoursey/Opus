@@ -1,21 +1,58 @@
 :root {
-  --white: rgb(255, 255, 255);
-  --black: rgb(20, 23, 26);
-  --gray-1: rgb(248, 249, 250);
-  --gray-2: rgb(222, 226, 230);
-  --gray-3: rgb(173, 181, 189);
-  --gray-4: rgb(134, 142, 150);
-  --dark-text: rgb(73, 80, 87);
-  --separator: #ddd;
-  --aside: #fbfbfb;
-  --fg: var(--black);
-  --bg: var(--white);
-  --highlight: #42a5f5;
-  --error: #e53935;
-  --warning: #ffee58;
-  --select: #29b6f6;
+  --font-stack: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --font-stack-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
 
-  background-color: #161616;
+  --text: rgb(20, 23, 26);
+  --bg: rgb(255, 255, 255);
+  --bright-text: rgb(73, 80, 87);
+  --accent: #42a5f5;
+  --error: #e53935;
+  --separator: #ddd;
+
+  --aside-text: var(--bright-text);
+  --aside-bg: #fbfbfb;
+
+  --aside-active-bg: var(--accent);
+  --aside-active-text: var(--bg);
+
+  --aside-selected-bg: rgb(222, 226, 230);
+
+  --highlight-text: var(--bg);
+  --highlight-bg: var(--accent);
+
+  --footer-text: rgb(173, 181, 189);
+  --input-border: rgb(222, 226, 230);
+
+  --editor-bg: var(--bg);
+  --editor-text: var(--text);
+
+  background-color: var(--text);
+}
+
+.dark {
+  --text: #ffffff;
+  --bg: #1e1e1e;
+  --bright-text: rgb(173, 181, 189);
+  --accent: #f9aa33;
+  --error: #e53935;
+  --separator: #2D2D2D;
+
+  --aside-text: var(--bright-text);
+  --aside-bg: #141414;
+
+  --aside-active-bg: var(--accent);
+  --aside-active-text: var(--bg);
+
+  --aside-selected-bg: #474747;
+
+  --highlight-text: var(--text);
+  --highlight-bg: var(--accent);
+
+  --footer-text: #888888;
+  --input-border: #444444;
+
+  --editor-bg: var(--fg);
+  --editor-text: var(--text);
 }
 
 * {
@@ -47,24 +84,23 @@ textarea,
 }
 
 ::selection {
-  background: var(--highlight);
-  color: var(--bg);
+  background-color: var(--highlight-bg);
+  color: var(--highlight-text);
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background: var(--bg);
-  color: var(--fg);
+  font-family: var(--font-stack);
+  background-color: var(--bg);
+  color: var(--text);
   font-size: 12px;
   min-height: 100vh;
   min-width: 100%;
   overflow: hidden;
-  transition: filter 400ms;
+  transition: color 400ms, background-color 400ms, border 400ms;
 }
 
 body.dark {
-  filter: invert(100%);
-  transition: filter 400ms;
+  transition: color 400ms, background-color 400ms, border 400ms;
 }
 
 .wrapper {
@@ -84,14 +120,15 @@ body.dark {
 }
 
 aside {
-  color: var(--dark-text);
-  background: var(--aside);
+  color: var(--aside-text);
+  background-color: var(--aside-bg);
   flex-basis: 215px;
   min-width: 215px;
   max-width: 500px;
   user-select: none;
   border-right: 1px solid var(--separator);
   padding-top: 30px;
+  transition: color 400ms, background-color 400ms, border 400ms;
 }
 
 .sidebar {
@@ -111,35 +148,19 @@ aside {
 }
 
 .selected {
-  background-color: var(--gray-2);
+  background-color: var(--aside-selected-bg);
 }
 
 .active {
-  color: var(--bg);
-  background-color: var(--highlight);
+  color: var(--aside-active-text);
+  background-color: var(--aside-active-bg);
 }
 
 .highlight {
-  color: var(--white);
+  color: var(--bg);
+  background-color: var(--highlight-bg);
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  background: var(--select);
   animation: highlight 200ms;
-}
-
-.handler {
-  width: 1px;
-  padding: 0;
-  cursor: ew-resize;
-  flex: 0 0 auto;
-}
-
-.handler::before {
-  content: '';
-  display: block;
-  width: 1px;
-  height: 100vh;
-  background: var(--separator);
-  margin: 0 auto;
 }
 
 main {
@@ -154,10 +175,10 @@ main {
 }
 
 footer {
-  font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+  font-family: var(--font-stack-mono);
   user-select: none;
   -webkit-app-region: drag;
-  color: var(--gray-3);
+  color: var(--footer-text);
   line-height: 40px;
   position: absolute;
   bottom: 0;
@@ -222,9 +243,10 @@ footer {
 .find-input, .find-replace-input, .goto-input {
   margin: 0 10px;
   width: 100%;
-  font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+  color: var(--footer-text);
+  font-family: var(--font-stack-mono);
   border: none;
-  border-bottom: 1px solid var(--gray-2);
+  border-bottom: 1px solid var(--input-border);
   outline: none;
   transition: color 200ms;
 }
@@ -256,7 +278,7 @@ footer {
 
 .selection {
   margin-left: 10px;
-  color: var(--dark-text);
+  color: var(--bright-text);
 }
 
 .file-stats {
@@ -276,7 +298,7 @@ footer {
 }
 
 .ql-container {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--font-stack);
   border: none !important;
 }
 
@@ -298,12 +320,12 @@ footer {
 
 .ql-editor pre {
   font-size: 12px;
-  font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", "Source Code Pro", monospace;
+  font-family: var(--font-stack-mono);
 }
 
 .ql-snow .ql-editor pre.ql-syntax {
-  background-color: var(--gray-2);
-  color: var(--dark-text);
+  background-color: var(--input-border);
+  color: var(--editor-text);
 }
 
 .ql-editor ul,
@@ -334,15 +356,15 @@ footer {
 
 .ql-editor hr {
   border: none;
-  background: var(--gray-2);
+  background-color: var(--separator);
   width: 100%;
   height: 1px;
 }
 
 @keyframes highlight {
   0% {
-    background: none;
-    color: var(--fg);
+    background-color: transparent;
+    color: var(--text);
   }
 }
 
