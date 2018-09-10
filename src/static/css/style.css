@@ -278,6 +278,9 @@ footer {
   display: flex;
   flex-direction: row;
   align-items: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .cursor-stats {
@@ -290,11 +293,17 @@ footer {
 }
 
 .file-stats {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .file-name {
   justify-content: flex-end;
+  white-space: nowrap;
+}
+
+.file-name > div {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .time {

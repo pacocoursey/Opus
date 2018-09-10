@@ -4,7 +4,7 @@ const stats = document.querySelector('.stats');
 const position = document.querySelector('.position');
 const selection = document.querySelector('.selection');
 const fileStats = document.querySelector('.file-stats');
-const file = document.querySelector('.file-name');
+const file = document.querySelector('.file-name > div');
 const time = document.querySelector('.time');
 
 module.exports = {
@@ -52,11 +52,7 @@ module.exports = {
     fileStats.textContent = `${lines}L ${words}W`;
   },
   setFile(name) {
-    if (name.indexOf('.') !== -1) {
-      file.textContent = `${name.split('.').slice(0, -1).join('.')}`;
-    } else {
-      file.textContent = `${name}`;
-    }
+    file.textContent = `${name}`;
   },
   hasChanges() {
     file.classList.add('unsaved');

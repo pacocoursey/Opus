@@ -6,7 +6,6 @@ const settings = require('electron-settings');
 const { quill } = require('./quill');
 const footer = require('./footer');
 
-let plain = false;
 let activeFile = '';
 let initial = '';
 const empty = new Delta([
@@ -46,16 +45,11 @@ module.exports = {
     if (contents && contents !== '') {
       try {
         const delta = new Delta(JSON.parse(contents));
-        plain = false;
         initial = delta;
         quill.setContents(delta, 'silent');
       } catch (error) {
         // File is not JSON
-        plain = true;
-        initial = contents;
-        quill.setText(contents, 'silent');
-        // TODO: disable quill key bindings, put text in monospace
-        // quill.formatText(0, quill.getLength(), 'font', 'monospace', 'silent');
+        throw new Error('File is not in JSON format.');
       }
     }
   },
@@ -63,12 +57,6 @@ module.exports = {
     if (!p || p === '') { throw new Error('Cannot write to empty path.'); }
 
     const contents = JSON.stringify(quill.getContents());
-
-    // if (plain) {
-    //   contents = quill.getText();
-    // } else {
-    //   contents = JSON.stringify(quill.getContents());
-    // }
 
     fs.writeFile(p, contents, (error) => {
       if (error) { throw new Error(error); }
@@ -127,8 +115,11 @@ module.exports = {
     // Editor has no unsaved changes
     noChanges();
 
+    // Update the stored file path
+    settings.set('file', activeFile);
+
     // Update footer filename
-    footer.setFile(path.basename(activeFile));
+    footer.setFile(path.basename(activeFile, path.extname(activeFile)));
   },
   open(p) {
     if (!p || p === '') { throw new Error('Cannot open empty path.'); }
@@ -158,7 +149,7 @@ module.exports = {
     quill.focus();
 
     // Update the footer
-    footer.setFile(path.basename(activeFile));
+    footer.setFile(path.basename(activeFile, path.extname(activeFile)));
     footer.updateFileStats();
 
     return true;
@@ -171,13 +162,14 @@ module.exports = {
 
     removeActive();
     noChanges();
-    footer.setFile('untitled');
-    footer.updateFileStats();
     initial = '';
+    activeFile = '';
     quill.setContents(null, 'silent');
     quill.history.clear();
     quill.focus();
-    activeFile = '';
+    footer.setFile('untitled');
+    footer.updateFileStats();
+    module.exports.export();
   },
   set(p) {
     activeFile = p;
@@ -209,24 +201,12 @@ module.exports = {
 
       // Check if contents are the same as when saved
       if (!initial || initial === '') {
-        if (plain) {
-          diff = quill.getText() === '';
-        } else {
-          diff = quill.getContents().diff(empty);
-        }
-      } else if (plain) {
-        diff = quill.getText() === initial;
+        diff = quill.getContents().diff(empty);
       } else {
         diff = quill.getContents().diff(initial);
       }
 
-      if (plain) {
-        if (diff.length === 0) {
-          noChanges();
-        } else {
-          hasChanges();
-        }
-      } else if (diff.ops.length === 0) {
+      if (diff.ops.length === 0) {
         noChanges();
       } else {
         hasChanges();

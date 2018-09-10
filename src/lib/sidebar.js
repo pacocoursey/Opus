@@ -64,7 +64,7 @@ module.exports = {
         // Remove active class from other things
         const elems = document.querySelectorAll('.active');
         if (elems && elems.length !== 0) {
-          [].forEach.call(elems, (el) => {
+          elems.forEach((el) => {
             el.classList.remove('active');
           });
         }
