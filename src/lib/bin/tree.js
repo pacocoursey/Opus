@@ -90,7 +90,11 @@
           content.setAttribute('data-item', JSON.stringify(item));
           if (item.active) { content.classList.add('active'); }
           text.setAttribute('class', 'tree-leaf-text');
-          text.textContent = item.name;
+          if (item.extension) {
+            text.textContent = item.name.slice(0, -5);
+          } else {
+            text.textContent = item.name;
+          }
           expando.setAttribute('class', 'tree-expando ' + (item.expanded ? 'expanded' : ''));
           if (item.expanded) { arrow = '<i class="fas fa-fw fa-angle-down"></i>'; }
           else { arrow = '<i class="fas fa-fw fa-angle-right"></i>'; }

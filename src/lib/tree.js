@@ -10,7 +10,7 @@ const update = function getUpdatedProjectTree(p) {
 
   tree.data = null;
   tree.data = dirTree(p, {
-    exclude: /(^|[/\\])\../,
+    extensions: /\.opus/,
   });
   tree.data.root = true;
 };

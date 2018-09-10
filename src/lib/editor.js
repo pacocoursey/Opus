@@ -77,6 +77,10 @@ module.exports = {
   saveDialog() {
     const choice = dialog.showSaveDialog({
       defaultPath: settings.get('project'),
+      filters: [{
+        name: 'Custom File Type',
+        extensions: ['opus'],
+      }],
     });
 
     return choice;

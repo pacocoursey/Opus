@@ -20,7 +20,7 @@ const parent = function getParentPath(p) {
 
 const removeActive = function removeActiveClassFromSidebar() {
   const elems = document.querySelectorAll('.selected');
-  [].forEach.call(elems, (el) => {
+  elems.forEach((el) => {
     el.classList.remove('selected');
   });
 };
@@ -28,6 +28,10 @@ const removeActive = function removeActiveClassFromSidebar() {
 const newFile = function createNewFile(p) {
   const choice = dialog.showSaveDialog({
     defaultPath: p,
+    filters: [{
+      name: 'Custom File Type',
+      extensions: ['opus'],
+    }],
   });
 
   if (choice && choice !== '') {
@@ -55,9 +59,19 @@ const newFolder = function createNewFolder(p) {
   }
 };
 
-const rename = function renameFileOrFolder(p, isFile) {
+const rename = function renameFileOrFolder(p, isFile = false) {
+  let filters = null;
+
+  if (isFile) {
+    filters = [{
+      name: 'Custom File Type',
+      extensions: ['opus'],
+    }];
+  }
+
   const choice = dialog.showSaveDialog({
     defaultPath: parent(p),
+    filters,
   });
 
   if (choice && choice !== '') {
@@ -71,9 +85,19 @@ const rename = function renameFileOrFolder(p, isFile) {
   }
 };
 
-const duplicate = function duplicateFileOrFolder(p) {
+const duplicate = function duplicateFileOrFolder(p, isFile) {
+  let filters = null;
+
+  if (isFile) {
+    filters = [{
+      name: 'Custom File Type',
+      extensions: ['opus'],
+    }];
+  }
+
   const choice = dialog.showSaveDialog({
     defaultPath: parent(p),
+    filters,
   });
 
   if (choice && choice !== '') {
@@ -124,12 +148,12 @@ function buildFolderMenu(m) {
 
   m.append(new MenuItem({
     label: 'Rename',
-    click: () => { rename(elementPath); },
+    click: () => { rename(elementPath, false); },
   }));
 
   m.append(new MenuItem({
     label: 'Duplicate',
-    click: () => { duplicate(elementPath); },
+    click: () => { duplicate(elementPath, false); },
   }));
 
   m.append(new MenuItem({
@@ -159,7 +183,7 @@ function buildFileMenu(m) {
 
   m.append(new MenuItem({
     label: 'Duplicate',
-    click: () => { duplicate(elementPath); },
+    click: () => { duplicate(elementPath, true); },
   }));
 
   m.append(new MenuItem({

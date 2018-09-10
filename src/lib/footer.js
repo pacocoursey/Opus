@@ -52,7 +52,11 @@ module.exports = {
     fileStats.textContent = `${lines}L ${words}W`;
   },
   setFile(name) {
-    file.textContent = `${name}`;
+    if (name.indexOf('.') !== -1) {
+      file.textContent = `${name.split('.').slice(0, -1).join('.')}`;
+    } else {
+      file.textContent = `${name}`;
+    }
   },
   hasChanges() {
     file.classList.add('unsaved');
