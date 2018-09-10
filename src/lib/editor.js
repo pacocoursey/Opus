@@ -124,7 +124,11 @@ module.exports = {
   open(p) {
     if (!p || p === '') { throw new Error('Cannot open empty path.'); }
 
-    module.exports.checkChanges();
+    const canOpen = module.exports.checkChanges();
+
+    if (!canOpen) {
+      return false;
+    }
 
     // Reset editor contents
     quill.setContents(null, 'silent');
