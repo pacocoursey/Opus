@@ -11,7 +11,7 @@ const update = function getUpdatedProjectTree(p) {
 
   tree.data = null;
   tree.data = dirTree(p, {
-    extensions: /\.opus/,
+    extensions: /\.note/,
   });
   tree.data.root = true;
 };

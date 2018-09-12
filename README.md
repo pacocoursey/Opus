@@ -26,7 +26,7 @@ Features I'd like to implement:
 
 - [ ] Ability to have multiple projects (folders) open at once
 - [ ] Drag and drop to move files in the tree-view
-- [X] Filter files to match only .opus files
+- [X] Filter files to match only .note files
 - [X] Add Escape keybind to clear current cursor formatting
 - [X] Add custom scroll bar to editor
 - [X] Dark Mode

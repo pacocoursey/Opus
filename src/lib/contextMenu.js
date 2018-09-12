@@ -30,7 +30,7 @@ const newFile = function createNewFile(p) {
     defaultPath: p,
     filters: [{
       name: 'Custom File Type',
-      extensions: ['opus'],
+      extensions: ['note'],
     }],
   });
 
@@ -65,7 +65,7 @@ const rename = function renameFileOrFolder(p, isFile = false) {
   if (isFile) {
     filters = [{
       name: 'Custom File Type',
-      extensions: ['opus'],
+      extensions: ['note'],
     }];
   }
 
@@ -91,7 +91,7 @@ const duplicate = function duplicateFileOrFolder(p, isFile) {
   if (isFile) {
     filters = [{
       name: 'Custom File Type',
-      extensions: ['opus'],
+      extensions: ['note'],
     }];
   }
 

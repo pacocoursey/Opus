@@ -67,7 +67,7 @@ module.exports = {
       defaultPath: settings.get('project'),
       filters: [{
         name: 'Custom File Type',
-        extensions: ['opus'],
+        extensions: ['note'],
       }],
     });
 
