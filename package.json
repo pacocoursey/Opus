@@ -2,7 +2,7 @@
   "name": "Opus",
   "version": "1.0.2",
   "description": "a minimalistic text-editor.",
-  "main": "./src/index.js",
+  "main": "./src/main.js",
   "scripts": {
     "rebuild": "electron-rebuild",
     "start": "electron .",
