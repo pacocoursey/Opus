@@ -1,137 +1,107 @@
-const {
-  app, ipcMain, BrowserWindow, dialog,
-} = require('electron');
+const { app, BrowserWindow, dialog } = require('electron');
 const home = require('os').homedir();
-const path = require('path');
-const url = require('url');
 const fs = require('fs-extra');
+const url = require('url');
+const path = require('path');
+const Project = require('./project');
 
 app.image = path.join(__dirname, '../icon.png');
-app.hasChanges = false;
 
-let win;
+const projects = {};
+const p1 = new Project('/Users/paco/Dropbox/school/Opus');
+const p2 = new Project('/Users/paco/Dropbox/school/Opus2');
 
-function createStartWindow() {
-  win = new BrowserWindow({
-    width: 960,
-    height: 544,
-    transparent: true,
-    frame: false,
-    show: false,
-    center: true,
-    icon: app.image,
-  });
+projects[p1.path] = p1;
+projects[p2.path] = p2;
 
-  const { webContents } = win;
-  webContents.on('did-finish-load', () => {
-    webContents.setZoomFactor(1);
-    webContents.setVisualZoomLevelLimits(1, 1);
-    webContents.setLayoutZoomLevelLimits(0, 0);
-  });
+function windowCreation() {
+  // TODO: error check if projects is length 0, open a new window that
+  // prompts user to open a working directory
 
-  webContents.on('new-window', (event) => {
-    event.preventDefault();
-  });
+  // Loop through each project and open a window
+  Object.values(projects).forEach((project) => {
+    project.window = new BrowserWindow({
+      width: 960,
+      height: 544,
+      minWidth: 500,
+      minHeight: 400,
+      transparent: true,
+      frame: false,
+      show: false,
+      center: true,
+      icon: app.image,
+    });
 
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'init/index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
+    // Send project information to the window
+    project.window.project = {
+      path: project.path,
+      hasChanges: project.hasChanges,
+      isSlid: project.isSlid,
+      activeFile: project.activeFile,
+      tree: project.tree,
+    };
 
-  win.once('ready-to-show', () => {
-    win.show();
-  });
+    const { webContents } = project.window;
+    webContents.on('did-finish-load', () => {
+      webContents.setZoomFactor(1);
+      webContents.setVisualZoomLevelLimits(1, 1);
+      webContents.setLayoutZoomLevelLimits(0, 0);
+    });
 
-  win.on('closed', () => {
-    win = null;
-  });
-}
+    webContents.on('new-window', (e) => {
+      e.preventDefault();
+    });
 
-function createMainWindow() {
-  win = new BrowserWindow({
-    width: 960,
-    height: 544,
-    minWidth: 500,
-    minHeight: 400,
-    transparent: true,
-    frame: false,
-    show: false,
-    center: true,
-    icon: app.image,
-  });
+    project.window.loadURL(url.format({
+      pathname: path.join(__dirname, 'index.html'),
+      protocol: 'file:',
+      slashes: true,
+    }));
 
-  const { webContents } = win;
-  webContents.on('did-finish-load', () => {
-    webContents.setZoomFactor(1);
-    webContents.setVisualZoomLevelLimits(1, 1);
-    webContents.setLayoutZoomLevelLimits(0, 0);
-  });
+    project.window.once('ready-to-show', () => {
+      project.window.show();
+    });
 
-  webContents.on('new-window', (event) => {
-    event.preventDefault();
-  });
+    project.window.on('closed', () => {
+      project.window = null;
+    });
 
-  win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true,
-  }));
+    project.window.on('close', (e) => {
+      e.preventDefault();
 
-  win.once('ready-to-show', () => {
-    win.show();
-  });
+      if (project.hasChanges) {
+        const choice = dialog.showMessageBox({
+          type: 'question',
+          buttons: ['Save', 'Cancel', 'Don\'t Save'],
+          title: 'Confirm',
+          message: 'This file has changes, do you want to save them?',
+          detail: 'Your changes will be lost if you close this item without saving.',
+          icon: `${app.image}`,
+        });
 
-  win.on('closed', () => {
-    win = null;
-  });
-
-  win.on('close', (e) => {
-    e.preventDefault();
-
-    if (app.hasChanges) {
-      const choice = dialog.showMessageBox({
-        type: 'question',
-        buttons: ['Save', 'Cancel', 'Don\'t Save'],
-        title: 'Confirm',
-        message: 'This file has changes, do you want to save them?',
-        detail: 'Your changes will be lost if you close this item without saving.',
-        icon: `${app.image}`,
-      });
-
-      if (choice === 2) {
-        // Don't Save
-        app.exit();
-      } else if (choice === 0) {
-        // Save
-        win.webContents.send('save');
+        if (choice === 2) {
+          // Don't Save
+          app.exit();
+        } else if (choice === 0) {
+          // Save
+          project.window.webContents.send('save');
+        }
+      } else {
+        // Save the active file and tree state
+        webContents.send('export');
       }
-    } else {
-      // Save the active file and tree state
-      win.webContents.send('export');
-    }
+    });
   });
 }
-
-// Listen for renderer close event
-ipcMain.on('done', () => {
-  app.exit();
-});
-
-// Listen for load main event (after init)
-ipcMain.on('main', () => {
-  win.close();
-  createMainWindow();
-});
 
 app.on('ready', () => {
   // Check if application has been started before
   const str = path.join(home, '.opus');
   if (!fs.existsSync(str)) {
-    createStartWindow();
+    windowCreation();
     fs.ensureDirSync(str);
   } else {
-    createMainWindow();
+    windowCreation();
   }
 });
 
@@ -142,7 +112,5 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  if (win === null) {
-    createMainWindow();
-  }
+  console.log('Activate the window?');
 });

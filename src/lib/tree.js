@@ -1,5 +1,5 @@
 const { flatten, unflatten } = require('flat');
-const settings = require('electron-settings');
+const store = require('./store');
 const dirTree = require('./bin/directoryTree');
 
 const tree = {
@@ -104,8 +104,8 @@ const reload = function reloadDocumentTree(p) {
   let tmp;
   let active;
 
-  if (settings.has('file')) {
-    active = settings.get('file');
+  if (store.get('activeFile')) {
+    active = store.get('activeFile');
   }
 
   Object.keys(old).forEach((key) => {

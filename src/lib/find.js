@@ -1,4 +1,5 @@
 const { quill } = require('./quill');
+const store = require('./store');
 
 const editor = document.querySelector('.ql-editor');
 const go = document.querySelector('.goto');
@@ -20,6 +21,7 @@ let done = false;
 
 module.exports = {
   activate(isReplace = false) {
+    console.log(`Received find request in window ${store.get('window')}`);
     // If find is already active, do nothing
     if (active && !isReplace) {
       input.focus();

@@ -1,11 +1,11 @@
-const settings = require('electron-settings');
+const store = require('./store');
 
 module.exports = {
   init() {
     let isDark = false;
 
-    if (settings.has('theme')) {
-      isDark = settings.get('theme');
+    if (store.get('theme')) {
+      isDark = store.get('theme');
     }
 
     if (isDark) {
@@ -15,6 +15,6 @@ module.exports = {
   toggle() {
     document.body.classList.toggle('dark');
     const isDark = document.body.classList.contains('dark');
-    settings.set('theme', isDark);
+    store.set('theme', isDark);
   },
 };

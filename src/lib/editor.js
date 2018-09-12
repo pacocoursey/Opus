@@ -2,9 +2,9 @@ const { app, dialog } = require('electron').remote;
 const Delta = require('quill-delta');
 const fs = require('fs');
 const path = require('path');
-const settings = require('electron-settings');
 const { quill } = require('./quill');
 const footer = require('./footer');
+const store = require('./store');
 
 let activeFile = '';
 let initial = '';
@@ -64,7 +64,7 @@ module.exports = {
   },
   saveDialog() {
     const choice = dialog.showSaveDialog({
-      defaultPath: settings.get('project'),
+      defaultPath: store.get('path'),
       filters: [{
         name: 'Custom File Type',
         extensions: ['note'],
@@ -116,7 +116,7 @@ module.exports = {
     noChanges();
 
     // Update the stored file path
-    settings.set('file', activeFile);
+    module.exports.export();
 
     // Update footer filename
     footer.setFile(path.basename(activeFile, path.extname(activeFile)));
@@ -182,12 +182,12 @@ module.exports = {
     return activeFile;
   },
   export() {
-    settings.set('file', activeFile);
+    store.set('activeFile', activeFile);
   },
   init() {
     // Setup activeFile
-    if (settings.has('file')) {
-      activeFile = settings.get('file');
+    if (store.get('file')) {
+      activeFile = store.get('file');
       if (!activeFile || activeFile === '') {
         module.exports.reset();
       } else {

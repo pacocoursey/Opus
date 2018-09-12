@@ -1,34 +1,34 @@
 const chokidar = require('chokidar');
-const settings = require('electron-settings');
 const TreeView = require('./bin/tree');
 const Tree = require('./tree');
 const editor = require('./editor');
+const store = require('./store');
 
 const wrapper = document.querySelector('.wrapper');
 let tree;
 
 module.exports = {
   init() {
-    const activeProject = settings.get('project');
+    const activeProject = store.get('path');
 
     // Determine whether to show aside or not on load
-    if (settings.has('slide')) {
-      const isSlid = settings.get('slide');
+    if (store.get('isSlid')) {
+      const isSlid = store.get('isSlid');
       if (isSlid) {
         wrapper.classList.add('slide');
       }
     }
 
     // Get the folder data
-    if (settings.has('tree')) {
-      tree = Tree.createTree(activeProject, settings.get('tree'));
+    if (store.has('tree')) {
+      tree = Tree.createTree(activeProject, store.get('tree'));
     } else {
       tree = Tree.createTree(activeProject, null);
     }
 
     // Ensure the active prop on the active file
-    if (settings.has('file')) {
-      const file = settings.get('file');
+    if (store.has('activeFile')) {
+      const file = store.get('activeFile');
       if (file && file !== '') { tree.find(file).active = true; }
     }
 
@@ -109,11 +109,11 @@ module.exports = {
   },
   export() {
     // Save the tree state
-    settings.set('tree', tree.getSettings());
+    store.set('tree', tree.getSettings());
   },
   toggle() {
     wrapper.classList.toggle('slide');
     const isSlid = wrapper.classList.contains('slide');
-    settings.set('slide', isSlid);
+    store.set('isSlid', isSlid);
   },
 };

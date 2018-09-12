@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const { remote, ipcRenderer } = require('electron');
 const menu = require('./lib/menu');
 const contextMenu = require('./lib/contextMenu');
 const theme = require('./lib/theme');
@@ -6,6 +6,11 @@ const quill = require('./lib/quill');
 const editor = require('./lib/editor');
 const sidebar = require('./lib/sidebar');
 const footer = require('./lib/footer');
+const store = require('./lib/store');
+
+// Initialize the store with the window's project object
+const { project } = remote.getCurrentWindow();
+store.init(project);
 
 // Spellcheck in texteditor
 require('./lib/spellcheck');
@@ -13,6 +18,7 @@ require('./lib/spellcheck');
 // Disable file drop redirect
 require('electron-disable-file-drop');
 
+// Init all the modules
 theme.init();
 quill.init();
 editor.init();
