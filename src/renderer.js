@@ -1,5 +1,4 @@
 const { remote, ipcRenderer } = require('electron');
-const menu = require('./lib/menu');
 const contextMenu = require('./lib/contextMenu');
 const theme = require('./lib/theme');
 const quill = require('./lib/quill');
@@ -7,6 +6,18 @@ const editor = require('./lib/editor');
 const sidebar = require('./lib/sidebar');
 const footer = require('./lib/footer');
 const store = require('./lib/store');
+
+// Maintain an object with these modules
+// for easy ipcRenderer access without eval()
+const modules = {
+  contextMenu,
+  theme,
+  quill,
+  editor,
+  sidebar,
+  footer,
+  store,
+};
 
 // Initialize the store with the window's project object
 const { project } = remote.getCurrentWindow();
@@ -23,9 +34,13 @@ theme.init();
 quill.init();
 editor.init();
 sidebar.init();
-menu.init();
 contextMenu.init();
 footer.init();
+
+ipcRenderer.on('message', (e, d) => {
+  const { method, module, params } = d;
+  modules[module][method](params);
+});
 
 // Save the state of active file and tree
 ipcRenderer.on('export', (e) => {

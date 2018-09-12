@@ -1,9 +1,13 @@
-const { app, BrowserWindow, dialog } = require('electron');
-const home = require('os').homedir();
-const fs = require('fs-extra');
+const {
+  app,
+  dialog,
+  ipcMain,
+  BrowserWindow,
+} = require('electron');
 const url = require('url');
 const path = require('path');
 const Project = require('./project');
+const menu = require('./menu');
 
 app.image = path.join(__dirname, '../icon.png');
 
@@ -67,6 +71,7 @@ function windowCreation() {
     });
 
     project.window.on('close', (e) => {
+      console.log('Close event fired.');
       e.preventDefault();
 
       if (project.hasChanges) {
@@ -94,15 +99,17 @@ function windowCreation() {
   });
 }
 
+ipcMain.on('done', () => {
+  app.exit();
+});
+
 app.on('ready', () => {
-  // Check if application has been started before
-  const str = path.join(home, '.opus');
-  if (!fs.existsSync(str)) {
-    windowCreation();
-    fs.ensureDirSync(str);
-  } else {
-    windowCreation();
-  }
+  // TODO: start window etc..
+  // Initialize the windows
+  windowCreation();
+
+  // Configure application menu
+  menu.init();
 });
 
 app.on('window-all-closed', () => {
