@@ -7,6 +7,7 @@ const {
 } = require('electron');
 const url = require('url');
 const pathModule = require('path');
+const settings = require('electron-settings');
 const ipc = require('electron-better-ipc');
 const Project = require('./project');
 
@@ -312,6 +313,11 @@ module.exports = {
       properties: ['openDirectory', 'createDirectory'],
     });
 
+    // Cancel was clicked, do nothing
+    if (!choice || choice.length === 0) {
+      return;
+    }
+
     const path = choice[0];
     const p = new Project(path);
 
@@ -442,8 +448,10 @@ module.exports = {
     let cancelFlag = false;
     const projectsArr = Object.values(global.projects);
 
-    // If no windows are open, just exit
+    // If no windows are open, save settings then exit
     if (projectsArr.length === 0) {
+      // Save the projects object to settings
+      settings.set('projects', global.projects);
       app.exit();
       return;
     }
@@ -458,9 +466,12 @@ module.exports = {
           if (choice === 2) {
             // Don't save
             project.window.close();
+            project.hasChanges = false;
           } else if (choice === 1) {
+            // Cancel
             cancelFlag = true;
           } else if (choice === 0) {
+            // Save
             const ret = await ipc.callRenderer(project.window, 'save');
             if (ret) {
               project.window.close();
@@ -475,6 +486,9 @@ module.exports = {
     if (cancelFlag) {
       return;
     }
+
+    // Save the projects object to settings
+    settings.set('projects', global.projects);
 
     // Should have closed all the windows by now
     app.exit();

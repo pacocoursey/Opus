@@ -7,7 +7,7 @@ app.image = path.join(__dirname, '../icon.png');
 
 if (settings.has('projects')) {
   global.projects = settings.get('projects');
-  Object.values(global.projects).forEach(p => delete p.window);
+  Object.values(global.projects).forEach((p) => { delete p.window; });
 } else {
   global.projects = {};
 }
