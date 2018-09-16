@@ -13,12 +13,12 @@ const empty = new Delta([
 ]);
 
 const hasChanges = function hasChanges() {
-  app.hasChanges = true;
+  store.set('hasChanges', true);
   footer.hasChanges();
 };
 
 const noChanges = function noChanges() {
-  app.hasChanges = false;
+  store.set('hasChanges', false);
   footer.noChanges();
 };
 
@@ -75,7 +75,7 @@ module.exports = {
   },
   checkChanges() {
     // Ask user to save changes to current file
-    if (app.hasChanges) {
+    if (store.get('hasChanges')) {
       const choice = dialog.showMessageBox({
         type: 'question',
         buttons: ['Save', 'Cancel', 'Don\'t Save'],

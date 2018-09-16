@@ -1,7 +1,5 @@
 const {
   app,
-  dialog,
-  ipcMain,
   BrowserWindow,
 } = require('electron');
 const url = require('url');
@@ -11,19 +9,19 @@ const menu = require('./menu');
 
 app.image = path.join(__dirname, '../icon.png');
 
-const projects = {};
+global.projects = {};
 const p1 = new Project('/Users/paco/Dropbox/school/Opus');
 const p2 = new Project('/Users/paco/Dropbox/school/Opus2');
 
-projects[p1.path] = p1;
-projects[p2.path] = p2;
+global.projects[p1.path] = p1;
+global.projects[p2.path] = p2;
 
 function windowCreation() {
   // TODO: error check if projects is length 0, open a new window that
   // prompts user to open a working directory
 
   // Loop through each project and open a window
-  Object.values(projects).forEach((project) => {
+  Object.values(global.projects).forEach((project) => {
     project.window = new BrowserWindow({
       width: 960,
       height: 544,
@@ -69,39 +67,8 @@ function windowCreation() {
     project.window.on('closed', () => {
       project.window = null;
     });
-
-    project.window.on('close', (e) => {
-      console.log('Close event fired.');
-      e.preventDefault();
-
-      if (project.hasChanges) {
-        const choice = dialog.showMessageBox({
-          type: 'question',
-          buttons: ['Save', 'Cancel', 'Don\'t Save'],
-          title: 'Confirm',
-          message: 'This file has changes, do you want to save them?',
-          detail: 'Your changes will be lost if you close this item without saving.',
-          icon: `${app.image}`,
-        });
-
-        if (choice === 2) {
-          // Don't Save
-          app.exit();
-        } else if (choice === 0) {
-          // Save
-          project.window.webContents.send('save');
-        }
-      } else {
-        // Save the active file and tree state
-        webContents.send('export');
-      }
-    });
   });
 }
-
-ipcMain.on('done', () => {
-  app.exit();
-});
 
 app.on('ready', () => {
   // TODO: start window etc..
@@ -119,5 +86,6 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
+  windowCreation();
   console.log('Activate the window?');
 });

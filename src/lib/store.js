@@ -1,10 +1,12 @@
+const { remote } = require('electron');
 const assert = require('assert');
 
-let project = {};
+let path;
+const projects = remote.getGlobal('projects');
 
 module.exports = {
-  init(obj) {
-    project = obj;
+  path(str) {
+    path = str;
   },
   set(key, value) {
     assert.strictEqual(
@@ -13,11 +15,11 @@ module.exports = {
       'First parameter of set must be a string.',
     );
 
-    project[key] = value;
-    return project;
+    projects[path][key] = value;
+    return projects[path];
   },
   has(key) {
-    return Object.prototype.hasOwnProperty.call(project, key);
+    return Object.prototype.hasOwnProperty.call(projects[path], key);
   },
   get(key) {
     assert.strictEqual(
@@ -26,8 +28,8 @@ module.exports = {
       'First parameter of set must be a string.',
     );
 
-    if (Object.prototype.hasOwnProperty.call(project, key)) {
-      return project[key];
+    if (Object.prototype.hasOwnProperty.call(projects[path], key)) {
+      return projects[path][key];
     }
 
     return undefined;

@@ -1,21 +1,107 @@
 const {
-  Menu,
+  app,
   shell,
+  Menu,
+  dialog,
   BrowserWindow,
 } = require('electron');
+const ipc = require('electron-better-ipc');
 
 function send(obj, func, params) {
-  const { webContents } = BrowserWindow.getFocusedWindow();
+  const win = BrowserWindow.getFocusedWindow();
 
-  if (!webContents) {
+  if (!win) {
     throw new Error('No focused window.');
   }
 
+  const { webContents } = win;
   webContents.send('message', {
     module: obj,
     method: func,
     parameters: params,
   });
+}
+
+function saveDialog() {
+  const choice = dialog.showMessageBox({
+    type: 'question',
+    buttons: ['Save', 'Cancel', 'Don\'t Save'],
+    title: 'Confirm',
+    message: 'This file has changes, do you want to save them?',
+    detail: 'Your changes will be lost if you close this item without saving.',
+    icon: `${app.image}`,
+  });
+
+  return choice;
+}
+
+async function closeWindow() {
+  const win = BrowserWindow.getFocusedWindow();
+
+  if (!win) {
+    throw new Error('No focused window.');
+  }
+
+  const { hasChanges } = global.projects[win.project.path];
+
+  if (hasChanges) {
+    const choice = saveDialog();
+
+    if (choice === 2) {
+      // Don't Save
+      win.close();
+    } else if (choice === 0) {
+      // Save
+      const ret = await ipc.callRenderer(win, 'save');
+      if (ret) {
+        win.close();
+      }
+    }
+  } else {
+    win.close();
+  }
+}
+
+async function asyncForEach(array, callback) {
+  for (let i = 0; i < array.length; i += 1) {
+    /* eslint-disable-next-line */
+    await callback(array[i], i, array);
+  }
+}
+
+async function quitApp() {
+  let cancelFlag = false;
+
+  await asyncForEach(Object.values(global.projects), async (project) => {
+    if (project.window) {
+      if (project.hasChanges) {
+        project.window.focus();
+
+        const choice = saveDialog();
+
+        if (choice === 2) {
+          // Don't save
+          project.window.close();
+        } else if (choice === 1) {
+          cancelFlag = true;
+        } else if (choice === 0) {
+          const ret = await ipc.callRenderer(project.window, 'save');
+          if (ret) {
+            project.window.close();
+          }
+        }
+      } else {
+        project.window.close();
+      }
+    }
+  });
+
+  if (cancelFlag) {
+    return;
+  }
+
+  // Should have closed all the windows by now
+  app.exit();
 }
 
 const template = [
@@ -50,8 +136,8 @@ const template = [
       { type: 'separator' },
       {
         label: 'Quit',
-        role: 'quit',
         accelerator: 'CmdOrCtrl+q',
+        click() { quitApp(); },
       },
     ],
   },
@@ -292,8 +378,8 @@ const template = [
     submenu: [
       {
         label: 'Close Window',
-        role: 'close',
         accelerator: 'CmdOrCtrl+Shift+W',
+        click() { closeWindow(); },
       },
       { role: 'minimize' },
     ],

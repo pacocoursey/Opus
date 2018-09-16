@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "chokidar": "^2.0.3",
+    "electron-better-ipc": "^0.1.1",
     "electron-disable-file-drop": "^1.0.2",
     "electron-settings": "^3.2.0",
     "flat": "^4.0.0",

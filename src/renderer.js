@@ -1,4 +1,5 @@
 const { remote, ipcRenderer } = require('electron');
+const ipc = require('electron-better-ipc');
 const contextMenu = require('./lib/contextMenu');
 const theme = require('./lib/theme');
 const quill = require('./lib/quill');
@@ -21,7 +22,7 @@ const modules = {
 
 // Initialize the store with the window's project object
 const { project } = remote.getCurrentWindow();
-store.init(project);
+store.path(project.path);
 
 // Spellcheck in texteditor
 require('./lib/spellcheck');
@@ -42,17 +43,8 @@ ipcRenderer.on('message', (e, d) => {
   modules[module][method](params);
 });
 
-// Save the state of active file and tree
-ipcRenderer.on('export', (e) => {
-  sidebar.export();
-  e.sender.send('done');
-});
-
 // Save editor contents
-// then save state of active file and tree
-ipcRenderer.on('save', (e) => {
+ipc.answerMain('save', async () => {
   editor.save();
-  editor.export();
-  sidebar.export();
-  e.sender.send('done');
+  return true;
 });
