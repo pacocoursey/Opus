@@ -186,8 +186,8 @@ module.exports = {
   },
   init() {
     // Setup activeFile
-    if (store.get('file')) {
-      activeFile = store.get('file');
+    if (store.get('activeFile')) {
+      activeFile = store.get('activeFile');
       if (!activeFile || activeFile === '') {
         module.exports.reset();
       } else {
