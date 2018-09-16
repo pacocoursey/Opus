@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Opus - Open</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./static/css/open.css">
+  </head>
+  <body>
+
+    <div class="wrapper">
+      <main>
+        <div class="title">
+          <h1>Opus</h1>
+          <span class="badge">v2.0.1</span>
+        </div>
+
+        <div class="links">
+          <div class="link">
+            <h2>Documentation</h2>
+            <p>Read the Opus documentation.</p>
+          </div>
+
+          <div class="link">
+            <h2>Source</h2>
+            <p>Opus is an open-source project. Find the code on GitHub.</p>
+          </div>
+        </div>
+      </main>
+
+      <aside>
+        <div class="list">
+          <div class="list-item active" data-path="/Users/paco/Dropbox/school/Chemistry">
+            <div class="name">Chemistry</div>
+            <div class="path">~/Dropbox/school/</div>
+          </div>
+          <div class="list-item" data-path="/Users/paco/Dropbox/school/Biology">
+            <div class="name">Biology</div>
+            <div class="path">~/Dropbox/school/</div>
+          </div>
+          <div class="list-item" data-path="/Users/paco/Dropbox/school/Opsys">
+            <div class="name">Opsys</div>
+            <div class="path">~/Dropbox/school/</div>
+          </div>
+        </div>
+
+        <!-- <div class="no-recent">
+          No Recent Projects
+        </div> -->
+
+        <footer>
+          <div class="open">Open Project...</div>
+        </footer>
+      </aside>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript">
+
+    const removeActive = () => {
+      document.querySelector('.active').classList.remove('active');
+    };
+
+    const get = (increment) => {
+      const currentlyActive = document.querySelector('.active');
+      const list = document.querySelector('.list');
+      let i = 0;
+
+      for (i = 0; i < list.children.length; i += 1) {
+        if (list.children[i] === currentlyActive) {
+          break;
+        }
+      }
+
+      if (!list.children[i + increment]) {
+        return currentlyActive;
+      } else {
+        return list.children[i + increment];
+      }
+    };
+
+    const openPath = (path) => {
+      console.log(`Open path: ${path}`);
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.keyCode === 38) {
+        const el = get(-1);
+        removeActive();
+        el.classList.add('active');
+      } else if (e.keyCode === 40) {
+        const el = get(1);
+        removeActive();
+        el.classList.add('active');
+      } else if (e.keyCode === 13) {
+        const active = document.querySelector('.active');
+        openPath(active.getAttribute('data-path'));
+      }
+    });
+
+    document.querySelector('.open').addEventListener('click', () => {
+      // TODO: open the open dialog
+    });
+
+    const listItems = document.querySelectorAll('.list-item');
+    listItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        if (item.classList.contains('active')) {
+          return;
+        }
+
+        removeActive();
+        item.classList.add('active');
+      });
+
+      item.addEventListener('dblclick', () => {
+        openPath(item.getAttribute('data-path'));
+      });
+    });
+    </script>
+  </body>
+</html>

@@ -332,8 +332,43 @@ module.exports = {
 
     // Show open dialog if no active projects
     if (projectArr.length === 0) {
-      console.log('No projects');
-      module.exports.openDialog();
+      console.log('Attempting to create open windwow.');
+      let win = new BrowserWindow({
+        width: 800,
+        height: 450,
+        resizable: false,
+        // transparent: true,
+        frame: false,
+        show: false,
+      });
+
+      const { webContents } = win;
+      webContents.on('did-finish-load', () => {
+        webContents.setZoomFactor(1);
+        webContents.setVisualZoomLevelLimits(1, 1);
+        webContents.setLayoutZoomLevelLimits(0, 0);
+      });
+
+      webContents.on('new-window', (e) => {
+        e.preventDefault();
+      });
+
+      win.loadURL(url.format({
+        pathname: pathModule.join(__dirname, 'open.html'),
+        protocol: 'file:',
+        slashes: true,
+      }));
+
+      win.once('ready-to-show', () => {
+        win.show();
+      });
+
+      win.on('closed', () => {
+        win = null;
+      });
+
+      // console.log('No projects');
+      // module.exports.openDialog();
     }
 
     // Loop through each project and open a window
