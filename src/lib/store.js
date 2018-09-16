@@ -1,4 +1,5 @@
 const { remote } = require('electron');
+const settings = require('electron-settings');
 const assert = require('assert');
 
 let path;
@@ -15,7 +16,12 @@ module.exports = {
       'First parameter of set must be a string.',
     );
 
+    // Update the global object
     projects[path][key] = value;
+
+    // Save the global object to settings
+    settings.set('projects', projects);
+
     return projects[path];
   },
   has(key) {

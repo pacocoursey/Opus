@@ -24,6 +24,7 @@ Keep in mind this project is still under development.
 
 Features I'd like to implement:
 
+- [ ] Automatically update file contents if edited elsewhere
 - [ ] Ability to have multiple projects (folders) open at once
 - [ ] Drag and drop to move files in the tree-view
 - [X] Filter files to match only .note files
