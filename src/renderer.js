@@ -7,6 +7,8 @@ const editor = require('./lib/editor');
 const sidebar = require('./lib/sidebar');
 const footer = require('./lib/footer');
 const store = require('./lib/store');
+const find = require('./lib/find');
+const go = require('./lib/goto');
 
 // Maintain an object with these modules
 // for easy ipcRenderer access without eval()
@@ -18,11 +20,12 @@ const modules = {
   sidebar,
   footer,
   store,
+  find,
+  go,
 };
 
 // Initialize the store with the window's project object
 const { path } = remote.getCurrentWindow().project;
-console.log(`In renderer: window path is ${path}`);
 store.path(path);
 
 // Spellcheck in texteditor

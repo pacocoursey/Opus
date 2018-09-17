@@ -142,7 +142,7 @@ const template = [
       {
         label: 'Go to Line',
         accelerator: 'CmdOrCtrl+Alt+G',
-        click() { module.exports.send('goto', 'activate'); },
+        click() { module.exports.send('go', 'activate'); },
       },
     ],
   },
@@ -321,7 +321,7 @@ module.exports = {
     }
 
     const path = choice[0];
-    const p = new Project(path);
+    const p = Project.new(path);
 
     // Ensure path is not already open as a window
     if (!global.projects[path]) {

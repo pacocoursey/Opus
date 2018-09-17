@@ -10,7 +10,7 @@ app.image = path.join(__dirname, '../icon.png');
 global.projects = {};
 
 ipc.answerRenderer('openProject', async (p) => {
-  const project = new Project(p);
+  const project = Project.new(p);
 
   // Ensure path is not already open as a window
   if (!global.projects[p]) {
@@ -31,7 +31,6 @@ app.on('ready', () => {
 
   if (settings.has('projects')) {
     global.projects = settings.get('projects');
-    Object.values(global.projects).forEach((p) => { delete p.window; });
   } else {
     global.projects = {};
   }

@@ -19,8 +19,19 @@ module.exports = {
     // Update the global object
     projects[path][key] = value;
 
-    // Save the global object to settings
-    settings.set('projects', projects);
+    // Clone the projects object to avoid storing the window object
+    const clone = {};
+    clone[path] = {
+      path: projects[path].path,
+      hasChanges: projects[path].hasChanges,
+      isSlid: projects[path].isSlid,
+      theme: projects[path].theme,
+      activeFile: projects[path].activeFile,
+      tree: projects[path].tree,
+    };
+
+    // Save the clone to settings
+    settings.set('projects', clone);
 
     return projects[path];
   },
@@ -33,17 +44,6 @@ module.exports = {
       'string',
       'First parameter of get must be a string.',
     );
-
-    console.log(`store.get() received key: ${key}`);
-    console.log('Projects[path] is:');
-    console.log(`store path is ${path}`);
-    console.log(projects[path]);
-
-    console.log('Global is:');
-    console.log(projects);
-
-    console.log('Global using remot.get is:');
-    console.log(remote.getGlobal('projects'));
 
     if (Object.prototype.hasOwnProperty.call(projects[path], key)) {
       return projects[path][key];

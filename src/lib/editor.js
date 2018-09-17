@@ -7,18 +7,27 @@ const footer = require('./footer');
 const store = require('./store');
 
 let activeFile = '';
+let localHasChanges = false;
 let initial = '';
 const empty = new Delta([
   { insert: '\n' },
 ]);
 
 const hasChanges = function hasChanges() {
-  store.set('hasChanges', true);
+  if (!localHasChanges) {
+    store.set('hasChanges', true);
+    localHasChanges = true;
+  }
+
   footer.hasChanges();
 };
 
 const noChanges = function noChanges() {
-  store.set('hasChanges', false);
+  if (localHasChanges) {
+    store.set('hasChanges', false);
+    localHasChanges = false;
+  }
+
   footer.noChanges();
 };
 
@@ -195,6 +204,8 @@ module.exports = {
         module.exports.open(activeFile);
       }
     } else { activeFile = ''; }
+
+    localHasChanges = store.get('hasChanges');
 
     // On change, update the flag
     quill.on('text-change', () => {
