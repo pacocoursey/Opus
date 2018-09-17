@@ -4,9 +4,10 @@ const assert = require('assert');
 
 let path;
 const projects = remote.getGlobal('projects');
+const clone = projects;
 
 module.exports = {
-  path(str) {
+  init(str) {
     path = str;
   },
   set(key, value) {
@@ -19,19 +20,8 @@ module.exports = {
     // Update the global object
     projects[path][key] = value;
 
-    // Clone the projects object to avoid storing the window object
-    const clone = {};
-    clone[path] = {
-      path: projects[path].path,
-      hasChanges: projects[path].hasChanges,
-      isSlid: projects[path].isSlid,
-      theme: projects[path].theme,
-      activeFile: projects[path].activeFile,
-      tree: projects[path].tree,
-    };
-
-    // Save the clone to settings
-    settings.set('projects', clone);
+    // Save the cloned projects object
+    module.exports.save();
 
     return projects[path];
   },
@@ -50,5 +40,17 @@ module.exports = {
     }
 
     return undefined;
+  },
+  save() {
+    clone[path] = {
+      path: projects[path].path,
+      hasChanges: projects[path].hasChanges,
+      isSlid: projects[path].isSlid,
+      theme: projects[path].theme,
+      activeFile: projects[path].activeFile,
+      tree: projects[path].tree,
+    };
+
+    settings.set('projects', clone);
   },
 };

@@ -25,8 +25,8 @@ const modules = {
 };
 
 // Initialize the store with the window's project object
-const { path } = remote.getCurrentWindow().project;
-store.path(path);
+const { path } = remote.getCurrentWindow();
+store.init(path);
 
 // Spellcheck in texteditor
 require('./lib/spellcheck');
@@ -50,5 +50,10 @@ ipcRenderer.on('message', (e, d) => {
 // Save editor contents
 ipc.answerMain('save', async () => {
   editor.save();
+  return true;
+});
+
+ipc.answerMain('export', async () => {
+  store.save();
   return true;
 });

@@ -12,7 +12,7 @@ module.exports = {
     const activeProject = store.get('path');
 
     // Determine whether to show aside or not on load
-    if (store.get('isSlid')) {
+    if (store.has('isSlid')) {
       const isSlid = store.get('isSlid');
       if (isSlid) {
         wrapper.classList.add('slide');
@@ -21,6 +21,8 @@ module.exports = {
 
     // Get the folder data
     if (store.has('tree')) {
+      console.log('Store has tree!');
+      console.log(store.get('tree'));
       tree = Tree.createTree(activeProject, store.get('tree'));
     } else {
       tree = Tree.createTree(activeProject, null);

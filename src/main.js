@@ -44,6 +44,7 @@ app.on('ready', () => {
 
   if (settings.has('projects')) {
     global.projects = settings.get('projects');
+    console.log(global.projects);
   } else {
     global.projects = {};
   }
