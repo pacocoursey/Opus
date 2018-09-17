@@ -9,6 +9,19 @@ app.image = path.join(__dirname, '../icon.png');
 
 global.projects = {};
 
+ipc.answerRenderer('openDialog', async () => helpers.openDialog());
+
+ipc.answerRenderer('closeFocusedWindow', async () => {
+  const win = BrowserWindow.getFocusedWindow();
+
+  if (!win) {
+    return false;
+  }
+
+  win.close();
+  return true;
+});
+
 ipc.answerRenderer('openProject', async (p) => {
   const project = Project.new(p);
 

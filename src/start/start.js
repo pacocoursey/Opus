@@ -44,8 +44,16 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-document.querySelector('.open').addEventListener('click', () => {
-  // TODO: open the open dialog
+document.querySelector('.open').addEventListener('click', async () => {
+  const ret = await ipc.callMain('openDialog');
+
+  if (ret) {
+    ipc.callMain('openProject', ret);
+  }
+});
+
+document.querySelector('.close').addEventListener('click', async () => {
+  ipc.callMain('closeFocusedWindow');
 });
 
 const listItems = document.querySelectorAll('.list-item');

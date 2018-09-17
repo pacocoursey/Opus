@@ -317,10 +317,18 @@ module.exports = {
 
     // Cancel was clicked, do nothing
     if (!choice || choice.length === 0) {
-      return;
+      return false;
     }
 
     const path = choice[0];
+
+    if (path) {
+      return path;
+    }
+
+    return false;
+  },
+  createNewProject(path) {
     const p = Project.new(path);
 
     // Ensure path is not already open as a window
@@ -333,7 +341,7 @@ module.exports = {
     startWindow = new BrowserWindow({
       width: 800,
       height: 450,
-      // resizable: false,
+      resizable: false,
       frame: false,
       show: false,
     });
@@ -474,6 +482,11 @@ module.exports = {
     } else {
       win.close();
       delete global.projects[path];
+    }
+
+    // Check if no editor windows are active
+    if (Object.values(global.projects).length === 0) {
+      module.exports.createStartWindow();
     }
   },
   async quitApp() {
