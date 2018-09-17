@@ -21,8 +21,9 @@ const modules = {
 };
 
 // Initialize the store with the window's project object
-const { project } = remote.getCurrentWindow();
-store.path(project.path);
+const { path } = remote.getCurrentWindow().project;
+console.log(`In renderer: window path is ${path}`);
+store.path(path);
 
 // Spellcheck in texteditor
 require('./lib/spellcheck');

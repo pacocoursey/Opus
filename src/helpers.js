@@ -300,6 +300,8 @@ const template = [
   },
 ];
 
+let startWindow = null;
+
 const asyncForEach = async (array, callback) => {
   for (let i = 0; i < array.length; i += 1) {
     /* eslint-disable-next-line */
@@ -327,48 +329,47 @@ module.exports = {
       module.exports.windowCreation();
     }
   },
+  createStartWindow() {
+    startWindow = new BrowserWindow({
+      width: 800,
+      height: 450,
+      // resizable: false,
+      frame: false,
+      show: false,
+    });
+
+    const { webContents } = startWindow;
+    webContents.on('did-finish-load', () => {
+      webContents.setZoomFactor(1);
+      webContents.setVisualZoomLevelLimits(1, 1);
+      webContents.setLayoutZoomLevelLimits(0, 0);
+    });
+
+    webContents.on('new-window', (e) => {
+      e.preventDefault();
+    });
+
+    startWindow.loadURL(url.format({
+      pathname: pathModule.join(__dirname, '/start/start.html'),
+      protocol: 'file:',
+      slashes: true,
+    }));
+
+    startWindow.once('ready-to-show', () => {
+      startWindow.show();
+    });
+
+    startWindow.on('closed', () => {
+      startWindow = null;
+    });
+  },
   windowCreation() {
     const projectArr = Object.values(global.projects);
 
-    // Show open dialog if no active projects
+    // Show start window if no active projects
     if (projectArr.length === 0) {
-      console.log('Attempting to create open windwow.');
-      let win = new BrowserWindow({
-        width: 800,
-        height: 450,
-        resizable: false,
-        // transparent: true,
-        frame: false,
-        show: false,
-      });
-
-      const { webContents } = win;
-      webContents.on('did-finish-load', () => {
-        webContents.setZoomFactor(1);
-        webContents.setVisualZoomLevelLimits(1, 1);
-        webContents.setLayoutZoomLevelLimits(0, 0);
-      });
-
-      webContents.on('new-window', (e) => {
-        e.preventDefault();
-      });
-
-      win.loadURL(url.format({
-        pathname: pathModule.join(__dirname, 'open.html'),
-        protocol: 'file:',
-        slashes: true,
-      }));
-
-      win.once('ready-to-show', () => {
-        win.show();
-      });
-
-      win.on('closed', () => {
-        win = null;
-      });
-
-      // console.log('No projects');
-      // module.exports.openDialog();
+      module.exports.createStartWindow();
+      return;
     }
 
     // Loop through each project and open a window
@@ -390,10 +391,6 @@ module.exports = {
         // Send project information to the window
         project.window.project = {
           path: project.path,
-          hasChanges: project.hasChanges,
-          isSlid: project.isSlid,
-          activeFile: project.activeFile,
-          tree: project.tree,
         };
 
         const { webContents } = project.window;
@@ -531,5 +528,8 @@ module.exports = {
   menu() {
     const m = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(m);
+  },
+  closeStartWindow() {
+    startWindow.close();
   },
 };

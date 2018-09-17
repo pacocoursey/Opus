@@ -31,8 +31,19 @@ module.exports = {
     assert.strictEqual(
       typeof key,
       'string',
-      'First parameter of set must be a string.',
+      'First parameter of get must be a string.',
     );
+
+    console.log(`store.get() received key: ${key}`);
+    console.log('Projects[path] is:');
+    console.log(`store path is ${path}`);
+    console.log(projects[path]);
+
+    console.log('Global is:');
+    console.log(projects);
+
+    console.log('Global using remot.get is:');
+    console.log(remote.getGlobal('projects'));
 
     if (Object.prototype.hasOwnProperty.call(projects[path], key)) {
       return projects[path][key];
