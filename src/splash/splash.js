@@ -44,11 +44,12 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-document.querySelector('.open').addEventListener('click', async () => {
+document.querySelector('footer').addEventListener('click', async () => {
   const ret = await ipc.callMain('openDialog');
 
   if (ret) {
-    ipc.callMain('openProject', ret);
+    const r = await ipc.callMain('openProject', ret);
+    console.log(r);
   }
 });
 

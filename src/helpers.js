@@ -61,7 +61,19 @@ const template = [
       {
         label: 'Open',
         accelerator: 'CmdOrCtrl+O',
-        click() { module.exports.openDialog(); },
+        click() {
+          const path = module.exports.openDialog();
+          if (path) {
+            const project = Project.new(path);
+
+            // Ensure path is not already open as a window
+            if (!global.projects[path]) {
+              global.projects[path] = project;
+              module.exports.closeSplashWindow();
+              module.exports.windowCreation();
+            }
+          }
+        },
       },
       { type: 'separator' },
       {
@@ -300,7 +312,7 @@ const template = [
   },
 ];
 
-let startWindow = null;
+let splashWindow = null;
 
 const asyncForEach = async (array, callback) => {
   for (let i = 0; i < array.length; i += 1) {
@@ -337,16 +349,16 @@ module.exports = {
       module.exports.windowCreation();
     }
   },
-  createStartWindow() {
-    startWindow = new BrowserWindow({
+  createSplashWindow() {
+    splashWindow = new BrowserWindow({
       width: 800,
       height: 450,
-      resizable: false,
+      // resizable: false,
       frame: false,
       show: false,
     });
 
-    const { webContents } = startWindow;
+    const { webContents } = splashWindow;
     webContents.on('did-finish-load', () => {
       webContents.setZoomFactor(1);
       webContents.setVisualZoomLevelLimits(1, 1);
@@ -357,26 +369,26 @@ module.exports = {
       e.preventDefault();
     });
 
-    startWindow.loadURL(url.format({
-      pathname: pathModule.join(__dirname, '/start/start.html'),
+    splashWindow.loadURL(url.format({
+      pathname: pathModule.join(__dirname, '/splash/splash.html'),
       protocol: 'file:',
       slashes: true,
     }));
 
-    startWindow.once('ready-to-show', () => {
-      startWindow.show();
+    splashWindow.once('ready-to-show', () => {
+      splashWindow.show();
     });
 
-    startWindow.on('closed', () => {
-      startWindow = null;
+    splashWindow.on('closed', () => {
+      splashWindow = null;
     });
   },
   windowCreation() {
     const projectArr = Object.values(global.projects);
 
-    // Show start window if no active projects
+    // Show splash window if no active projects
     if (projectArr.length === 0) {
-      module.exports.createStartWindow();
+      module.exports.createSplashWindow();
       return;
     }
 
@@ -486,7 +498,7 @@ module.exports = {
 
     // Check if no editor windows are active
     if (Object.values(global.projects).length === 0) {
-      module.exports.createStartWindow();
+      module.exports.createSplashWindow();
     }
   },
   async quitApp() {
@@ -542,7 +554,9 @@ module.exports = {
     const m = Menu.buildFromTemplate(template);
     Menu.setApplicationMenu(m);
   },
-  closeStartWindow() {
-    startWindow.close();
+  closeSplashWindow() {
+    if (splashWindow) {
+      splashWindow.close();
+    }
   },
 };

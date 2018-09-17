@@ -28,7 +28,7 @@ ipc.answerRenderer('openProject', async (p) => {
   // Ensure path is not already open as a window
   if (!global.projects[p]) {
     global.projects[p] = project;
-    helpers.closeStartWindow();
+    helpers.closeSplashWindow();
     helpers.windowCreation();
   }
 });
