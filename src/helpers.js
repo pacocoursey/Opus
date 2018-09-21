@@ -7,7 +7,6 @@ const {
 } = require('electron');
 const url = require('url');
 const pathModule = require('path');
-const settings = require('electron-settings');
 const ipc = require('electron-better-ipc');
 const Project = require('./project');
 
@@ -471,7 +470,7 @@ module.exports = {
       throw new Error('No focused window.');
     }
 
-    const { path } = win.project;
+    const { path } = win;
     const { hasChanges } = global.projects[path];
 
     if (hasChanges) {
@@ -506,19 +505,13 @@ module.exports = {
     // If no windows are open, save settings then exit
     if (projectsArr.length === 0) {
       // Save the projects object to settings
-      // settings.set('projects', global.projects);
       app.exit();
       return;
     }
 
     await asyncForEach(projectsArr, async (project) => {
       if (project.window) {
-        console.log('Exporting. Settings before:');
-        console.log(settings.get('projects'));
-        const r = await ipc.callRenderer(project.window, 'export');
-        console.log(r);
-        console.log('Settings after:');
-        console.log(settings.get('projects'));
+        await ipc.callRenderer(project.window, 'export');
 
         if (project.hasChanges) {
           project.window.focus();
@@ -548,15 +541,6 @@ module.exports = {
     if (cancelFlag) {
       return;
     }
-
-    // Save the projects object to settings
-    // settings.set('projects', global.projects);
-
-    // console.log('Before exiting:');
-    // console.log(global.projects);
-    //
-    // console.log('Settings before exiting:');
-    // console.log(settings.get('projects'));
 
     // Should have closed all the windows by now
     app.exit();

@@ -21,8 +21,6 @@ module.exports = {
 
     // Get the folder data
     if (store.has('tree')) {
-      console.log('Store has tree!');
-      console.log(store.get('tree'));
       tree = Tree.createTree(activeProject, store.get('tree'));
     } else {
       tree = Tree.createTree(activeProject, null);
