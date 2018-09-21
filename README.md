@@ -27,6 +27,7 @@ Features I'd like to implement:
 - [ ] Automatically update file contents if edited elsewhere
 - [ ] Ability to have multiple projects (folders) open at once
 - [ ] Drag and drop to move files in the tree-view
+- [ ] Setting to hide and show footer
 - [X] Filter files to match only .note files
 - [X] Add Escape keybind to clear current cursor formatting
 - [X] Add custom scroll bar to editor
