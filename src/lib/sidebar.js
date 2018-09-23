@@ -12,9 +12,8 @@ module.exports = {
     const activeProject = store.get('path');
 
     // Determine whether to show aside or not on load
-    if (store.has('isSlid')) {
-      const isSlid = store.get('isSlid');
-      if (isSlid) {
+    if (store.has('sidebar')) {
+      if (!store.get('sidebar')) {
         wrapper.classList.add('slide');
       }
     }
@@ -27,8 +26,8 @@ module.exports = {
     }
 
     // Ensure the active prop on the active file
-    if (store.has('activeFile')) {
-      const file = store.get('activeFile');
+    if (store.has('file')) {
+      const file = store.get('file');
       if (file && file !== '') { tree.find(file).active = true; }
     }
 
@@ -114,6 +113,6 @@ module.exports = {
   toggle() {
     wrapper.classList.toggle('slide');
     const isSlid = wrapper.classList.contains('slide');
-    store.set('isSlid', isSlid);
+    store.set('sidebar', !isSlid);
   },
 };

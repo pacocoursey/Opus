@@ -1,557 +1,345 @@
-const {
-  app,
-  shell,
-  Menu,
-  dialog,
-  BrowserWindow,
-} = require('electron');
+const { app, dialog, BrowserWindow } = require('electron');
 const url = require('url');
-const pathModule = require('path');
+const path = require('path');
 const ipc = require('electron-better-ipc');
-const Project = require('./project');
+const settings = require('electron-settings');
+const windows = require('./windows');
 
-const template = [
-  {
-    label: 'Opus',
-    submenu: [
-      {
-        label: 'About',
-        click() { shell.openExternal('https://github.com/pacocoursey/Opus/'); },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: 'Preferences',
-        accelerator: 'CmdOrCtrl+,',
-        click() {
-          // TODO: preferences window
-        },
-      },
-      { type: 'separator' },
-      {
-        label: 'Hide Opus',
-        role: 'hide',
-        accelerator: 'CmdOrCtrl+h',
-      },
-      {
-        label: 'Hide Others',
-        role: 'hideothers',
-        accelerator: 'CmdOrCtrl+Option+h',
-      },
-      { type: 'separator' },
-      {
-        label: 'Quit',
-        accelerator: 'CmdOrCtrl+q',
-        click() { module.exports.quitApp(); },
-      },
-    ],
-  },
-  {
-    label: 'File',
-    submenu: [
-      {
-        label: 'New',
-        accelerator: 'CmdOrCtrl+N',
-        click() {
-          module.exports.send('editor', 'reset');
-        },
-      },
-      {
-        label: 'Open',
-        accelerator: 'CmdOrCtrl+O',
-        click() {
-          const path = module.exports.openDialog();
-          if (path) {
-            const project = Project.new(path);
+let splashWindow;
 
-            // Ensure path is not already open as a window
-            if (!global.projects[path]) {
-              global.projects[path] = project;
-              module.exports.closeSplashWindow();
-              module.exports.windowCreation();
-            }
-          }
-        },
-      },
-      { type: 'separator' },
-      {
-        label: 'Close',
-        accelerator: 'CmdOrCtrl+W',
-        click() {
-          module.exports.send('editor', 'reset');
-        },
-      },
-      {
-        label: 'Save...',
-        accelerator: 'CmdOrCtrl+S',
-        click() {
-          module.exports.send('editor', 'save');
-        },
-      },
-      {
-        label: 'Save As...',
-        accelerator: 'CmdOrCtrl+Shift+S',
-        click() {
-          // TODO: editor.saveAs();
-        },
-      },
-      // TODO: exports
-    ],
-  },
-  {
-    label: 'Edit',
-    submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
-      { type: 'separator' },
-      { role: 'cut' },
-      { role: 'copy' },
-      {
-        label: 'Paste',
-        role: 'pasteandmatchstyle',
-        accelerator: 'CmdOrCtrl+V',
-      },
-      {
-        label: 'Paste with Style',
-        role: 'paste',
-        accelerator: 'CmdOrCtrl+Shift+V',
-      },
-      { role: 'delete' },
-      { role: 'selectall' },
-      { type: 'separator' },
-      {
-        label: 'Find',
-        submenu: [
-          {
-            label: 'Find...',
-            accelerator: 'CmdOrCtrl+F',
-            click() { module.exports.send('find', 'activate', false); },
-          },
-          {
-            label: 'Find and Replace...',
-            accelerator: 'CmdOrCtrl+Shift+F',
-            click() { module.exports.send('find', 'activate', true); },
-          },
-          {
-            label: 'Replace All',
-            click() { module.exports.send('find', 'replaceAll'); },
-          },
-          {
-            label: 'Find Next',
-            accelerator: 'CmdOrCtrl+G',
-            click() { module.exports.send('find', 'find', 1); },
-          },
-          {
-            label: 'Find Previous',
-            accelerator: 'CmdOrCtrl+Shift+G',
-            click() { module.exports.send('find', 'find', -1); },
-          },
-        ],
-      },
-      { type: 'separator' },
-      {
-        label: 'Go to Line',
-        accelerator: 'CmdOrCtrl+Alt+G',
-        click() { module.exports.send('go', 'activate'); },
-      },
-    ],
-  },
-  {
-    label: 'Format',
-    submenu: [
-      {
-        label: 'Escape Current',
-        accelerator: 'esc',
-        click() { module.exports.send('quill', 'escape'); },
-      },
-      { type: 'separator' },
-      {
-        label: 'Separator',
-        accelerator: 'CmdOrCtrl+Shift+H',
-        click() { module.exports.send('quill', 'separator'); },
-      },
-      { type: 'separator' },
-      {
-        label: 'Heading 1',
-        accelerator: 'CmdOrCtrl+1',
-        click() { module.exports.send('quill', 'h1'); },
-      },
-      {
-        label: 'Heading 2',
-        accelerator: 'CmdOrCtrl+2',
-        click() { module.exports.send('quill', 'h2'); },
-      },
-      {
-        label: 'Heading 3',
-        accelerator: 'CmdOrCtrl+3',
-        click() { module.exports.send('quill', 'h3'); },
-      },
-      { type: 'separator' },
-      {
-        label: 'Bold',
-        accelerator: 'CmdOrCtrl+B',
-        click() { module.exports.send('quill', 'bold'); },
-      },
-      {
-        label: 'Italic',
-        accelerator: 'CmdOrCtrl+I',
-        click() { module.exports.send('quill', 'italic'); },
-      },
-      {
-        label: 'Underline',
-        accelerator: 'CmdOrCtrl+U',
-        click() { module.exports.send('quill', 'underline'); },
-      },
-      {
-        label: 'Strikethrough',
-        accelerator: 'CmdOrCtrl+Shift+S',
-        click() { module.exports.send('quill', 'strikethrough'); },
-      },
-      { type: 'separator' },
-      {
-        label: 'List',
-        accelerator: 'CmdOrCtrl+L',
-        click() { module.exports.send('quill', 'list'); },
-      },
-      {
-        label: 'Ordered List',
-        accelerator: 'CmdOrCtrl+Shift+L',
-        click() { module.exports.send('quill', 'orderedList'); },
-      },
-      { type: 'separator' },
-      {
-        label: 'Quote',
-        accelerator: 'CmdOrCtrl+.',
-        click() { module.exports.send('quill', 'quote'); },
-      },
-      {
-        label: 'Code',
-        accelerator: 'CmdOrCtrl+Shift+C',
-        click() { module.exports.send('quill', 'code'); },
-      },
-      {
-        label: 'Codeblock',
-        accelerator: 'CmdOrCtrl+Alt+C',
-        click() { module.exports.send('quill', 'codeblock'); },
-      },
-      { type: 'separator' },
-      {
-        label: 'Superscript',
-        accelerator: 'CmdOrCtrl+Alt+Plus',
-        click() { module.exports.send('quill', 'superscript'); },
-      },
-      {
-        label: 'Subscript',
-        accelerator: 'CmdOrCtrl+Alt+-',
-        click() { module.exports.send('quill', 'subscript'); },
-      },
-      { type: 'separator' },
-      {
-        label: 'Indent',
-        accelerator: 'CmdOrCtrl+]',
-        click() { module.exports.send('quill', 'indent'); },
-      },
-      {
-        label: 'Outdent',
-        accelerator: 'CmdOrCtrl+[',
-        click() { module.exports.send('quill', 'outdent'); },
-      },
-      {
-        label: 'Clear Formatting',
-        accelerator: 'CmdOrCtrl+0',
-        click() { module.exports.send('quill', 'clear'); },
-      },
-    ],
-  },
-  {
-    label: 'View',
-    submenu: [
-      {
-        label: 'Toggle Sidebar',
-        accelerator: 'CmdOrCtrl+\\',
-        click() { module.exports.send('sidebar', 'toggle'); },
-      },
-      {
-        label: 'Toggle Dark Mode',
-        accelerator: 'CmdOrCtrl+D',
-        click() { module.exports.send('theme', 'toggle'); },
-      },
-      { type: 'separator' },
-      { role: 'reload' },
-      { role: 'forcereload' },
-      { role: 'toggledevtools' },
-      { type: 'separator' },
-      { type: 'separator' },
-      {
-        role: 'togglefullscreen',
-        accelerator: 'CmdOrCtrl+Shift+F',
-      },
-    ],
-  },
-  {
-    role: 'window',
-    submenu: [
-      {
-        label: 'Close Window',
-        accelerator: 'CmdOrCtrl+Shift+W',
-        click() { module.exports.closeWindow(); },
-      },
-      { role: 'minimize' },
-    ],
-  },
-  {
-    role: 'help',
-    submenu: [
-      {
-        label: 'Learn More',
-        click() { shell.openExternal('https://github.com/pacocoursey/Opus/'); },
-      },
-    ],
-  },
-];
-
-let splashWindow = null;
-
-const asyncForEach = async (array, callback) => {
-  for (let i = 0; i < array.length; i += 1) {
-    /* eslint-disable-next-line */
-    await callback(array[i], i, array);
-  }
+const editorWindowSettings = {
+  width: 960,
+  height: 544,
+  minWidth: 500,
+  minHeight: 400,
+  frame: false,
+  show: false,
+  icon: app.image,
 };
 
-module.exports = {
-  openDialog() {
-    const choice = dialog.showOpenDialog({
-      properties: ['openDirectory', 'createDirectory'],
-    });
+const splashWindowSettings = {
+  width: 800,
+  height: 450,
+  resizable: false,
+  frame: false,
+  show: false,
+  icon: app.image,
+};
 
-    // Cancel was clicked, do nothing
-    if (!choice || choice.length === 0) {
-      return false;
-    }
+/**
+ * Create the splash BrowserWindow.
+ */
 
-    const path = choice[0];
+function createSplashWindow() {
+  splashWindow = new BrowserWindow(splashWindowSettings);
 
-    if (path) {
-      return path;
-    }
+  const { webContents } = splashWindow;
+  webContents.on('did-finish-load', () => {
+    webContents.setZoomFactor(1);
+    webContents.setVisualZoomLevelLimits(1, 1);
+    webContents.setLayoutZoomLevelLimits(0, 0);
+  });
 
-    return false;
-  },
-  createNewProject(path) {
-    const p = Project.new(path);
+  webContents.on('new-window', (e) => {
+    e.preventDefault();
+  });
 
-    // Ensure path is not already open as a window
-    if (!global.projects[path]) {
-      global.projects[path] = p;
-      module.exports.windowCreation();
-    }
-  },
-  createSplashWindow() {
-    splashWindow = new BrowserWindow({
-      width: 800,
-      height: 450,
-      // resizable: false,
-      frame: false,
-      show: false,
-    });
+  splashWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '/splash/splash.html'),
+    protocol: 'file:',
+    slashes: true,
+  }));
 
-    const { webContents } = splashWindow;
-    webContents.on('did-finish-load', () => {
-      webContents.setZoomFactor(1);
-      webContents.setVisualZoomLevelLimits(1, 1);
-      webContents.setLayoutZoomLevelLimits(0, 0);
-    });
+  splashWindow.once('ready-to-show', () => {
+    splashWindow.show();
+  });
 
-    webContents.on('new-window', (e) => {
-      e.preventDefault();
-    });
+  splashWindow.on('closed', () => {
+    splashWindow = null;
+  });
+}
 
-    splashWindow.loadURL(url.format({
-      pathname: pathModule.join(__dirname, '/splash/splash.html'),
-      protocol: 'file:',
-      slashes: true,
-    }));
+/**
+ * Create a new editor window and assign it to the settings object.
+ */
 
-    splashWindow.once('ready-to-show', () => {
-      splashWindow.show();
-    });
+function createEditorWindow(win) {
+  const w = new BrowserWindow(editorWindowSettings);
 
-    splashWindow.on('closed', () => {
-      splashWindow = null;
-    });
-  },
-  windowCreation() {
-    const projectArr = Object.values(global.projects);
+  // Pass along the respective path to each window
+  w.path = win.path;
 
-    // Show splash window if no active projects
-    if (projectArr.length === 0) {
-      module.exports.createSplashWindow();
+  // Set the window to active
+  win.active = true;
+
+  // Save the object to settings
+  settings.set(`windows.${win.path}`, win);
+
+  // Save the BrowserWindow reference
+  windows.set(win.path, w);
+
+  // TODO: check if this is fixed in Electron 3.0
+  const { webContents } = w;
+  webContents.on('did-finish-load', () => {
+    webContents.setZoomFactor(1);
+    webContents.setVisualZoomLevelLimits(1, 1);
+    webContents.setLayoutZoomLevelLimits(0, 0);
+  });
+
+  // TODO: check if this is fixed in Electron 3.0
+  webContents.on('new-window', (e) => {
+    e.preventDefault();
+  });
+
+  w.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true,
+  }));
+
+  w.once('ready-to-show', () => {
+    // Delay here to let animations (slide, theme) finish before showing
+    setTimeout(() => {
+      windows.get(win.path).show();
+    }, 400);
+  });
+
+  w.on('closed', () => {
+    win.active = false;
+    settings.set(`windows.${win.path}`, win);
+  });
+}
+
+/**
+ * Creates a new project object and adds it to settings.
+ */
+
+function createNewProject(projectPath) {
+  if (settings.has(`windows.${projectPath}`)) {
+    return settings.get(`windows.${projectPath}`);
+  }
+
+  const obj = {
+    path: projectPath,
+    file: undefined,
+    tree: undefined,
+    active: false,
+    footer: true,
+    sidebar: true,
+    dark: false,
+    changes: false,
+  };
+
+  settings.set(`windows.${projectPath}`, obj);
+
+  return obj;
+}
+
+/**
+ * Opens an Open Dialog, allowing folders to be selected.
+ * Returns the selected path or null.
+ */
+
+function openDialog() {
+  const choice = dialog.showOpenDialog({
+    properties: ['openDirectory', 'createDirectory'],
+  });
+
+  if (!choice || choice.length === 0 || !choice[0]) {
+    return null;
+  }
+
+  return choice[0];
+}
+
+/**
+ * Opens a new editor window.
+ */
+
+function openWindow() {
+  const folderPath = openDialog();
+
+  if (!folderPath) {
+    return;
+  }
+
+  if (settings.has(`windows.${folderPath}`)) {
+    // This path has been opened before
+    // check if there exists a BrowserWindow for it
+    if (windows.has(folderPath)) {
+      // There is already a BrowserWindow, focus it
+      windows.get(folderPath).focus();
       return;
     }
 
-    // Loop through each project and open a window
-    projectArr.forEach((project) => {
-      // Only create if the window does not already exist
-      if (!project.window) {
-        project.window = new BrowserWindow({
-          width: 960,
-          height: 544,
-          minWidth: 500,
-          minHeight: 400,
-          transparent: true,
-          frame: false,
-          show: false,
-          center: true,
-          icon: app.image,
-        });
+    // The path is not currently open, open a new window
+    const obj = settings.get(`windows.${folderPath}`);
+    createEditorWindow(obj);
+  } else {
+    const project = createNewProject(folderPath);
+    createEditorWindow(project);
+  }
+}
 
-        // Send project information to the window
-        project.window.path = project.path;
+/**
+ * Close a specified window, or closes the focused window.
+ * Does NOT check if window has changes, use closeEditorWindow() for that.
+ * Does NOT update settings object.
+ */
 
-        const { webContents } = project.window;
-        webContents.on('did-finish-load', () => {
-          webContents.setZoomFactor(1);
-          webContents.setVisualZoomLevelLimits(1, 1);
-          webContents.setLayoutZoomLevelLimits(0, 0);
-        });
+function closeWindow(win = BrowserWindow.getFocusedWindow()) {
+  if (!win) throw new Error('No focused window.');
+  else win.close();
+}
 
-        webContents.on('new-window', (e) => {
-          e.preventDefault();
-        });
+/**
+ * Returns an array of window objects that have active = true.
+ */
 
-        project.window.loadURL(url.format({
-          pathname: pathModule.join(__dirname, 'index.html'),
-          protocol: 'file:',
-          slashes: true,
-        }));
+function getActiveWindows() {
+  if (!settings.has('windows')) {
+    return [];
+  }
 
-        project.window.once('ready-to-show', () => {
-          project.window.show();
-        });
+  const wins = settings.get('windows');
+  const active = Object.values(wins).filter(win => win.active);
 
-        project.window.on('closed', () => {
-          project.window = null;
-        });
-      }
-    });
-  },
-  send(obj, func, params) {
-    const win = BrowserWindow.getFocusedWindow();
+  return active;
+}
 
-    if (!win) {
-      throw new Error('No focused window.');
-    }
+/**
+ * Send a message to the focused window to trigger a renderer process function.
+ */
 
-    const { webContents } = win;
-    webContents.send('message', {
-      module: obj,
-      method: func,
-      parameters: params,
-    });
-  },
-  saveDialog() {
-    const choice = dialog.showMessageBox({
-      type: 'question',
-      buttons: ['Save', 'Cancel', 'Don\'t Save'],
-      title: 'Confirm',
-      message: 'This file has changes, do you want to save them?',
-      detail: 'Your changes will be lost if you close this item without saving.',
-      icon: `${app.image}`,
-    });
+function send(obj, func, params) {
+  const win = BrowserWindow.getFocusedWindow();
 
-    return choice;
-  },
-  async closeWindow() {
-    const win = BrowserWindow.getFocusedWindow();
+  if (!win) throw new Error('No focused window.');
 
-    if (!win) {
-      throw new Error('No focused window.');
-    }
+  const { webContents } = win;
+  webContents.send('message', {
+    module: obj,
+    method: func,
+    paramteres: params,
+  });
+}
 
-    const { path } = win;
-    const { hasChanges } = global.projects[path];
+/**
+ * Ask the user if they want to Save, Cancel, or Don't Save.
+ * Returns the user's choice.
+ */
 
-    if (hasChanges) {
-      const choice = module.exports.saveDialog();
+function saveDialog(p) {
+  return dialog.showMessageBox({
+    type: 'question',
+    buttons: ['Save', 'Cancel', 'Don\'t Save'],
+    title: 'Confirm',
+    message: `${p} has changes, do you want to save them?`,
+    detail: 'Your changes will be lost if you close this file without saving.',
+    icon: `${app.image}`,
+  });
+}
 
-      if (choice === 2) {
-        // Don't Save
-        win.close();
-        delete global.projects[path];
-      } else if (choice === 0) {
+/**
+ * Find the associated settings object with a BrowserWindow.
+ */
+
+function getWindowObject(win = BrowserWindow.getFocusedWindow()) {
+  if (!win) throw new Error('Cannot get window object of null window.');
+
+  const p = win.path;
+  if (!settings.has(`windows.${p}`)) {
+    throw new Error(`Cannot find window object for window ${win}`);
+  }
+
+  return settings.get(`windows.${p}`);
+}
+
+/**
+ * Closes a window. If it has changes, ask user for input.
+ * If it does not have changes it closes the window, updates win object.
+ */
+
+async function closeEditorWindow(win) {
+  let obj = win;
+
+  if (!win) {
+    const window = BrowserWindow.getFocusedWindow();
+
+    if (!window) throw new Error('No focused window.');
+
+    // Get the associated window object
+    obj = getWindowObject(window);
+  }
+
+  if (obj.changes) {
+    const choice = saveDialog(path);
+    switch (choice) {
+      case 0: {
         // Save
-        const ret = await ipc.callRenderer(win, 'save');
-        if (ret) {
-          win.close();
-          delete global.projects[path];
-        }
+        const ret = await ipc.callRenderer(obj.window, 'save');
+        if (!ret) throw new Error('Save called failed.');
+        break;
       }
-    } else {
-      win.close();
-      delete global.projects[path];
+      case 1:
+        // Cancel
+        return false;
+      case 2:
+        // Don't Save
+        break;
+      default:
+        throw new Error(`Out of bounds dialog return: ${choice}`);
     }
+  }
 
-    // Check if no editor windows are active
-    if (Object.values(global.projects).length === 0) {
-      module.exports.createSplashWindow();
-    }
-  },
-  async quitApp() {
-    let cancelFlag = false;
-    const projectsArr = Object.values(global.projects);
+  windows.get(obj.path).close();
+  windows.delete(obj.path);
+  obj.changes = false;
+  obj.active = false;
+  settings.set(`windows.${obj.path}`, obj);
 
-    // If no windows are open, save settings then exit
-    if (projectsArr.length === 0) {
-      // Save the projects object to settings
-      app.exit();
+  return true;
+}
+
+/**
+ * Quit the application. Checks if any editor windows have changes,
+ * requests to save changes, then closes all windows and updates
+ * each window object to be inactive with a null window.
+ */
+
+function quitApp() {
+  let wins = getActiveWindows();
+  const changed = wins.filter(win => win.changes);
+
+  for (let i = 0; i < changed.length; i += 1) {
+    const ret = closeEditorWindow(changed[i]);
+
+    // Either cancelled or some error thrown
+    // do not continue closing windows and do not quit
+    if (ret === false) {
       return;
     }
+  }
 
-    await asyncForEach(projectsArr, async (project) => {
-      if (project.window) {
-        await ipc.callRenderer(project.window, 'export');
+  // Update list of active windows
+  wins = getActiveWindows();
 
-        if (project.hasChanges) {
-          project.window.focus();
+  // Windows with changes have been handled, close them all
+  wins.forEach((win) => {
+    closeEditorWindow(win);
+  });
 
-          const choice = module.exports.saveDialog();
+  app.exit();
+}
 
-          if (choice === 2) {
-            // Don't save
-            project.window.close();
-            project.hasChanges = false;
-          } else if (choice === 1) {
-            // Cancel
-            cancelFlag = true;
-          } else if (choice === 0) {
-            // Save
-            const ret = await ipc.callRenderer(project.window, 'save');
-            if (ret) {
-              project.window.close();
-            }
-          }
-        } else {
-          project.window.close();
-        }
-      }
-    });
 
-    if (cancelFlag) {
-      return;
-    }
-
-    // Should have closed all the windows by now
-    app.exit();
-  },
-  menu() {
-    const m = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(m);
-  },
-  closeSplashWindow() {
-    if (splashWindow) {
-      splashWindow.close();
-    }
-  },
+module.exports = {
+  send,
+  quitApp,
+  openWindow,
+  closeWindow,
+  getActiveWindows,
+  closeEditorWindow,
+  createSplashWindow,
+  createEditorWindow,
 };

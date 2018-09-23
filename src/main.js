@@ -1,58 +1,37 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const settings = require('electron-settings');
-const ipc = require('electron-better-ipc');
-const Project = require('./project');
-const helpers = require('./helpers');
+const menu = require('./menu');
+const {
+  quitApp,
+  getActiveWindows,
+  createSplashWindow,
+  createEditorWindow,
+} = require('./helpers');
 
-app.image = path.join(__dirname, '../icon.png');
-
-global.projects = {};
-
-ipc.answerRenderer('openDialog', async () => helpers.openDialog());
-
-ipc.answerRenderer('closeFocusedWindow', async () => {
-  const win = BrowserWindow.getFocusedWindow();
-
-  if (!win) {
-    return false;
-  }
-
-  win.close();
-  return true;
-});
-
-ipc.answerRenderer('openProject', async (p) => {
-  const project = Project.new(p);
-
-  // Ensure path is not already open as a window
-  if (!global.projects[p]) {
-    global.projects[p] = project;
-    helpers.closeSplashWindow();
-    helpers.windowCreation();
-  }
-});
-
-// Handle quitting ourselves
-app.on('before-quit', (e) => {
-  e.preventDefault();
-  helpers.quitApp();
-});
+function createWindows(windows) {
+  windows.forEach((win) => {
+    createEditorWindow(win);
+  });
+}
 
 app.on('ready', () => {
-  // TODO: start window etc..
+  const windows = getActiveWindows();
 
-  if (settings.has('projects')) {
-    global.projects = settings.get('projects');
+  if (windows.length === 0) {
+    createSplashWindow();
   } else {
-    global.projects = {};
+    createWindows(windows);
   }
 
-  // Initialize the windows
-  helpers.windowCreation();
+  // Set app image path for dialogs
+  app.image = path.join(__dirname, '../icon.png');
 
-  // Configure application menu
-  helpers.menu();
+  menu.createMenu();
+});
+
+app.on('before-quit', (e) => {
+  e.preventDefault();
+  quitApp();
 });
 
 app.on('window-all-closed', () => {
@@ -64,10 +43,8 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   const win = BrowserWindow.getFocusedWindow();
 
-  // Focus a window if there are any
-  // if not, show open window
   if (!win) {
-    helpers.windowCreation();
+    createSplashWindow();
   } else {
     win.focus();
   }

@@ -15,7 +15,7 @@ const empty = new Delta([
 
 const hasChanges = function hasChanges() {
   if (!localHasChanges) {
-    store.set('hasChanges', true);
+    store.set('changes', true);
     localHasChanges = true;
   }
 
@@ -24,7 +24,7 @@ const hasChanges = function hasChanges() {
 
 const noChanges = function noChanges() {
   if (localHasChanges) {
-    store.set('hasChanges', false);
+    store.set('changes', false);
     localHasChanges = false;
   }
 
@@ -84,7 +84,7 @@ module.exports = {
   },
   checkChanges() {
     // Ask user to save changes to current file
-    if (store.get('hasChanges')) {
+    if (store.get('changes')) {
       const choice = dialog.showMessageBox({
         type: 'question',
         buttons: ['Save', 'Cancel', 'Don\'t Save'],
@@ -191,12 +191,12 @@ module.exports = {
     return activeFile;
   },
   export() {
-    store.set('activeFile', activeFile);
+    store.set('file', activeFile);
   },
   init() {
     // Setup activeFile
-    if (store.get('activeFile')) {
-      activeFile = store.get('activeFile');
+    if (store.has('file')) {
+      activeFile = store.get('file');
       if (!activeFile || activeFile === '') {
         module.exports.reset();
       } else {
@@ -205,7 +205,9 @@ module.exports = {
       }
     } else { activeFile = ''; }
 
-    localHasChanges = store.get('hasChanges');
+    localHasChanges = store.get('changes');
+
+    console.log(localHasChanges);
 
     // On change, update the flag
     quill.on('text-change', () => {
