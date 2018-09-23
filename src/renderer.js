@@ -52,8 +52,3 @@ ipc.answerMain('save', async () => {
   editor.save();
   return true;
 });
-
-ipc.answerMain('export', async () => {
-  store.save();
-  return true;
-});

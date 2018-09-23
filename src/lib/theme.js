@@ -4,8 +4,8 @@ module.exports = {
   init() {
     let isDark = false;
 
-    if (store.get('theme')) {
-      isDark = store.get('theme');
+    if (store.has('dark')) {
+      isDark = store.get('dark');
     }
 
     if (isDark) {
@@ -15,6 +15,6 @@ module.exports = {
   toggle() {
     document.body.classList.toggle('dark');
     const isDark = document.body.classList.contains('dark');
-    store.set('theme', isDark);
+    store.set('dark', isDark);
   },
 };

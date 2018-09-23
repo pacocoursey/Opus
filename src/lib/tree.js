@@ -104,8 +104,8 @@ const reload = function reloadDocumentTree(p) {
   let tmp;
   let active;
 
-  if (store.get('activeFile')) {
-    active = store.get('activeFile');
+  if (store.has('file')) {
+    active = store.get('file');
   }
 
   Object.keys(old).forEach((key) => {
