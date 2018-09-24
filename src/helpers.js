@@ -270,7 +270,7 @@ function getWindowObject(win = BrowserWindow.getFocusedWindow()) {
  * If it does not have changes it closes the window, updates win object.
  */
 
-async function closeEditorWindow(win) {
+async function closeEditorWindow(win, quitFlag = false) {
   let obj = win;
 
   if (!win) {
@@ -306,7 +306,10 @@ async function closeEditorWindow(win) {
   windows.get(obj.path).close();
   windows.delete(obj.path);
   obj.changes = false;
-  obj.active = false;
+
+  // Don't set windows to inactive when we are quitting
+  // we want these windows to re-appear on next launch
+  if (!quitFlag) obj.active = false;
   settings.set(`windows.${obj.path}`, obj);
 
   if (windows.length() === 0) {
@@ -328,7 +331,7 @@ async function quitApp() {
 
   for (let i = 0; i < changed.length; i += 1) {
     /* eslint-disable-next-line */
-    const ret = await closeEditorWindow(changed[i]);
+    const ret = await closeEditorWindow(changed[i], true);
 
     // Either cancelled or some error thrown
     // do not continue closing windows and do not quit
@@ -342,7 +345,7 @@ async function quitApp() {
 
   // Windows with changes have been handled, close them all
   wins.forEach((win) => {
-    closeEditorWindow(win);
+    closeEditorWindow(win, true);
   });
 
   // Close the splash window in case it was open
