@@ -1,12 +1,24 @@
 const { app, BrowserWindow } = require('electron');
+const ipc = require('electron-better-ipc');
 const path = require('path');
 const menu = require('./menu');
 const {
   quitApp,
+  openWindow,
   getActiveWindows,
+  closeSplashWindow,
   createSplashWindow,
   createEditorWindow,
 } = require('./helpers');
+
+ipc.answerRenderer('openProject', async (p) => {
+  openWindow(p);
+  closeSplashWindow();
+});
+
+ipc.answerRenderer('closeSplashWindow', async () => {
+  closeSplashWindow();
+});
 
 function createWindows(windows) {
   windows.forEach((win) => {

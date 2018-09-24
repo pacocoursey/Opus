@@ -164,10 +164,15 @@ function openDialog() {
 
 /**
  * Opens a new editor window.
+ * takes a path as an argument, or opens a dialog to get a path
  */
 
-function openWindow() {
-  const folderPath = openDialog();
+function openWindow(p) {
+  let folderPath = p;
+
+  if (!folderPath) {
+    folderPath = openDialog();
+  }
 
   if (!folderPath) {
     return;

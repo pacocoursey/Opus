@@ -1,4 +1,49 @@
+const path = require('path');
 const ipc = require('electron-better-ipc');
+const settings = require('electron-settings');
+
+const aside = document.querySelector('aside');
+const footer = document.querySelector('footer');
+
+function listItem(p) {
+  const itemDiv = document.createElement('div');
+  const nameDiv = document.createElement('div');
+  const pathDiv = document.createElement('div');
+
+  itemDiv.classList.add('list-item');
+  itemDiv.setAttribute('data-path', p);
+  nameDiv.classList.add('name');
+  nameDiv.innerText = path.basename(p);
+  pathDiv.classList.add('path');
+  pathDiv.innerText = path.dirname(p);
+
+  itemDiv.appendChild(nameDiv);
+  itemDiv.appendChild(pathDiv);
+
+  return itemDiv;
+}
+
+if (settings.has('windows')) {
+  const windows = Object.values(settings.get('windows'));
+
+  if (windows.length === 0) {
+    aside.innerHTML = '<div class="no-recent">No Recent Folders</div>';
+  } else {
+    const list = document.createElement('div');
+    list.classList.add('list');
+
+    windows.forEach((win) => {
+      const item = listItem(win.path);
+      list.appendChild(item);
+    });
+
+    list.children[0].classList.add('active');
+
+    aside.appendChild(list);
+  }
+} else {
+  aside.innerHTML = '<div class="no-recent">No Recent Folders</div>';
+}
 
 const removeActive = () => {
   document.querySelector('.active').classList.remove('active');
@@ -22,10 +67,10 @@ const get = (increment) => {
   return list.children[i + increment];
 };
 
-const openPath = async (path) => {
-  console.log(`Open path: ${path}`);
+const openPath = async (p) => {
+  console.log(`Open path: ${p}`);
 
-  const ret = await ipc.callMain('openProject', path);
+  const ret = await ipc.callMain('openProject', p);
   console.log(ret);
 };
 
@@ -44,17 +89,12 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-document.querySelector('footer').addEventListener('click', async () => {
-  const ret = await ipc.callMain('openDialog');
-
-  if (ret) {
-    const r = await ipc.callMain('openProject', ret);
-    console.log(r);
-  }
+footer.addEventListener('click', async () => {
+  await ipc.callMain('openProject');
 });
 
 document.querySelector('.close').addEventListener('click', async () => {
-  ipc.callMain('closeFocusedWindow');
+  ipc.callMain('closeSplashWindow');
 });
 
 const listItems = document.querySelectorAll('.list-item');
