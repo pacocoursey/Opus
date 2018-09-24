@@ -207,8 +207,6 @@ module.exports = {
 
     localHasChanges = store.get('changes');
 
-    console.log(localHasChanges);
-
     // On change, update the flag
     quill.on('text-change', () => {
       let diff;

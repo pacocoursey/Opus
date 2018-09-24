@@ -75,10 +75,7 @@ const get = (increment) => {
 };
 
 const openPath = async (p) => {
-  console.log(`Open path: ${p}`);
-
-  const ret = await ipc.callMain('openProject', p);
-  console.log(ret);
+  await ipc.callMain('openProject', p);
 };
 
 document.addEventListener('keydown', (e) => {

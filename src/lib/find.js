@@ -1,7 +1,9 @@
 const { quill } = require('./quill');
+const footer = require('./footer');
 
 const editor = document.querySelector('.ql-editor');
 const go = document.querySelector('.goto');
+const foot = document.querySelector('footer');
 
 const el = document.querySelector('.find');
 const input = document.querySelector('.find-input');
@@ -24,6 +26,11 @@ module.exports = {
     if (active && !isReplace) {
       input.focus();
       return;
+    }
+
+    // Need to show the footer before we can show the find
+    if (foot.classList.contains('hide')) {
+      footer.toggle();
     }
 
     // Show, reset, and focus the input
@@ -74,6 +81,7 @@ module.exports = {
   escape(e) {
     // Escape key was pressed
     if (e.keyCode === 27) {
+      e.preventDefault();
       module.exports.deactivate();
     } else if (e.keyCode === 9) {
       // Tab key was pressed, shift focus manually

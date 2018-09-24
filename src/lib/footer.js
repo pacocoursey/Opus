@@ -1,6 +1,7 @@
 const { quill } = require('./quill');
+const store = require('./store');
 
-const stats = document.querySelector('.stats');
+const footer = document.querySelector('footer');
 const position = document.querySelector('.position');
 const selection = document.querySelector('.selection');
 const fileStats = document.querySelector('.file-stats');
@@ -9,13 +10,25 @@ const time = document.querySelector('.time');
 
 module.exports = {
   init() {
+    let isVisible = true;
+
+    if (store.has('footer')) {
+      isVisible = store.get('footer');
+    }
+
+    if (!isVisible) {
+      footer.classList.add('hide');
+    }
+
     module.exports.updateFileStats();
 
     module.exports.updateTime();
     setInterval(module.exports.updateTime, 10000);
   },
   toggle() {
-    stats.classList.toggle('hide');
+    footer.classList.toggle('hide');
+    const isHidden = footer.classList.contains('hide');
+    store.set('footer', !isHidden);
   },
   updateTime() {
     const date = new Date();

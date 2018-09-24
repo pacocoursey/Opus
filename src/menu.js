@@ -262,6 +262,11 @@ const template = [
         accelerator: 'CmdOrCtrl+D',
         click() { send('theme', 'toggle'); },
       },
+      {
+        label: 'Toggle Footer',
+        accelerator: 'Cmd+Alt+F',
+        click() { send('footer', 'toggle'); },
+      },
       { type: 'separator' },
       { role: 'reload' },
       { role: 'forcereload' },

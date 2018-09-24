@@ -16,7 +16,7 @@
   --highlight-text: var(--bg);
   --highlight-bg: var(--accent);
   --footer-text: rgb(173, 181, 189);
-  --footer-background: #f9f9f9;
+  --footer-bg: var(--aside-bg);
   --footer-border: #f0f0f0;
   --input-border: rgb(222, 226, 230);
   --editor-bg: var(--bg);
@@ -41,7 +41,7 @@
   --highlight-bg: var(--accent);
   --footer-text: #888;
   --footer-border: #282828;
-  --footer-background: #202020;
+  --footer-bg: var(--aside-bg);
   --input-border: #232223;
   --editor-bg: var(--fg);
   --editor-text: var(--text);
@@ -186,7 +186,7 @@ footer {
   -webkit-app-region: no-drag;
   color: var(--footer-text);
   border-top: 1px solid var(--footer-border);
-  background-color: var(--footer-background);
+  background-color: var(--footer-bg);
   line-height: 40px;
   position: absolute;
   bottom: 0;
@@ -197,7 +197,13 @@ footer {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  transition: var(--transition);
+  transform: translateY(0);
+  transition: var(--transition), transform 200ms ease-in;
+}
+
+footer.hide {
+  transform: translateY(40px);
+  transition: transform 200ms ease-out;
 }
 
 .stats {

@@ -1,7 +1,9 @@
 const { quill } = require('./quill');
 const find = require('./find');
+const footer = require('./footer');
 
 const editor = document.querySelector('.ql-editor');
+const foot = document.querySelector('footer');
 
 const el = document.querySelector('.goto');
 const input = document.querySelector('.goto-input');
@@ -13,6 +15,12 @@ module.exports = {
   activate() {
     if (active) {
       input.focus();
+      return;
+    }
+
+    // Need to show the footer before we can show the goto
+    if (foot.classList.contains('hide')) {
+      footer.toggle();
     }
 
     find.deactivate();
@@ -26,6 +34,7 @@ module.exports = {
   },
   keydown(e) {
     if (e.keyCode === 27) {
+      e.preventDefault();
       module.exports.deactivate();
     }
   },
