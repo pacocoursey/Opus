@@ -27,6 +27,16 @@ const splashWindowSettings = {
 };
 
 /**
+ * Close the splash BrowserWindow.
+ */
+
+function closeSplashWindow() {
+  if (splashWindow) {
+    splashWindow.close();
+  }
+}
+
+/**
  * Create the splash BrowserWindow.
  */
 
@@ -273,11 +283,12 @@ async function closeEditorWindow(win) {
   }
 
   if (obj.changes) {
-    const choice = saveDialog(path);
+    windows.get(obj.path).focus();
+    const choice = saveDialog(obj.path);
     switch (choice) {
       case 0: {
         // Save
-        const ret = await ipc.callRenderer(obj.window, 'save');
+        const ret = await ipc.callRenderer(windows.get(obj.path), 'save');
         if (!ret) throw new Error('Save called failed.');
         break;
       }
@@ -298,6 +309,10 @@ async function closeEditorWindow(win) {
   obj.active = false;
   settings.set(`windows.${obj.path}`, obj);
 
+  if (windows.length() === 0) {
+    createSplashWindow();
+  }
+
   return true;
 }
 
@@ -307,12 +322,13 @@ async function closeEditorWindow(win) {
  * each window object to be inactive with a null window.
  */
 
-function quitApp() {
+async function quitApp() {
   let wins = getActiveWindows();
   const changed = wins.filter(win => win.changes);
 
   for (let i = 0; i < changed.length; i += 1) {
-    const ret = closeEditorWindow(changed[i]);
+    /* eslint-disable-next-line */
+    const ret = await closeEditorWindow(changed[i]);
 
     // Either cancelled or some error thrown
     // do not continue closing windows and do not quit
@@ -329,6 +345,9 @@ function quitApp() {
     closeEditorWindow(win);
   });
 
+  // Close the splash window in case it was open
+  closeSplashWindow();
+
   app.exit();
 }
 
@@ -339,6 +358,7 @@ module.exports = {
   openWindow,
   closeWindow,
   getActiveWindows,
+  closeSplashWindow,
   closeEditorWindow,
   createSplashWindow,
   createEditorWindow,

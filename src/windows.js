@@ -32,10 +32,15 @@ function del(path) {
   delete windows[path];
 }
 
+function length() {
+  return Object.values(windows).length;
+}
+
 module.exports = {
   get,
   set,
   has,
   reset,
+  length,
   delete: del,
 };

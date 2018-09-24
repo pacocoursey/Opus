@@ -4,6 +4,7 @@ const {
   quitApp,
   openWindow,
   closeEditorWindow,
+  closeSplashWindow,
 } = require('./helpers');
 
 const template = [
@@ -56,7 +57,7 @@ const template = [
       {
         label: 'Open',
         accelerator: 'CmdOrCtrl+O',
-        click() { openWindow(); },
+        click() { openWindow(); closeSplashWindow(); },
       },
       { type: 'separator' },
       {
