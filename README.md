@@ -18,9 +18,16 @@ $ npm start
 
 Keep in mind this project is still under development.
 
-![Opus Screenshot](screenshot.png)
+![Opus Light Mode Screenshot](assets/screenshot-light.png)
+![Opus Dark Mode Screenshot](assets/screenshot-dark.png)
 
-## Features
+## Description
+
+Opus aims to be a mix between a text-editor and note-taking application. It reads and writes `.note` files from your native file system. This means it works well with tools like Dropbox for syncing files across your devices.
+
+Much like a code editor, Opus opens folders and allows you to edit the files inside. You can have multiple windows open, each with their own folder as a starting point.
+
+## Goals
 
 Features I'd like to implement:
 
