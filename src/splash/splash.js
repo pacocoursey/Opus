@@ -1,6 +1,7 @@
 const path = require('path');
 const ipc = require('electron-better-ipc');
 const settings = require('electron-settings');
+const { shell } = require('electron');
 
 const aside = document.querySelector('aside');
 const footer = document.querySelector('footer');
@@ -44,6 +45,12 @@ if (settings.has('windows')) {
 } else {
   aside.innerHTML = '<div class="no-recent">No Recent Folders</div>';
 }
+
+document.querySelectorAll('.link').forEach((link) => {
+  link.addEventListener('click', () => {
+    shell.openExternal('https://github.com/pacocoursey/Opus/');
+  });
+});
 
 const removeActive = () => {
   document.querySelector('.active').classList.remove('active');

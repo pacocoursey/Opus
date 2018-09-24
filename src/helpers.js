@@ -175,7 +175,7 @@ function openWindow(p) {
   }
 
   if (!folderPath) {
-    return;
+    return false;
   }
 
   if (settings.has(`windows.${folderPath}`)) {
@@ -184,7 +184,7 @@ function openWindow(p) {
     if (windows.has(folderPath)) {
       // There is already a BrowserWindow, focus it
       windows.get(folderPath).focus();
-      return;
+      return false;
     }
 
     // The path is not currently open, open a new window
@@ -194,6 +194,8 @@ function openWindow(p) {
     const project = createNewProject(folderPath);
     createEditorWindow(project);
   }
+
+  return true;
 }
 
 /**
@@ -308,8 +310,11 @@ async function closeEditorWindow(win, quitFlag = false) {
     }
   }
 
-  windows.get(obj.path).close();
-  windows.delete(obj.path);
+  if (windows.has(obj.path)) {
+    windows.get(obj.path).close();
+    windows.delete(obj.path);
+  }
+
   obj.changes = false;
 
   // Don't set windows to inactive when we are quitting
@@ -331,9 +336,10 @@ async function closeEditorWindow(win, quitFlag = false) {
  */
 
 async function quitApp() {
-  let wins = getActiveWindows();
-  const changed = wins.filter(win => win.changes);
+  const nonChanged = Object.values(settings.get('windows')).filter(win => (win.active && !win.changes));
+  const changed = Object.values(settings.get('windows')).filter(win => win.changes);
 
+  // Loop through the changed windows first in case of cancel
   for (let i = 0; i < changed.length; i += 1) {
     /* eslint-disable-next-line */
     const ret = await closeEditorWindow(changed[i], true);
@@ -345,11 +351,8 @@ async function quitApp() {
     }
   }
 
-  // Update list of active windows
-  wins = getActiveWindows();
-
-  // Windows with changes have been handled, close them all
-  wins.forEach((win) => {
+  // Windows with changes have been handled, close the rest
+  nonChanged.forEach((win) => {
     closeEditorWindow(win, true);
   });
 

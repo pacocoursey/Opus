@@ -11,9 +11,13 @@ const {
   createEditorWindow,
 } = require('./helpers');
 
+// Catch unhandled promise rejections
+require('electron-unhandled')();
+
 ipc.answerRenderer('openProject', async (p) => {
-  openWindow(p);
-  closeSplashWindow();
+  const res = openWindow(p);
+
+  if (res) closeSplashWindow();
 });
 
 ipc.answerRenderer('closeSplashWindow', async () => {

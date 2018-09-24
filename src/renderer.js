@@ -34,6 +34,9 @@ require('./lib/spellcheck');
 // Disable file drop redirect
 require('electron-disable-file-drop');
 
+// Catch unhandled promise rejections
+require('electron-unhandled')();
+
 // Init all the modules
 theme.init();
 quill.init();
