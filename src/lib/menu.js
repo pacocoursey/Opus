@@ -294,10 +294,16 @@ const template = [
   },
 ];
 
+/**
+ * Initialize the application menu
+ */
+
+function init() {
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 module.exports = {
-  init() {
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-  },
+  init,
   template,
 };
