@@ -7,6 +7,7 @@ const footer = require('./footer');
 const store = require('./store');
 
 let activeFile = '';
+let saveFlag = false;
 let localHasChanges = false;
 let initial = '';
 const empty = new Delta([
@@ -41,6 +42,16 @@ const removeActive = function removeActiveClassFromSidebar() {
 };
 
 module.exports = {
+  reload() {
+    // If the current file has changed, and it was not a local save
+    // reload the document contents
+    if (!saveFlag) {
+      console.warn('Reloading file from external change..');
+      module.exports.read(activeFile);
+    }
+
+    saveFlag = false;
+  },
   read(p) {
     if (!p || p === '') { throw new Error('Cannot read from empty path.'); }
 
@@ -108,6 +119,9 @@ module.exports = {
     return true;
   },
   save() {
+    // Indicate that this is a local change to the file
+    saveFlag = true;
+
     // If file does not exist, save it somewhere
     if (!activeFile || activeFile === '') {
       const choice = module.exports.saveDialog();

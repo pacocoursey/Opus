@@ -31,8 +31,8 @@ Much like a code editor, Opus opens folders and allows you to edit the files ins
 
 Features I'd like to implement:
 
-- [ ] Automatically update file contents if edited elsewhere
 - [ ] Drag and drop to move files in the tree-view
+- [X] Automatically update file contents if edited elsewhere
 - [X] Ability to have multiple projects (folders) open at once
 - [X] Setting to hide and show footer
 - [X] Filter files to match only .note files

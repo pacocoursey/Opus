@@ -38,6 +38,9 @@ module.exports = {
     const watcher = chokidar.watch(activeProject, {
       ignored: /(^|[/\\])\../,
       persistent: true,
+      awaitWriteFinish: {
+        stabilityThreshold: 300,
+      },
     });
 
     // Event listeners
@@ -91,6 +94,11 @@ module.exports = {
       // Check if removed file is active in the editor
       watcher.on('unlink', (p) => {
         if (editor.get() === p) { editor.reset(); }
+      });
+
+      // Check if changed file is active in the editor
+      watcher.on('change', (p) => {
+        if (editor.get() === p) { editor.reload(); }
       });
 
       watcher.on('all', (() => {
