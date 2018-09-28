@@ -32,7 +32,6 @@ Features I'd like to implement:
 
 ### v2.0.0
 
-- [ ] Improve the way cursor is displayed on first element of a list
 - [ ] Add an introductory window & flow
 - [ ] Support exporting note files as .txt, .pdf, and .md
 - [ ] Preferences window that allows customization of all UI colors
@@ -48,6 +47,7 @@ Features I'd like to implement:
 - [X] Improve sidebar design and general application feel
 - [X] Automatically update file contents if edited elsewhere
 - [X] Ability to have multiple projects (folders) open at once
+- [X] Improve the way cursor is displayed on first element of a list
 - [X] Add Escape keyboard shortcut to clear current cursor formatting
 - [X] Show document stats in the footer, improve cursor position stats
 
