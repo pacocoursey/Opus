@@ -12,7 +12,6 @@ Alternatively, you can run Opus locally from the command line:
 $ git clone https://github.com/pacocoursey/Opus.git
 $ cd opus
 $ npm install
-$ npm run rebuild     # rebuild native spellchecker module
 $ npm start
 ```
 
