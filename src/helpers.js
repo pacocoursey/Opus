@@ -88,17 +88,11 @@ function createEditorWindow(win) {
   // Save the BrowserWindow reference
   windows.set(win.path, w);
 
-  // TODO: check if this is fixed in Electron 3.0
   const { webContents } = w;
   webContents.on('did-finish-load', () => {
     webContents.setZoomFactor(1);
     webContents.setVisualZoomLevelLimits(1, 1);
     webContents.setLayoutZoomLevelLimits(0, 0);
-  });
-
-  // TODO: check if this is fixed in Electron 3.0
-  webContents.on('new-window', (e) => {
-    e.preventDefault();
   });
 
   w.loadURL(url.format({

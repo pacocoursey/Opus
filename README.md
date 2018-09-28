@@ -30,23 +30,29 @@ Much like a code editor, Opus opens folders and allows you to edit the files ins
 
 Features I'd like to implement:
 
-- [ ] Drag and drop to move files in the tree-view
-- [X] Automatically update file contents if edited elsewhere
-- [X] Ability to have multiple projects (folders) open at once
+### v2.0.0
+
+- [ ] Improve the way cursor is displayed on first element of a list
+- [ ] Add an introductory window & flow
+- [ ] Support exporting note files as .txt, .pdf, and .md
+- [ ] Preferences window that allows customization of all UI colors
+- [X] Find
+- [X] Goto
+- [X] Replace
+- [X] Dark Mode
+- [X] Spellchecker
+- [X] Add custom scroll bar to editor
+- [X] Show current time in the footer
 - [X] Setting to hide and show footer
 - [X] Filter files to match only .note files
-- [X] Add Escape keybind to clear current cursor formatting
-- [X] Add custom scroll bar to editor
-- [X] Dark Mode
-- [X] Find
-- [X] Replace
-- [X] Goto
 - [X] Improve sidebar design and general application feel
-- [X] Show current time in the footer
+- [X] Automatically update file contents if edited elsewhere
+- [X] Ability to have multiple projects (folders) open at once
+- [X] Add Escape keyboard shortcut to clear current cursor formatting
 - [X] Show document stats in the footer, improve cursor position stats
-- [X] Spellchecker
 
-## Keybinds
+
+## Keyboard Shortcuts
 
 ### Application
 
