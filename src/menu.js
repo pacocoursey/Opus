@@ -75,13 +75,22 @@ const template = [
         },
       },
       {
-        label: 'Save As...',
-        accelerator: 'CmdOrCtrl+Shift+S',
-        click() {
-          // TODO: editor.saveAs();
-        },
+        label: 'Export To',
+        submenu: [
+          {
+            label: 'HTML...',
+            click() { send('editor', 'exportEditor', 'html'); },
+          },
+          {
+            label: 'Markdown...',
+            click() { send('editor', 'exportEditor', 'md'); },
+          },
+          {
+            label: 'Plain Text...',
+            click() { send('editor', 'exportEditor', 'txt'); },
+          },
+        ],
       },
-      // TODO: exports
     ],
   },
   {

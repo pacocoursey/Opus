@@ -231,7 +231,7 @@ function send(obj, func, params) {
   webContents.send('message', {
     module: obj,
     method: func,
-    paramteres: params,
+    parameters: params,
   });
 }
 

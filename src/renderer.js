@@ -46,8 +46,8 @@ contextMenu.init();
 footer.init();
 
 ipcRenderer.on('message', (e, d) => {
-  const { method, module, params } = d;
-  modules[module][method](params);
+  const { method, module, parameters } = d;
+  modules[module][method](parameters);
 });
 
 // Save editor contents

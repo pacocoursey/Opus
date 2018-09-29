@@ -2,10 +2,12 @@ const { app, dialog } = require('electron').remote;
 const Delta = require('quill-delta');
 const fs = require('fs');
 const path = require('path');
+const Turndown = require('turndown');
 const { quill } = require('./quill');
 const footer = require('./footer');
 const store = require('./store');
 
+const turndownService = new Turndown();
 let activeFile = '';
 let saveFlag = false;
 let localHasChanges = false;
@@ -42,6 +44,36 @@ const removeActive = function removeActiveClassFromSidebar() {
 };
 
 module.exports = {
+  exportEditor(type) {
+    const output = module.exports.exportFile(type);
+
+    if (!output) throw new Error('Could not export this file.');
+
+    // Open save dialog to get an output path
+    const choice = module.exports.saveDialog(type);
+    if (!choice) return;
+
+    // Write the output to the file
+    fs.writeFile(choice, output, (error) => {
+      if (error) { throw new Error(error); }
+    });
+  },
+  exportFile(type) {
+    if (!type) throw new Error('Export called without an export type.');
+
+    const html = quill.container.firstChild.innerHTML;
+
+    switch (type) {
+      case 'html':
+        return html;
+      case 'md':
+        return turndownService.turndown(html);
+      case 'txt':
+        return quill.getText();
+      default:
+        return false;
+    }
+  },
   reload() {
     // If the current file has changed, and it was not a local save
     // reload the document contents
@@ -82,12 +114,12 @@ module.exports = {
       if (error) { throw new Error(error); }
     });
   },
-  saveDialog() {
+  saveDialog(extension = 'note') {
     const choice = dialog.showSaveDialog({
       defaultPath: store.get('path'),
       filters: [{
         name: 'Custom File Type',
-        extensions: ['note'],
+        extensions: [extension],
       }],
     });
 
