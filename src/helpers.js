@@ -6,6 +6,7 @@ const settings = require('electron-settings');
 const windows = require('./windows');
 
 let splashWindow;
+let introWindow;
 
 const editorWindowSettings = {
   width: 960,
@@ -25,6 +26,54 @@ const splashWindowSettings = {
   show: false,
   icon: app.image,
 };
+
+const introWindowSettings = {
+  width: 800,
+  height: 450,
+  // resizable: false,
+  frame: false,
+  show: false,
+  icon: app.image,
+};
+
+/**
+ * Close the intro BrowserWindow.
+ */
+
+function closeIntroWindow() {
+  if (introWindow) {
+    introWindow.close();
+  }
+}
+
+/**
+ * Create the intro BrowserWindow.
+ */
+
+function createIntroWindow() {
+  introWindow = new BrowserWindow(introWindowSettings);
+
+  const { webContents } = introWindow;
+  webContents.on('did-finish-load', () => {
+    webContents.setZoomFactor(1);
+    webContents.setVisualZoomLevelLimits(1, 1);
+    webContents.setLayoutZoomLevelLimits(0, 0);
+  });
+
+  introWindow.loadURL(url.format({
+    pathname: path.join(__dirname, '/intro/intro.html'),
+    protocol: 'file:',
+    slashes: true,
+  }));
+
+  introWindow.once('ready-to-show', () => {
+    introWindow.show();
+  });
+
+  introWindow.on('closed', () => {
+    introWindow = null;
+  });
+}
 
 /**
  * Close the splash BrowserWindow.
@@ -48,10 +97,6 @@ function createSplashWindow() {
     webContents.setZoomFactor(1);
     webContents.setVisualZoomLevelLimits(1, 1);
     webContents.setLayoutZoomLevelLimits(0, 0);
-  });
-
-  webContents.on('new-window', (e) => {
-    e.preventDefault();
   });
 
   splashWindow.loadURL(url.format({
@@ -363,7 +408,9 @@ module.exports = {
   openWindow,
   closeWindow,
   getActiveWindows,
+  closeIntroWindow,
   closeSplashWindow,
+  createIntroWindow,
   closeEditorWindow,
   createSplashWindow,
   createEditorWindow,

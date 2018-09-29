@@ -43,7 +43,7 @@ Features I'd like to implement:
 - [X] Show current time in the footer
 - [X] Setting to hide and show footer
 - [X] Filter files to match only .note files
-- [X] Support exporting note files as .txt, .pdf, and .md
+- [X] Support exporting note files as .txt, .html, and .md
 - [X] Improve sidebar design and general application feel
 - [X] Automatically update file contents if edited elsewhere
 - [X] Ability to have multiple projects (folders) open at once

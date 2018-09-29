@@ -310,7 +310,6 @@ const template = [
   },
 ];
 
-
 function createMenu() {
   const m = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(m);

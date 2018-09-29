@@ -1,11 +1,14 @@
 const { app, BrowserWindow } = require('electron');
 const ipc = require('electron-better-ipc');
 const path = require('path');
+const home = require('os').homedir();
+const fs = require('fs-extra');
 const menu = require('./menu');
 const {
   quitApp,
   openWindow,
   getActiveWindows,
+  createIntroWindow,
   closeSplashWindow,
   createSplashWindow,
   createEditorWindow,
@@ -30,19 +33,25 @@ function createWindows(windows) {
   });
 }
 
-app.on('ready', () => {
-  const windows = getActiveWindows();
+app.on('ready', async () => {
+  const isFirstRun = !await fs.pathExists(path.join(home, '.opus'));
 
-  if (windows.length === 0) {
-    createSplashWindow();
+  if (isFirstRun) {
+    createIntroWindow();
   } else {
-    createWindows(windows);
+    const windows = getActiveWindows();
+
+    if (windows.length === 0) {
+      createSplashWindow();
+    } else {
+      createWindows(windows);
+    }
+
+    // Set app image path for dialogs
+    app.image = path.join(__dirname, '../icon.png');
+
+    menu.createMenu();
   }
-
-  // Set app image path for dialogs
-  app.image = path.join(__dirname, '../icon.png');
-
-  menu.createMenu();
 });
 
 app.on('before-quit', (e) => {
