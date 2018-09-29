@@ -33,7 +33,6 @@ Features I'd like to implement:
 ### v2.0.0
 
 - [ ] Add an introductory window & flow
-- [ ] Support exporting note files as .txt, .pdf, and .md
 - [ ] Preferences window that allows customization of all UI colors
 - [X] Find
 - [X] Goto
@@ -44,6 +43,7 @@ Features I'd like to implement:
 - [X] Show current time in the footer
 - [X] Setting to hide and show footer
 - [X] Filter files to match only .note files
+- [X] Support exporting note files as .txt, .pdf, and .md
 - [X] Improve sidebar design and general application feel
 - [X] Automatically update file contents if edited elsewhere
 - [X] Ability to have multiple projects (folders) open at once
