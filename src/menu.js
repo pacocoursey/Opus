@@ -12,19 +12,21 @@ const template = [
     label: 'Opus',
     submenu: [
       {
-        label: 'About',
+        label: 'About Opus',
         click() { shell.openExternal('https://github.com/pacocoursey/Opus/'); },
       },
       {
         type: 'separator',
       },
       {
-        label: 'Preferences',
+        label: 'Preferences...',
         accelerator: 'CmdOrCtrl+,',
         click() {
           // TODO: preferences window
         },
       },
+      { type: 'separator' },
+      { role: 'services' },
       { type: 'separator' },
       {
         label: 'Hide Opus',
@@ -38,7 +40,7 @@ const template = [
       },
       { type: 'separator' },
       {
-        label: 'Quit',
+        label: 'Quit Opus',
         accelerator: 'CmdOrCtrl+q',
         click() { quitApp(); },
       },
@@ -74,6 +76,7 @@ const template = [
           send('editor', 'save');
         },
       },
+      { type: 'separator' },
       {
         label: 'Export To',
         submenu: [

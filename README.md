@@ -34,6 +34,8 @@ Features I'd like to implement:
 
 - [ ] Add an introductory window & flow
 - [ ] Preferences window that allows customization of all UI colors
+- [ ] Update menu based on active window
+- [ ] Show recent projects based on most recent edit
 - [X] Find
 - [X] Goto
 - [X] Replace
