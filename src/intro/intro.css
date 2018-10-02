@@ -1,3 +1,20 @@
+:root {
+  --lighter-blue: #80d8ff;
+  --light-blue: #90caf9;
+  --blue: #00b0ff;
+  --lightest-gray: #f9f9f9;
+  --lighter-gray: #f0f0f0;
+  --light-gray: #e0e0e0;
+  --gray: #d2d2d3;
+  --dark-gray: rgb(173, 181, 189);
+  --box-shadow-default:
+    0 0 30px 0 rgba(0, 0, 0, 0.08),
+    0 1px 18px 0 rgba(0, 0, 0, 0.05);
+  --box-shadow-hover:
+    0 0 110px 0 rgba(0, 0, 0, 0.08),
+    0 10px 25px 0 rgba(0, 0, 0, 0.05);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -12,13 +29,142 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   -webkit-app-region: drag;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 .wrapper {
   height: 100vh;
   width: 100vw;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+main {
+  -webkit-app-region: no-drag;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.content.active {
+  visibility: visible;
+}
+
+.content h1 {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.gray {
+  color: var(--dark-gray);
+}
+
+.logo {
+  width: 100px;
+}
+
+footer {
+  -webkit-app-region: no-drag;
+  border-top: 1px solid var(--lighter-gray);
+  background-color: var(--lightest-gray);
+  flex-shrink: 0;
+  height: 70px;
+  padding: 0 20px 0 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.sections {
+  flex-basis: 100%;
+  display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+
+.section {
+  font-size: 14px;
+  margin-right: 50px;
+  color: var(--gray);
+}
+
+.section.active {
+  color: #000;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.next {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  background-color: var(--blue);
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  margin-left: 20px;
+}
+
+.next:active {
+  background-color: var(--lighter-blue);
+}
+
+.back {
+  visibility: hidden;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: 1px solid var(--gray);
+  color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.back.active {
+  visibility: visible;
+}
+
+.back:active {
+  background-color: var(--lighter-gray);
+}
+
+.ql-toolbar {
+  display: none;
+}
+
+.ql-container {
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  /* border: none !important; */
 }

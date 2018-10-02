@@ -5,15 +5,74 @@
     <title></title>
 
     <!-- Stylesheets -->
+    <link rel="stylesheet" href="../static/css/quill.css">
     <link rel="stylesheet" href="./intro.css">
   </head>
   <body>
 
     <div class="wrapper">
-      <h1>Introduction window</h1>
+      <main>
+
+        <div class="content active">
+          <div class="editor">
+
+          </div>
+        </div>
+
+        <div class="content">
+          <img src="../../assets/logo-no-shadow.png" class="logo" alt="">
+          <h1>Welcome to Opus</h1>
+          <p class="gray">a minimal note-taking app.</p>
+        </div>
+
+        <div class="content">
+          <h1>3</h1>
+        </div>
+      </main>
+
+      <footer>
+        <div class="sections">
+          <div class="section active">
+            Welcome
+          </div>
+          <div class="section">
+            Introduction
+          </div>
+
+          <div class="section">
+            Finish
+          </div>
+        </div>
+
+        <div class="buttons">
+          <div class="back">
+            Back
+          </div>
+
+          <div class="next">
+            Next
+          </div>
+        </div>
+
+
+      </footer>
     </div>
 
     <!-- Scripts -->
     <script type="text/javascript" src="./intro.js"></script>
+    <script type="text/javascript">
+      const Quill = require('quill');
+      const quill = new Quill('.editor', {
+        debug: 'error',
+        theme: 'snow',
+        modules: {
+          history: {
+            userOnly: true,
+          },
+        },
+      });
+
+      quill.setText('Welcome to Bear.');
+    </script>
   </body>
 </html>
