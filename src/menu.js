@@ -1,4 +1,4 @@
-const { shell, Menu } = require('electron');
+const { app, shell, Menu } = require('electron');
 const {
   send,
   quitApp,
@@ -7,7 +7,7 @@ const {
   closeSplashWindow,
 } = require('./helpers');
 
-function buildMenu(enabled = true, specialCase = true) {
+function buildMenu(isEnabled = true, isOpenEnabled = true) {
   return [
     {
       label: 'Opus',
@@ -52,7 +52,7 @@ function buildMenu(enabled = true, specialCase = true) {
       submenu: [
         {
           label: 'New',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+N',
           click() {
             send('editor', 'reset');
@@ -60,14 +60,14 @@ function buildMenu(enabled = true, specialCase = true) {
         },
         {
           label: 'Open',
-          enabled: specialCase,
+          enabled: isOpenEnabled,
           accelerator: 'CmdOrCtrl+O',
           click() { openWindow(); closeSplashWindow(); },
         },
         { type: 'separator' },
         {
           label: 'Close',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+W',
           click() {
             send('editor', 'reset');
@@ -75,7 +75,7 @@ function buildMenu(enabled = true, specialCase = true) {
         },
         {
           label: 'Save...',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+S',
           click() {
             send('editor', 'save');
@@ -87,17 +87,17 @@ function buildMenu(enabled = true, specialCase = true) {
           submenu: [
             {
               label: 'HTML...',
-              enabled,
+              enabled: isEnabled,
               click() { send('editor', 'exportEditor', 'html'); },
             },
             {
               label: 'Markdown...',
-              enabled,
+              enabled: isEnabled,
               click() { send('editor', 'exportEditor', 'md'); },
             },
             {
               label: 'Plain Text...',
-              enabled,
+              enabled: isEnabled,
               click() { send('editor', 'exportEditor', 'txt'); },
             },
           ],
@@ -130,30 +130,30 @@ function buildMenu(enabled = true, specialCase = true) {
           submenu: [
             {
               label: 'Find...',
-              enabled,
+              enabled: isEnabled,
               accelerator: 'CmdOrCtrl+F',
               click() { send('find', 'activate', false); },
             },
             {
               label: 'Find and Replace...',
-              enabled,
+              enabled: isEnabled,
               accelerator: 'CmdOrCtrl+Shift+F',
               click() { send('find', 'activate', true); },
             },
             {
               label: 'Replace All',
-              enabled,
+              enabled: isEnabled,
               click() { send('find', 'replaceAll'); },
             },
             {
               label: 'Find Next',
-              enabled,
+              enabled: isEnabled,
               accelerator: 'CmdOrCtrl+G',
               click() { send('find', 'find', 1); },
             },
             {
               label: 'Find Previous',
-              enabled,
+              enabled: isEnabled,
               accelerator: 'CmdOrCtrl+Shift+G',
               click() { send('find', 'find', -1); },
             },
@@ -162,7 +162,7 @@ function buildMenu(enabled = true, specialCase = true) {
         { type: 'separator' },
         {
           label: 'Go to Line',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Alt+G',
           click() { send('go', 'activate'); },
         },
@@ -173,122 +173,122 @@ function buildMenu(enabled = true, specialCase = true) {
       submenu: [
         {
           label: 'Escape Current',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'esc',
           click() { send('quill', 'escape'); },
         },
         { type: 'separator' },
         {
           label: 'Separator',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Shift+H',
           click() { send('quill', 'separator'); },
         },
         { type: 'separator' },
         {
           label: 'Heading 1',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+1',
           click() { send('quill', 'h1'); },
         },
         {
           label: 'Heading 2',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+2',
           click() { send('quill', 'h2'); },
         },
         {
           label: 'Heading 3',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+3',
           click() { send('quill', 'h3'); },
         },
         { type: 'separator' },
         {
           label: 'Bold',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+B',
           click() { send('quill', 'bold'); },
         },
         {
           label: 'Italic',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+I',
           click() { send('quill', 'italic'); },
         },
         {
           label: 'Underline',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+U',
           click() { send('quill', 'underline'); },
         },
         {
           label: 'Strikethrough',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Shift+S',
           click() { send('quill', 'strikethrough'); },
         },
         { type: 'separator' },
         {
           label: 'List',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+L',
           click() { send('quill', 'list'); },
         },
         {
           label: 'Ordered List',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Shift+L',
           click() { send('quill', 'orderedList'); },
         },
         { type: 'separator' },
         {
           label: 'Quote',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+.',
           click() { send('quill', 'quote'); },
         },
         {
           label: 'Code',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Shift+C',
           click() { send('quill', 'code'); },
         },
         {
           label: 'Codeblock',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Alt+C',
           click() { send('quill', 'codeblock'); },
         },
         { type: 'separator' },
         {
           label: 'Superscript',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Alt+Plus',
           click() { send('quill', 'superscript'); },
         },
         {
           label: 'Subscript',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Alt+-',
           click() { send('quill', 'subscript'); },
         },
         { type: 'separator' },
         {
           label: 'Indent',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+]',
           click() { send('quill', 'indent'); },
         },
         {
           label: 'Outdent',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+[',
           click() { send('quill', 'outdent'); },
         },
         {
           label: 'Clear Formatting',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+0',
           click() { send('quill', 'clear'); },
         },
@@ -299,7 +299,7 @@ function buildMenu(enabled = true, specialCase = true) {
       submenu: [
         {
           label: 'Toggle Sidebar',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+\\',
           click() { send('sidebar', 'toggle'); },
         },
@@ -310,7 +310,7 @@ function buildMenu(enabled = true, specialCase = true) {
         },
         {
           label: 'Toggle Footer',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'Cmd+Alt+F',
           click() { send('footer', 'toggle'); },
         },
@@ -331,7 +331,7 @@ function buildMenu(enabled = true, specialCase = true) {
       submenu: [
         {
           label: 'Close Window',
-          enabled,
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Shift+W',
           click() { closeEditorWindow(); },
         },
@@ -365,7 +365,7 @@ function createIntroMenu() {
  */
 
 function createSplashMenu() {
-  const template = buildMenu(false);
+  const template = buildMenu(false, true);
   const m = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(m);
 }
@@ -375,7 +375,7 @@ function createSplashMenu() {
  */
 
 function createEditorMenu() {
-  const template = buildMenu(true);
+  const template = buildMenu(true, true);
   const m = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(m);
 }

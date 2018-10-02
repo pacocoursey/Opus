@@ -67,7 +67,9 @@ function createIntroWindow() {
   }));
 
   introWindow.once('ready-to-show', () => {
-    introWindow.show();
+    setTimeout(() => {
+      introWindow.show();
+    }, 400);
   });
 
   introWindow.on('closed', () => {
@@ -375,25 +377,27 @@ async function closeEditorWindow(win, quitFlag = false) {
  */
 
 async function quitApp() {
-  const nonChanged = Object.values(settings.get('windows')).filter(win => (win.active && !win.changes));
-  const changed = Object.values(settings.get('windows')).filter(win => win.changes);
+  if (settings.has('windows')) {
+    const nonChanged = Object.values(settings.get('windows')).filter(win => (win.active && !win.changes));
+    const changed = Object.values(settings.get('windows')).filter(win => win.changes);
 
-  // Loop through the changed windows first in case of cancel
-  for (let i = 0; i < changed.length; i += 1) {
-    /* eslint-disable-next-line */
-    const ret = await closeEditorWindow(changed[i], true);
+    // Loop through the changed windows first in case of cancel
+    for (let i = 0; i < changed.length; i += 1) {
+      /* eslint-disable-next-line */
+      const ret = await closeEditorWindow(changed[i], true);
 
-    // Either cancelled or some error thrown
-    // do not continue closing windows and do not quit
-    if (ret === false) {
-      return;
+      // Either cancelled or some error thrown
+      // do not continue closing windows and do not quit
+      if (ret === false) {
+        return;
+      }
     }
-  }
 
-  // Windows with changes have been handled, close the rest
-  nonChanged.forEach((win) => {
-    closeEditorWindow(win, true);
-  });
+    // Windows with changes have been handled, close the rest
+    nonChanged.forEach((win) => {
+      closeEditorWindow(win, true);
+    });
+  }
 
   app.exit();
 }

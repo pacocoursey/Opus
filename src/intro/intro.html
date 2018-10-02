@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Start</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="../static/css/quill.css">
@@ -14,19 +14,42 @@
       <main>
 
         <div class="content active">
-          <div class="editor">
-
-          </div>
-        </div>
-
-        <div class="content">
           <img src="../../assets/logo-no-shadow.png" class="logo" alt="">
           <h1>Welcome to Opus</h1>
           <p class="gray">a minimal note-taking app.</p>
         </div>
 
         <div class="content">
-          <h1>3</h1>
+          <div class="list">
+            <div class="list-item">
+              <div class="number"><div>1</div></div>
+              <div class="list-text">
+                <div class="title">Open a folder</div>
+                <div class="description">The folder contents are shown in the sidebar. You can create, rename, and delete files there.</div>
+              </div>
+            </div>
+
+            <div class="list-item">
+              <div class="number"><div>2</div></div>
+              <div class="list-text">
+                <div class="title">Create a note</div>
+                <div class="description">Use the sidebar to create a new <code>.note</code> file. Click on it to open it in the editor.</div>
+              </div>
+            </div>
+
+            <div class="list-item">
+              <div class="number"><div>3</div></div>
+              <div class="list-text">
+                <div class="title">Write</div>
+                <div class="description">Start your work! You can find formatting options and their keyboard shortcuts in the menu.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content">
+          <h1>That's it.</h1>
+          <p class="gray">enjoy using Opus.</p>
         </div>
       </main>
 
@@ -60,19 +83,5 @@
 
     <!-- Scripts -->
     <script type="text/javascript" src="./intro.js"></script>
-    <script type="text/javascript">
-      const Quill = require('quill');
-      const quill = new Quill('.editor', {
-        debug: 'error',
-        theme: 'snow',
-        modules: {
-          history: {
-            userOnly: true,
-          },
-        },
-      });
-
-      quill.setText('Welcome to Bear.');
-    </script>
   </body>
 </html>

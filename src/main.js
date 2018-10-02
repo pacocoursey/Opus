@@ -8,6 +8,7 @@ const {
   quitApp,
   openWindow,
   getActiveWindows,
+  closeIntroWindow,
   createIntroWindow,
   closeSplashWindow,
   createSplashWindow,
@@ -26,6 +27,13 @@ ipc.answerRenderer('openProject', async (p) => {
 
 ipc.answerRenderer('closeSplashWindow', async () => {
   closeSplashWindow();
+});
+
+ipc.answerRenderer('closeIntroWindow', async () => {
+  await fs.ensureFile(path.join(home, '.opus'));
+  closeIntroWindow();
+  createSplashWindow();
+  menu.createSplahMenu();
 });
 
 function createWindows(windows) {
@@ -68,11 +76,11 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-  const win = BrowserWindow.getFocusedWindow();
+  const allWindows = BrowserWindow.getAllWindows();
 
-  if (!win) {
+  if (allWindows.length === 0) {
     createSplashWindow();
   } else {
-    win.focus();
+    allWindows[0].focus();
   }
 });

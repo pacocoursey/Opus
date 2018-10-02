@@ -54,21 +54,29 @@ main {
 }
 
 .content {
+  user-select: none;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  visibility: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 50px;
+  transform: translateX(100%);
+  transition: transform 400ms ease-in-out;
 }
 
 .content.active {
-  visibility: visible;
+  transform: translateX(0);
+  transition: transform 400ms ease-in-out;
+}
+
+.content.slide-left {
+  transform: translateX(-100%);
+  transition: transform 400ms ease-in-out;
 }
 
 .content h1 {
@@ -82,6 +90,61 @@ main {
 
 .logo {
   width: 100px;
+}
+
+.list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-item {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.list-item .number {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.list-item .number > div {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--lightest-gray);
+  border: 1px solid var(--lighter-gray);
+  color: var(--dark-gray);
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.list-text .title {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.list-text .description {
+  font-size: 12px;
+  color: var(--dark-gray);
 }
 
 footer {
@@ -166,5 +229,4 @@ footer {
   flex: 1;
   height: 100%;
   width: 100%;
-  /* border: none !important; */
 }

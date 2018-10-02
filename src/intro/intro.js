@@ -1,4 +1,4 @@
-// const path = require('path');
+const ipc = require('electron-better-ipc');
 
 const back = document.querySelector('.back');
 const button = document.querySelector('.next');
@@ -6,14 +6,13 @@ const content = document.querySelector('main');
 const sections = document.querySelector('.sections');
 let index = 0;
 
-function transition(increment = 1) {
+async function transition(increment = 1) {
   const newIndex = index + increment;
 
   if (newIndex >= content.children.length
       || newIndex >= sections.children.length
       || newIndex < 0) {
-    console.log('Close this window and move on!');
-    // await fs.ensureFile(path.join(home, 'opus'));
+    await ipc.callMain('closeIntroWindow');
     return;
   }
 
@@ -36,6 +35,12 @@ function transition(increment = 1) {
   const activeSection = document.querySelector('.section.active');
   const nextContent = content.children[index];
   const nextSection = sections.children[index];
+
+  if (increment > 0) {
+    activeContent.classList.add('slide-left');
+  } else {
+    nextContent.classList.remove('slide-left');
+  }
 
   activeContent.classList.remove('active');
   activeSection.classList.remove('active');
