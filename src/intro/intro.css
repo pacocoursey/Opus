@@ -29,6 +29,7 @@ body {
   min-height: 100vh;
   min-width: 100vw;
   -webkit-app-region: drag;
+  user-select: none;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 

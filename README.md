@@ -32,26 +32,25 @@ Features I'd like to implement:
 
 ### v2.0.0
 
-- [ ] Add an introductory window & flow
 - [ ] Preferences window that allows customization of all UI colors
-- [ ] Update menu based on active window
 - [ ] Show recent projects based on most recent edit
-- [ ] Change document.title value for editor window to folder name
-- [ ] Change view menu items to checkboxes ([X] Dark Mode, etc...)
-- [ ] New logo
 - [X] Find
 - [X] Goto
 - [X] Replace
+- [X] New logo
 - [X] Dark Mode
 - [X] Spellchecker
 - [X] Add custom scroll bar to editor
 - [X] Show current time in the footer
 - [X] Setting to hide and show footer
+- [X] Add an introductory window & flow
+- [X] Update menu based on active window
 - [X] Filter files to match only .note files
 - [X] Support exporting note files as .txt, .html, and .md
 - [X] Improve sidebar design and general application feel
 - [X] Automatically update file contents if edited elsewhere
 - [X] Ability to have multiple projects (folders) open at once
+- [X] Change document.title value for editor window to file name
 - [X] Improve the way cursor is displayed on first element of a list
 - [X] Add Escape keyboard shortcut to clear current cursor formatting
 - [X] Show document stats in the footer, improve cursor position stats

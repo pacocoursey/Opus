@@ -305,6 +305,7 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
         },
         {
           label: 'Toggle Dark Mode',
+          enabled: isEnabled,
           accelerator: 'CmdOrCtrl+D',
           click() { send('theme', 'toggle'); },
         },

@@ -211,6 +211,9 @@ module.exports = {
     footer.setFile(path.basename(activeFile, path.extname(activeFile)));
     footer.updateFileStats();
 
+    // Update the document title
+    document.title = path.basename(activeFile);
+
     return true;
   },
   reset() {
