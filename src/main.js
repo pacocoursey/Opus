@@ -19,6 +19,7 @@ require('electron-unhandled')();
 
 ipc.answerRenderer('openProject', async (p) => {
   const res = openWindow(p);
+  menu.createEditorMenu();
 
   if (res) closeSplashWindow();
 });
@@ -38,19 +39,20 @@ app.on('ready', async () => {
 
   if (isFirstRun) {
     createIntroWindow();
+    menu.createIntroMenu();
   } else {
     const windows = getActiveWindows();
 
     if (windows.length === 0) {
       createSplashWindow();
+      menu.createSplashMenu();
     } else {
       createWindows(windows);
+      menu.createEditorMenu();
     }
 
     // Set app image path for dialogs
     app.image = path.join(__dirname, '../icon.png');
-
-    menu.createMenu();
   }
 });
 

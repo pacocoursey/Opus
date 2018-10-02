@@ -36,6 +36,9 @@ Features I'd like to implement:
 - [ ] Preferences window that allows customization of all UI colors
 - [ ] Update menu based on active window
 - [ ] Show recent projects based on most recent edit
+- [ ] Change document.title value for editor window to folder name
+- [ ] Change view menu items to checkboxes ([X] Dark Mode, etc...)
+- [ ] New logo
 - [X] Find
 - [X] Goto
 - [X] Replace

@@ -395,9 +395,6 @@ async function quitApp() {
     closeEditorWindow(win, true);
   });
 
-  // Close the splash window in case it was open
-  closeSplashWindow();
-
   app.exit();
 }
 
