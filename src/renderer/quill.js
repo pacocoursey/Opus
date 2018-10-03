@@ -43,6 +43,15 @@ module.exports = {
   h3() {
     quill.format('header', '3', Quill.sources.USER);
   },
+  h4() {
+    quill.format('header', '4', Quill.sources.USER);
+  },
+  h5() {
+    quill.format('header', '5', Quill.sources.USER);
+  },
+  h6() {
+    quill.format('header', '6', Quill.sources.USER);
+  },
   bold() {
     quill.format('bold', !quill.getFormat().bold, Quill.sources.USER);
   },
