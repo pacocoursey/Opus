@@ -435,15 +435,15 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
         {
           type: 'separator',
         },
-        {
-          label: 'Preferences...',
-          accelerator: 'CmdOrCtrl+,',
-          click() {
-            // TODO: preferences window
-          },
-        },
+        // {
+        //   label: 'Preferences...',
+        //   accelerator: 'CmdOrCtrl+,',
+        //   click() {
+        //     // TODO: preferences window
+        //   },
+        // },
         { type: 'separator' },
-        { role: 'services' },
+        { role: 'services', submenu: [] },
         { type: 'separator' },
         {
           label: 'Hide Opus',
