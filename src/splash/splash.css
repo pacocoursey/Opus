@@ -15,6 +15,10 @@
     0 10px 25px 0 rgba(0, 0, 0, 0.05);
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -155,6 +159,7 @@ aside {
   justify-content: space-between;
   align-items: stretch;
   -webkit-app-region: no-drag;
+  overflow: auto;
 }
 
 .list {
@@ -206,7 +211,8 @@ aside {
 footer {
   -webkit-app-region: no-drag;
   cursor: pointer;
-  border-top: 1px solid var(--lighter-gray);
+  background-color: var(--lighter-gray);
+  border-top: 1px solid var(--light-gray);
   font-size: 12px;
   padding: 10px;
   flex-basis: 35px;
