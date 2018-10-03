@@ -369,11 +369,6 @@ footer.hide {
   padding-left: 0;
 }
 
-.ql-editor li {
-  height: 1.5rem;
-  line-height: normal;
-}
-
 .ql-editor ul > li::before,
 .ql-editor ul li::before {
   content: '\2022 ' !important; /* • */

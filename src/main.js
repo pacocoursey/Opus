@@ -14,6 +14,9 @@ const {
   createEditorWindow,
 } = require('./helpers');
 
+// Set app image path for dialogs
+app.image = path.join(__dirname, '../assets/logo-no-shadow.png');
+
 // Catch unhandled promise rejections
 require('electron-unhandled')();
 
@@ -60,9 +63,6 @@ app.on('ready', async () => {
     } else {
       createWindows(windows);
     }
-
-    // Set app image path for dialogs
-    app.image = path.join(__dirname, '../icon.png');
   }
 });
 

@@ -1,7 +1,8 @@
 {
-  "name": "Opus",
-  "version": "1.0.2",
-  "description": "a minimalistic text-editor.",
+  "name": "opus",
+  "productName": "Opus",
+  "version": "2.0.0-beta.1",
+  "description": "a minimal note-taking app",
   "main": "./src/main.js",
   "scripts": {
     "postinstall": "electron-rebuild",
@@ -37,11 +38,30 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.14.0"
   },
+  "bundle": {
+    "name": "Opus"
+  },
   "build": {
-    "appId": "com.electron.opus",
-    "productName": "Opus",
+    "appId": "com.pacocoursey.opus",
+    "files": [
+      "**/*"
+    ],
     "mac": {
       "category": "public.app-category.productivity"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 175,
+          "y": 225
+        },
+        {
+          "x": 365,
+          "y": 225,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     }
   }
 }

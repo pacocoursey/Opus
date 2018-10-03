@@ -1,6 +1,6 @@
 # Opus
 
-a minimalistic note-taking app.
+a minimal note-taking app.
 
 ## Installation
 
