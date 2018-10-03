@@ -8,6 +8,7 @@
     "start": "electron .",
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --ignore-path .gitignore --fix .",
+    "clean": "rm ~/.opus && rm ~/Library/Application\\ Support/Opus/Settings",
     "dist": "build"
   },
   "repository": "https://github.com/pacocoursey/Opus",

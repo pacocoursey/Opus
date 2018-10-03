@@ -1,6 +1,6 @@
 const { flatten, unflatten } = require('flat');
 const store = require('./store');
-const dirTree = require('./bin/directoryTree');
+const dirTree = require('./lib/directoryTree');
 
 const tree = {
   data: null,

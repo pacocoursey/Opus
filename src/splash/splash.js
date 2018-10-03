@@ -157,30 +157,24 @@ function initListeners() {
   });
 
   // Add active class to clicked item
-  // Add active class to right-clicked item
+  window.addEventListener('click', (e) => {
+    const element = e.target.closest('.list-item');
+
+    if (element) {
+      if (!element.classList.contains('active')) {
+        removeActive();
+        element.classList.add('active');
+      }
+    }
+  });
+
   // Open the window for double-clicked items
-  document.querySelectorAll('.list-item').forEach((item) => {
-    item.addEventListener('click', () => {
-      if (item.classList.contains('active')) {
-        return;
-      }
+  window.addEventListener('dblclick', (e) => {
+    const element = e.target.closest('.list-item');
 
-      removeActive();
-      item.classList.add('active');
-    });
-
-    item.addEventListener('contextmenu', () => {
-      if (item.classList.contains('active')) {
-        return;
-      }
-
-      removeActive();
-      item.classList.add('active');
-    });
-
-    item.addEventListener('dblclick', () => {
-      openPath(item.getAttribute('data-path'));
-    });
+    if (element) {
+      openPath(element.getAttribute('data-path'));
+    }
   });
 
   // Show a context menu when a list-item div is clicked.
@@ -190,6 +184,11 @@ function initListeners() {
     const element = e.target.closest('.list-item');
 
     if (element) {
+      if (!element.classList.contains('active')) {
+        removeActive();
+        element.classList.add('active');
+      }
+
       p = element.getAttribute('data-path');
       menu.popup(remote.getCurrentWindow());
     }
@@ -204,10 +203,8 @@ function removeProject(dataPath) {
   if (settings.has(`windows.${dataPath}`)) {
     settings.delete(`windows.${dataPath}`);
     populateSidebar();
-    initListeners();
   }
 }
-
 
 menu = Menu.buildFromTemplate([
   {

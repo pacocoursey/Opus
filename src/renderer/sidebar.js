@@ -1,5 +1,5 @@
 const chokidar = require('chokidar');
-const TreeView = require('./bin/tree');
+const TreeView = require('./lib/tree');
 const Tree = require('./tree');
 const editor = require('./editor');
 const store = require('./store');

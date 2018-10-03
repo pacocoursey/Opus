@@ -32,7 +32,6 @@ Features I'd like to implement:
 
 ### v2.0.0
 
-- [ ] Preferences window that allows customization of all UI colors
 - [X] Find
 - [X] Goto
 - [X] Replace

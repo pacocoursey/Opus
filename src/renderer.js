@@ -1,14 +1,14 @@
 const { remote, ipcRenderer } = require('electron');
 const ipc = require('electron-better-ipc');
-const contextMenu = require('./lib/contextMenu');
-const theme = require('./lib/theme');
-const quill = require('./lib/quill');
-const editor = require('./lib/editor');
-const sidebar = require('./lib/sidebar');
-const footer = require('./lib/footer');
-const store = require('./lib/store');
-const find = require('./lib/find');
-const go = require('./lib/goto');
+const contextMenu = require('./renderer/contextMenu');
+const theme = require('./renderer/theme');
+const quill = require('./renderer/quill');
+const editor = require('./renderer/editor');
+const sidebar = require('./renderer/sidebar');
+const footer = require('./renderer/footer');
+const store = require('./renderer/store');
+const find = require('./renderer/find');
+const go = require('./renderer/goto');
 
 // Maintain an object with these modules
 // for easy ipcRenderer access without eval()
@@ -29,7 +29,7 @@ const { path } = remote.getCurrentWindow();
 store.init(path);
 
 // Spellcheck in texteditor
-require('./lib/spellcheck');
+require('./renderer/spellcheck');
 
 // Disable file drop redirect
 require('electron-disable-file-drop');
