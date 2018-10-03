@@ -16,16 +16,6 @@ const windows = require('./windows');
 let splashWindow;
 let introWindow;
 
-const editorWindowSettings = {
-  width: 960,
-  height: 544,
-  minWidth: 500,
-  minHeight: 400,
-  frame: false,
-  show: false,
-  icon: app.image,
-};
-
 const splashWindowSettings = {
   width: 800,
   height: 450,
@@ -138,7 +128,17 @@ async function createEditorWindow(win) {
   // Set menu to intro menu.
   setEditorMenu();
 
-  const w = new BrowserWindow(editorWindowSettings);
+  const w = new BrowserWindow({
+    x: settings.get(`windows.${win.path}.state.x`) || undefined,
+    y: settings.get(`windows.${win.path}.state.y`) || undefined,
+    width: settings.get(`windows.${win.path}.state.width`) || 960,
+    height: settings.get(`windows.${win.path}.state.height`) || 544,
+    minWidth: 500,
+    minHeight: 400,
+    frame: false,
+    show: false,
+    icon: app.image,
+  });
 
   // Pass along the respective path to each window
   w.path = win.path;
@@ -171,6 +171,12 @@ async function createEditorWindow(win) {
   w.on('closed', () => {
     win.active = false;
     settings.set(`windows.${win.path}`, win);
+  });
+
+  ['resize', 'move', 'close'].forEach((e) => {
+    w.on(e, () => {
+      settings.set(`windows.${win.path}.state`, windows.get(win.path).getBounds());
+    });
   });
 
   return new Promise((resolve) => {

@@ -38,12 +38,14 @@ Features I'd like to implement:
 - [X] New logo
 - [X] Dark Mode
 - [X] Spellchecker
+- [X] Add h4, h5, h6 headings
 - [X] Add custom scroll bar to editor
 - [X] Show current time in the footer
 - [X] Setting to hide and show footer
 - [X] Add an introductory window & flow
 - [X] Update menu based on active window
 - [X] Filter files to match only .note files
+- [X] Remember window x, y, height, and width
 - [X] Show recent projects based on most recently opened
 - [X] Improve sidebar design and general application feel
 - [X] Support exporting note files as .txt, .html, and .md
@@ -53,7 +55,6 @@ Features I'd like to implement:
 - [X] Improve the way cursor is displayed on first element of a list
 - [X] Add Escape keyboard shortcut to clear current cursor formatting
 - [X] Show document stats in the footer, improve cursor position stats
-
 
 ## Keyboard Shortcuts
 
