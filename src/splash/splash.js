@@ -137,7 +137,8 @@ function initListeners() {
   // Send message to main process to prompt for a folder.
   footer.addEventListener('click', async () => {
     spinner.classList.add('active');
-    await ipc.callMain('openProject');
+    const res = await ipc.callMain('openProject');
+    if (!res) spinner.classList.remove('active');
   });
 
   // Open GitHub page when each link is clicked.

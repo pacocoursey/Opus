@@ -27,6 +27,7 @@ require('electron-unhandled')();
 ipc.answerRenderer('openProject', async (p) => {
   const res = await openWindow(p);
   if (res) closeSplashWindow();
+  return res;
 });
 
 ipc.answerRenderer('closeSplashWindow', async () => {
