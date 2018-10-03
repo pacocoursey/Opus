@@ -30,7 +30,7 @@ const splashWindowSettings = {
 const introWindowSettings = {
   width: 800,
   height: 450,
-  // resizable: false,
+  resizable: false,
   frame: false,
   show: false,
   icon: app.image,
