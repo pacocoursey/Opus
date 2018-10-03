@@ -72,6 +72,44 @@ body {
   transition: background-color 200ms, color 200ms;
 }
 
+.spinner {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner > div {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: var(--blue);
+  background-image: linear-gradient(to bottom right, #fff 10%, transparent 90%);
+  animation: spin 2s linear infinite;
+}
+
+.spinner.active {
+  visibility: visible;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 main {
   height: 100vh;
   flex-grow: 1;
@@ -184,7 +222,7 @@ aside {
 }
 
 .list-item.active > .path {
-  color: #efefef;
+  color: #fff;
 }
 
 .list-item > .name {

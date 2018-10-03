@@ -8,6 +8,7 @@ let menu;
 const { Menu } = remote;
 const aside = document.querySelector('aside');
 const footer = document.querySelector('footer');
+const spinner = document.querySelector('.spinner');
 
 /**
  * Create a new list-item div from the given path and return it.
@@ -82,6 +83,7 @@ function get(increment) {
  */
 
 async function openPath(dataPath) {
+  spinner.classList.add('active');
   await ipc.callMain('openProject', dataPath);
 }
 
@@ -122,6 +124,11 @@ function populateSidebar() {
  */
 
 function initListeners() {
+  // Listen for message to show spinner
+  ipc.answerMain('showSpinner', async () => {
+    spinner.classList.add('active');
+  });
+
   // Send message to main process to close the splash window.
   document.querySelector('.close').addEventListener('click', async () => {
     ipc.callMain('closeSplashWindow');
@@ -129,6 +136,7 @@ function initListeners() {
 
   // Send message to main process to prompt for a folder.
   footer.addEventListener('click', async () => {
+    spinner.classList.add('active');
     await ipc.callMain('openProject');
   });
 

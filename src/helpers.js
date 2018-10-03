@@ -134,7 +134,7 @@ function createSplashWindow() {
  * Create a new editor window and assign it to the settings object.
  */
 
-function createEditorWindow(win) {
+async function createEditorWindow(win) {
   // Set menu to intro menu.
   setEditorMenu();
 
@@ -168,16 +168,18 @@ function createEditorWindow(win) {
     slashes: true,
   }));
 
-  w.once('ready-to-show', () => {
-    // Delay here to let animations (slide, theme) finish before showing
-    setTimeout(() => {
-      windows.get(win.path).show();
-    }, 400);
-  });
-
   w.on('closed', () => {
     win.active = false;
     settings.set(`windows.${win.path}`, win);
+  });
+
+  return new Promise((resolve) => {
+    w.once('ready-to-show', () => {
+      setTimeout(() => {
+        windows.get(win.path).show();
+        resolve();
+      }, 400);
+    });
   });
 }
 
@@ -229,7 +231,7 @@ function openDialog() {
  * takes a path as an argument, or opens a dialog to get a path
  */
 
-function openWindow(p) {
+async function openWindow(p) {
   let folderPath = p;
 
   if (!folderPath) {
@@ -251,10 +253,10 @@ function openWindow(p) {
 
     // The path is not currently open, open a new window
     const obj = settings.get(`windows.${folderPath}`);
-    createEditorWindow(obj);
+    await createEditorWindow(obj);
   } else {
     const project = createNewProject(folderPath);
-    createEditorWindow(project);
+    await createEditorWindow(project);
   }
 
   return true;
@@ -478,10 +480,15 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
           label: 'Open',
           enabled: isOpenEnabled,
           accelerator: 'CmdOrCtrl+O',
-          click() {
-            const ret = openWindow();
+          async click() {
+            // If called from splash window, send a message to show spinner
+            if (BrowserWindow.getFocusedWindow() === splashWindow) {
+              ipc.callRenderer(splashWindow, 'showSpinner');
+            }
 
-            if (ret) {
+            const res = await openWindow();
+
+            if (res) {
               closeSplashWindow();
             }
           },
