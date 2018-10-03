@@ -129,6 +129,9 @@ function createEditorWindow(win) {
   // Set the window to active
   win.active = true;
 
+  // Update the last opened timestamp
+  win.opened = Date.now();
+
   // Save the object to settings
   settings.set(`windows.${win.path}`, win);
 
@@ -174,6 +177,7 @@ function createNewProject(projectPath) {
     path: projectPath,
     file: undefined,
     tree: undefined,
+    opened: undefined,
     active: false,
     footer: true,
     sidebar: true,

@@ -33,7 +33,6 @@ Features I'd like to implement:
 ### v2.0.0
 
 - [ ] Preferences window that allows customization of all UI colors
-- [ ] Show recent projects based on most recent edit
 - [X] Find
 - [X] Goto
 - [X] Replace
@@ -46,8 +45,9 @@ Features I'd like to implement:
 - [X] Add an introductory window & flow
 - [X] Update menu based on active window
 - [X] Filter files to match only .note files
-- [X] Support exporting note files as .txt, .html, and .md
+- [X] Show recent projects based on most recently opened
 - [X] Improve sidebar design and general application feel
+- [X] Support exporting note files as .txt, .html, and .md
 - [X] Automatically update file contents if edited elsewhere
 - [X] Ability to have multiple projects (folders) open at once
 - [X] Change document.title value for editor window to file name

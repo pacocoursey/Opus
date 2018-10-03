@@ -24,8 +24,21 @@ function listItem(p) {
   return itemDiv;
 }
 
+function compare(a, b) {
+  if (a.opened > b.opened) {
+    return -1;
+  }
+
+  if (a.opened < b.opened) {
+    return 1;
+  }
+
+  return 0;
+}
+
 if (settings.has('windows')) {
   const windows = Object.values(settings.get('windows'));
+  windows.sort(compare);
 
   if (windows.length === 0) {
     aside.innerHTML = '<div class="no-recent">No Recent Folders</div>';
