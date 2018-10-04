@@ -32,6 +32,8 @@ Features I'd like to implement:
 
 ### v2.0.0
 
+- [ ] Fix superscript keyboard shortcut
+- [ ] Undo [script] formatting by pressing the shortcut again
 - [X] Find
 - [X] Goto
 - [X] Replace
@@ -49,7 +51,9 @@ Features I'd like to implement:
 - [X] Show recent projects based on most recently opened
 - [X] Improve sidebar design and general application feel
 - [X] Support exporting note files as .txt, .html, and .md
+- [X] Overflow the sidebar when there are many folders/files
 - [X] Automatically update file contents if edited elsewhere
+- [X] Fix "cannot read property 'path' of null" tree-view bug
 - [X] Ability to have multiple projects (folders) open at once
 - [X] Change document.title value for editor window to file name
 - [X] Improve the way cursor is displayed on first element of a list

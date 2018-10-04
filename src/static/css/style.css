@@ -125,6 +125,7 @@ body.dark {
 }
 
 aside {
+  -webkit-app-region: no-drag;
   color: var(--aside-text);
   background-color: var(--aside-bg);
   flex-basis: 215px;
@@ -132,15 +133,14 @@ aside {
   max-width: 500px;
   user-select: none;
   border-right: 1px solid var(--separator);
-  padding-top: 30px;
   transition: var(--transition);
+  overflow: auto;
 }
 
 .sidebar {
-  padding: 10px;
+  padding: 30px 10px 10px 10px;
   line-height: 2.5em;
   font-size: 12px;
-  overflow: auto;
   -webkit-app-region: no-drag;
 }
 

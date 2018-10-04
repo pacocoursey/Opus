@@ -131,27 +131,22 @@
         }).join('');
 
         click = function (e) {
-          var parent = e.target;
+          var parent = e.target.closest('.tree-leaf');
+          var content = e.target.closest('.tree-leaf-content');
+          var data = JSON.parse(content.getAttribute('data-item'));
 
-          if (parent.className.includes('fa')) {
-            parent = parent.parentNode;
-          }
+          var leaves = parent.querySelector('.tree-child-leaves');
 
-          if (parent.className === 'tree-expando ' || parent.className === 'tree-leaf-text') {
-            parent = parent.parentNode;
-          }
-          var data = JSON.parse(parent.getAttribute('data-item'));
-          var leaves = parent.parentNode.querySelector('.tree-child-leaves');
-          if (leaves) {
+          if (data.type === 'directory') {
             if (leaves.classList.contains('hidden')) {
-              self.expand(parent, leaves);
+              self.expand(parent, data.path, leaves);
             } else {
-              self.collapse(parent, leaves);
+              self.collapse(parent, data.path, leaves);
             }
-          } else {
+          } else if (data.type === 'file') {
             emit(self, 'select', {
-              target: e,
-              data: data
+              target: content,
+              data,
             });
           }
         };
@@ -185,18 +180,20 @@
        * @param {DOMElement} node The parent node that contains the leaves
        * @param {DOMElement} leaves The leaves wrapper element
        */
-      TreeView.prototype.expand = function (node, leaves, skipEmit) {
+      TreeView.prototype.expand = function (node, path, leaves, skipEmit) {
         var expando = node.querySelector('.tree-expando');
+
         if (expando.innerHTML.includes('book')) {
           expando.innerHTML = '<i class="fas fa-fw fa-angle-down"></i><i class="fas fa-fw fa-book"></i>';
         } else {
           expando.innerHTML = '<i class="fas fa-fw fa-angle-down"></i><i class="fas fa-fw fa-folder"></i>';
         }
+
         leaves.classList.remove('hidden');
         if (skipEmit) { return; }
         emit(this, 'expand', {
           target: node,
-          leaves: leaves
+          path,
         });
       };
 
@@ -218,18 +215,20 @@
        * @param {DOMElement} node The parent node that contains the leaves
        * @param {DOMElement} leaves The leaves wrapper element
        */
-      TreeView.prototype.collapse = function (node, leaves, skipEmit) {
+      TreeView.prototype.collapse = function (node, path, leaves, skipEmit) {
         var expando = node.querySelector('.tree-expando');
+
         if (expando.innerHTML.includes('book')) {
           expando.innerHTML = '<i class="fas fa-fw fa-angle-right"></i><i class="fas fa-fw fa-book"></i>';
         } else {
           expando.innerHTML = '<i class="fas fa-fw fa-angle-right"></i><i class="fas fa-fw fa-folder"></i>';
         }
+
         leaves.classList.add('hidden');
         if (skipEmit) { return; }
         emit(this, 'collapse', {
           target: node,
-          leaves: leaves
+          path,
         });
       };
 

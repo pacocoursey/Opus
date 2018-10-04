@@ -43,50 +43,47 @@ module.exports = {
       },
     });
 
-    // Event listeners
     treeView.on('select', (e) => {
-      const newPath = e.data.path;
+      const { data, target } = e;
+      const { path } = data;
       const oldPath = editor.get();
 
-      const element = e.target.target.closest('.tree-leaf-content');
+      if (oldPath !== path) {
+        const ret = editor.open(path);
 
-      // Open the file if it is not already active
-      if (oldPath !== newPath) {
-        const ret = editor.open(newPath);
-
-        // New file was not opened
         if (!ret) { return; }
 
-        // Remove active state from old file
-        if (oldPath && oldPath !== '') { tree.find(oldPath).active = false; }
-
-        // Apply active state to new file
-        tree.find(newPath).active = true;
-
-        // Remove active class from other things
-        const elems = document.querySelectorAll('.active');
-        if (elems && elems.length !== 0) {
-          elems.forEach((el) => {
-            el.classList.remove('active');
-          });
+        if (oldPath && oldPath !== '') {
+          tree.find(oldPath).active = false;
         }
 
-        // Update CSS class
-        element.classList.add('active');
+        tree.find(path).active = true;
+
+        document.querySelectorAll('.active').forEach((el) => {
+          el.classList.remove('active');
+        });
+
+        target.classList.add('active');
       }
 
       module.exports.export();
     });
 
     treeView.on('expand', (e) => {
-      const name = JSON.parse(e.target.getAttribute('data-item')).path;
-      tree.open(name);
+      const { path } = e;
+      if (path) {
+        tree.open(path);
+      }
+
       module.exports.export();
     });
 
     treeView.on('collapse', (e) => {
-      const name = JSON.parse(e.target.getAttribute('data-item')).path;
-      tree.close(name);
+      const { path } = e;
+      if (path) {
+        tree.close(path);
+      }
+
       module.exports.export();
     });
 
