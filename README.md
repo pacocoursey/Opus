@@ -32,8 +32,6 @@ Features I'd like to implement:
 
 ### v2.0.0
 
-- [ ] Fix superscript keyboard shortcut
-- [ ] Undo [script] formatting by pressing the shortcut again
 - [X] Find
 - [X] Goto
 - [X] Replace
@@ -56,6 +54,7 @@ Features I'd like to implement:
 - [X] Fix "cannot read property 'path' of null" tree-view bug
 - [X] Ability to have multiple projects (folders) open at once
 - [X] Change document.title value for editor window to file name
+- [X] Fix superscript keyboard shortcut, undo formatting correctly
 - [X] Improve the way cursor is displayed on first element of a list
 - [X] Add Escape keyboard shortcut to clear current cursor formatting
 - [X] Show document stats in the footer, improve cursor position stats

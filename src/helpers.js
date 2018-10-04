@@ -717,7 +717,7 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
         {
           label: 'Superscript',
           enabled: isEnabled,
-          accelerator: 'CmdOrCtrl+Alt+Plus',
+          accelerator: 'CmdOrCtrl+Alt+=',
           click() { send('quill', 'superscript'); },
         },
         {

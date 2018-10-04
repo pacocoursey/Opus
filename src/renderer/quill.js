@@ -81,8 +81,9 @@ module.exports = {
   },
   superscript() {
     const result = quill.getFormat().script;
+    console.log(result);
     if (result === 'super') {
-      module.exports.clear();
+      quill.format('script', null, Quill.sources.USER);
     } else {
       quill.format('script', 'super', Quill.sources.USER);
     }
@@ -90,7 +91,7 @@ module.exports = {
   subscript() {
     const result = quill.getFormat().script;
     if (result === 'sub') {
-      module.exports.clear();
+      quill.format('script', null, Quill.sources.USER);
     } else {
       quill.format('script', 'sub', Quill.sources.USER);
     }
