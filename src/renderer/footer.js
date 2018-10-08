@@ -32,9 +32,7 @@ module.exports = {
   },
   updateTime() {
     const date = new Date();
-    const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-    const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-    time.textContent = `${hours}:${minutes}`;
+    time.textContent = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
   },
   updateCursorStats() {
     const range = quill.getSelection();
