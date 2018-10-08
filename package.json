@@ -13,7 +13,7 @@
     "dist": "build"
   },
   "repository": "https://github.com/pacocoursey/Opus",
-  "author": "Paco Coursey <paco@pacocoursey.com> (pacocoursey.com)",
+  "author": "Paco Coursey <p@paco.im> (paco.im)",
   "license": "MIT",
   "dependencies": {
     "chokidar": "^2.0.3",

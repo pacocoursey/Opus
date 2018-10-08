@@ -1,3 +1,7 @@
+<p align="center">
+  <img width="300" height="300" src="assets/logo.png">
+</p>
+
 # Opus
 
 a minimal note-taking app.
@@ -32,6 +36,8 @@ Features I'd like to implement:
 
 ### v2.0.0
 
+- [ ] Add hover to footer info
+- [ ] Tutorial Mode on first launch
 - [X] Find
 - [X] Goto
 - [X] Replace
@@ -43,6 +49,7 @@ Features I'd like to implement:
 - [X] Show current time in the footer
 - [X] Setting to hide and show footer
 - [X] Add an introductory window & flow
+- [X] Put time in 12h format with PM/AM
 - [X] Update menu based on active window
 - [X] Filter files to match only .note files
 - [X] Remember window x, y, height, and width
