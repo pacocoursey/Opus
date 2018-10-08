@@ -37,7 +37,6 @@ Features I'd like to implement:
 ### v2.0.0
 
 - [ ] Add hover to footer info
-- [ ] Tutorial Mode on first launch
 - [X] Find
 - [X] Goto
 - [X] Replace
@@ -56,6 +55,7 @@ Features I'd like to implement:
 - [X] Show recent projects based on most recently opened
 - [X] Improve sidebar design and general application feel
 - [X] Support exporting note files as .txt, .html, and .md
+- [X] Improve introduction flow, add images and more context
 - [X] Overflow the sidebar when there are many folders/files
 - [X] Automatically update file contents if edited elsewhere
 - [X] Fix "cannot read property 'path' of null" tree-view bug

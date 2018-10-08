@@ -70,6 +70,48 @@ main {
   transition: transform 400ms ease-in-out;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  width: 100%;
+  height: 100%;
+  margin: 0 50px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.text .title {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.text .description {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.text .code {
+  display: inline;
+}
+
 .content.active {
   transform: translateX(0);
   transition: transform 400ms ease-in-out;
@@ -93,59 +135,12 @@ main {
   width: 100px;
 }
 
-.list {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+.example {
+  width: 300px;
 }
 
-.list-item {
-  width: 70%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-.list-item .number {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-right: 50px;
-}
-
-.list-item .number > div {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: var(--lightest-gray);
-  border: 1px solid var(--lighter-gray);
-  color: var(--dark-gray);
-  font-weight: 600;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.list-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.list-text .title {
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.list-text .description {
-  font-size: 12px;
-  color: var(--dark-gray);
+.move-down {
+  transform: translateY(20px);
 }
 
 footer {
