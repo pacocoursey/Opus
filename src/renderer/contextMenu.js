@@ -133,7 +133,7 @@ const show = function showInFileManager(p) {
 
 function buildFolderMenu(m) {
   m.append(new MenuItem({
-    label: 'New File',
+    label: 'New Note',
     click: () => { newFile(elementPath); },
   }));
 
@@ -207,7 +207,7 @@ function buildFileMenu(m) {
 
 function buildRootMenu(m) {
   m.append(new MenuItem({
-    label: 'New File',
+    label: 'New Note',
     click: () => { newFile(elementPath); },
   }));
 
