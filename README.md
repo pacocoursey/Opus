@@ -36,7 +36,6 @@ Features I'd like to implement:
 
 ### v2.0.0
 
-- [ ] Add hover to footer info
 - [X] Find
 - [X] Goto
 - [X] Replace
