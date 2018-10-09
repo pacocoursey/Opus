@@ -15,7 +15,7 @@ const {
 } = require('./helpers');
 
 // Set app image path for dialogs
-app.image = path.join(__dirname, '../assets/logo-no-shadow.png');
+app.image = path.join(__dirname, '../assets/logo.png');
 
 // Catch unhandled promise rejections
 require('electron-unhandled')();
