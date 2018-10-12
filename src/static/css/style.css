@@ -110,7 +110,6 @@ body.dark {
 
 .traffic {
   -webkit-app-region: drag;
-  z-index: 24;
   position: fixed;
   top: 0;
   left: 0;
@@ -146,16 +145,18 @@ aside {
   user-select: none;
   border-right: 1px solid var(--separator);
   transition: var(--transition);
-  margin-top: 40px;
-  padding-top: 10px;
+  /* margin-top: 40px; */
+  /* padding-top: 50px; */
   overflow: auto;
 }
 
 .sidebar {
   padding: 0 10px 10px 10px;
+  margin-top: 50px;
   line-height: 2.5em;
   font-size: 12px;
   -webkit-app-region: no-drag;
+  overflow: auto;
 }
 
 .sidebar ol {
