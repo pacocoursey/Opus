@@ -108,6 +108,19 @@ body.dark {
   transition: var(--transition);
 }
 
+.traffic {
+  -webkit-app-region: drag;
+  z-index: 24;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 215px;
+  height: 40px;
+  border-right: 1px solid var(--separator);
+  background-color: var(--aside-bg);
+  transition: var(--transition);
+}
+
 .wrapper {
   display: flex;
   flex-direction: row;
@@ -125,7 +138,6 @@ body.dark {
 }
 
 aside {
-  -webkit-app-region: no-drag;
   color: var(--aside-text);
   background-color: var(--aside-bg);
   flex-basis: 215px;
@@ -134,11 +146,13 @@ aside {
   user-select: none;
   border-right: 1px solid var(--separator);
   transition: var(--transition);
+  margin-top: 40px;
+  padding-top: 10px;
   overflow: auto;
 }
 
 .sidebar {
-  padding: 30px 10px 10px 10px;
+  padding: 0 10px 10px 10px;
   line-height: 2.5em;
   font-size: 12px;
   -webkit-app-region: no-drag;
@@ -172,7 +186,7 @@ main {
   position: relative;
   flex-basis: 100%;
   max-height: calc(100vh - 20px);
-  margin: 30px 50px 0 50px;
+  margin: 40px 50px 0 50px;
   padding-bottom: 50px;
   overflow: auto;
   display: flex;

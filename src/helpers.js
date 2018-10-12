@@ -135,7 +135,7 @@ async function createEditorWindow(win) {
     height: settings.get(`windows.${win.path}.state.height`) || 544,
     minWidth: 500,
     minHeight: 400,
-    frame: false,
+    titleBarStyle: 'hiddenInset',
     show: false,
     icon: app.image,
   });
@@ -168,12 +168,17 @@ async function createEditorWindow(win) {
     slashes: true,
   }));
 
+  w.on('close', (e) => {
+    e.preventDefault();
+    // TODO: handle close ourselves with closeEditorWindow();
+  });
+
   w.on('closed', () => {
     win.active = false;
     settings.set(`windows.${win.path}`, win);
   });
 
-  ['resize', 'move', 'close'].forEach((e) => {
+  ['resize', 'move'].forEach((e) => {
     w.on(e, () => {
       settings.set(`windows.${win.path}.state`, windows.get(win.path).getBounds());
     });
