@@ -168,14 +168,17 @@ async function createEditorWindow(win) {
     slashes: true,
   }));
 
-  w.on('close', (e) => {
-    e.preventDefault();
-    // TODO: handle close ourselves with closeEditorWindow();
-  });
+  w.on('close', async (e) => {
+    const isSafeToClose = await closeEditorWindow();
 
-  w.on('closed', () => {
-    win.active = false;
-    settings.set(`windows.${win.path}`, win);
+    if (!isSafeToClose) {
+      e.preventDefault();
+    } else {
+      windows.delete(win.path);
+      if (windows.length() === 0) {
+        createSplashWindow();
+      }
+    }
   });
 
   ['resize', 'move'].forEach((e) => {
@@ -385,21 +388,13 @@ async function closeEditorWindow(win, quitFlag = false) {
     }
   }
 
-  if (windows.has(obj.path)) {
-    windows.get(obj.path).close();
-    windows.delete(obj.path);
-  }
-
+  // A closed window cannot have changes
   obj.changes = false;
 
   // Don't set windows to inactive when we are quitting
   // we want these windows to re-appear on next launch
   if (!quitFlag) obj.active = false;
   settings.set(`windows.${obj.path}`, obj);
-
-  if (windows.length() === 0) {
-    createSplashWindow();
-  }
 
   return true;
 }
@@ -789,10 +784,10 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
       role: 'window',
       submenu: [
         {
+          role: 'close',
           label: 'Close Window',
           enabled: isEnabled,
           accelerator: 'CmdOrCtrl+Shift+W',
-          click() { closeEditorWindow(); },
         },
         { role: 'minimize' },
       ],

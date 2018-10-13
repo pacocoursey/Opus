@@ -36,6 +36,7 @@ ipc.answerRenderer('closeSplashWindow', async () => {
 
 ipc.answerRenderer('closeIntroWindow', async () => {
   await fs.ensureFile(path.join(home, '.opus'));
+  app.isFirstRun = false;
   closeIntroWindow();
   createSplashWindow();
 });
@@ -51,9 +52,9 @@ function createWindows(windows) {
 }
 
 app.on('ready', async () => {
-  const isFirstRun = !await fs.pathExists(path.join(home, '.opus'));
+  app.isFirstRun = !await fs.pathExists(path.join(home, '.opus'));
 
-  if (isFirstRun) {
+  if (app.isFirstRun) {
     createIntroWindow();
   } else {
     const windows = getActiveWindows();
@@ -80,7 +81,9 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   const allWindows = BrowserWindow.getAllWindows();
 
-  if (allWindows.length === 0) {
+  if (app.isFirstRun) {
+    createIntroWindow();
+  } else if (allWindows.length === 0) {
     createSplashWindow();
   } else {
     allWindows[0].focus();
