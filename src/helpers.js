@@ -15,6 +15,7 @@ const windows = require('./windows');
 
 let splashWindow;
 let introWindow;
+let quitFlag;
 
 const splashWindowSettings = {
   width: 800,
@@ -169,8 +170,12 @@ async function createEditorWindow(win) {
   }));
 
   w.on('closed', () => {
+    if (!quitFlag) {
+      settings.set(`windows.${win.path}.active`, false);
+    }
+
     windows.delete(win.path);
-    if (windows.length() === 0) {
+    if (!quitFlag && windows.length() === 0) {
       createSplashWindow();
     }
   });
@@ -272,7 +277,7 @@ async function openWindow(p) {
 
 /**
  * Close a specified window, or closes the focused window.
- * Does NOT check if window has changes, use closeEditorWindow() for that.
+ * Does NOT check if window has changes.
  * Does NOT update settings object.
  */
 
@@ -314,115 +319,14 @@ function send(obj, func, params) {
 }
 
 /**
- * Ask the user if they want to Save, Cancel, or Don't Save.
- * Returns the user's choice.
- */
-
-function saveDialog(p) {
-  return dialog.showMessageBox({
-    type: 'question',
-    buttons: ['Save', 'Cancel', 'Don\'t Save'],
-    title: 'Confirm',
-    message: `${p} has changes, do you want to save them?`,
-    detail: 'Your changes will be lost if you close this file without saving.',
-    icon: `${app.image}`,
-  });
-}
-
-/**
- * Find the associated settings object with a BrowserWindow.
- */
-
-function getWindowObject(win = BrowserWindow.getFocusedWindow()) {
-  if (!win) throw new Error('Cannot get window object of null window.');
-
-  const p = win.path;
-  if (!settings.has(`windows.${p}`)) {
-    throw new Error(`Cannot find window object for window ${win}`);
-  }
-
-  return settings.get(`windows.${p}`);
-}
-
-/**
- * Closes a window. If it has changes, ask user for input.
- * If it does not have changes it closes the window, updates win object.
- */
-
-async function closeEditorWindow(win, quitFlag = false) {
-  let obj = win;
-
-  if (!win) {
-    const window = BrowserWindow.getFocusedWindow();
-
-    if (!window) throw new Error('No focused window.');
-
-    // Get the associated window object
-    obj = getWindowObject(window);
-  }
-
-  if (obj.changes) {
-    windows.get(obj.path).focus();
-    const choice = saveDialog(obj.path);
-    switch (choice) {
-      case 0: {
-        // Save
-        const ret = await ipc.callRenderer(windows.get(obj.path), 'save');
-        if (!ret) throw new Error('Save called failed.');
-        break;
-      }
-      case 1:
-        // Cancel
-        return false;
-      case 2:
-        // Don't Save
-        break;
-      default:
-        throw new Error(`Out of bounds dialog return: ${choice}`);
-    }
-  }
-
-  // A closed window cannot have changes
-  obj.changes = false;
-
-  // Don't set windows to inactive when we are quitting
-  // we want these windows to re-appear on next launch
-  if (!quitFlag) obj.active = false;
-  settings.set(`windows.${obj.path}`, obj);
-
-  return true;
-}
-
-/**
  * Quit the application. Checks if any editor windows have changes,
  * requests to save changes, then closes all windows and updates
  * each window object to be inactive with a null window.
  */
 
-async function quitApp() {
-  if (settings.has('windows')) {
-    const nonChanged = Object.values(settings.get('windows')).filter(win => (win.active && !win.changes));
-    const changed = Object.values(settings.get('windows')).filter(win => win.changes);
-
-    // Loop through the changed windows first in case of cancel
-    for (let i = 0; i < changed.length; i += 1) {
-      /* eslint-disable-next-line */
-      const ret = await closeEditorWindow(changed[i], true);
-
-      // Either cancelled or some error thrown
-      // do not continue closing windows and do not quit
-      if (ret === false) {
-        return;
-      }
-    }
-
-    // Windows with changes have been handled, close the rest
-    nonChanged.forEach((win) => {
-      closeEditorWindow(win, true);
-    });
-  }
-
-  app.exit();
+function quitApp() {
+  quitFlag = true;
+  app.quit();
 }
 
 function buildMenu(isEnabled = true, isOpenEnabled = true) {
@@ -459,10 +363,10 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
         },
         { type: 'separator' },
         {
-          role: 'quit',
+          // role: 'quit',
           label: 'Quit Opus',
           accelerator: 'CmdOrCtrl+q',
-          // click() { quitApp(); },
+          click() { quitApp(); },
         },
       ],
     },
@@ -839,7 +743,6 @@ module.exports = {
   closeIntroWindow,
   closeSplashWindow,
   createIntroWindow,
-  closeEditorWindow,
   createSplashWindow,
   createEditorWindow,
 };
