@@ -129,11 +129,6 @@ function initListeners() {
     spinner.classList.add('active');
   });
 
-  // Send message to main process to close the splash window.
-  document.querySelector('.close').addEventListener('click', async () => {
-    ipc.callMain('closeSplashWindow');
-  });
-
   // Send message to main process to prompt for a folder.
   footer.addEventListener('click', async () => {
     spinner.classList.add('active');

@@ -21,7 +21,7 @@ const splashWindowSettings = {
   width: 800,
   height: 450,
   resizable: false,
-  frame: false,
+  titleBarStyle: 'hiddenInset',
   show: false,
   icon: app.image,
 };
@@ -30,7 +30,7 @@ const introWindowSettings = {
   width: 800,
   height: 450,
   resizable: false,
-  frame: false,
+  titleBarStyle: 'hiddenInset',
   show: false,
   icon: app.image,
 };
