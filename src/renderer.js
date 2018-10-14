@@ -10,6 +10,8 @@ const store = require('./renderer/store');
 const find = require('./renderer/find');
 const go = require('./renderer/goto');
 
+const { app, dialog } = remote;
+
 // Maintain an object with these modules
 // for easy ipcRenderer access without eval()
 const modules = {
@@ -55,3 +57,36 @@ ipc.answerMain('save', async () => {
   editor.save();
   return true;
 });
+
+window.onbeforeunload = (e) => {
+  const changes = store.get('changes');
+
+  if (changes) {
+    const choice = dialog.showMessageBox({
+      type: 'question',
+      buttons: ['Save', 'Cancel', 'Don\'t Save'],
+      title: 'Confirm',
+      message: `${store.get('path')} has changes, do you want to save them?`,
+      detail: 'Your changes will be lost if you close this file without saving.',
+      icon: `${app.image}`,
+    });
+
+    switch (choice) {
+      case 0: {
+        // Save
+        editor.save();
+        return;
+      }
+      case 1:
+        // Cancel
+        e.returnValue = false;
+        break;
+      case 2:
+        // Don't Save
+        store.set('changes', false);
+        return;
+      default:
+        throw new Error(`Out of bounds dialog return: ${choice}`);
+    }
+  }
+};

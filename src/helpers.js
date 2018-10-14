@@ -168,16 +168,10 @@ async function createEditorWindow(win) {
     slashes: true,
   }));
 
-  w.on('close', async (e) => {
-    const isSafeToClose = await closeEditorWindow();
-
-    if (!isSafeToClose) {
-      e.preventDefault();
-    } else {
-      windows.delete(win.path);
-      if (windows.length() === 0) {
-        createSplashWindow();
-      }
+  w.on('closed', () => {
+    windows.delete(win.path);
+    if (windows.length() === 0) {
+      createSplashWindow();
     }
   });
 
@@ -465,9 +459,10 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
         },
         { type: 'separator' },
         {
+          role: 'quit',
           label: 'Quit Opus',
           accelerator: 'CmdOrCtrl+q',
-          click() { quitApp(); },
+          // click() { quitApp(); },
         },
       ],
     },

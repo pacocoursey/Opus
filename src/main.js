@@ -4,7 +4,6 @@ const path = require('path');
 const home = require('os').homedir();
 const fs = require('fs-extra');
 const {
-  quitApp,
   openWindow,
   getActiveWindows,
   closeIntroWindow,
@@ -65,11 +64,6 @@ app.on('ready', async () => {
       createWindows(windows);
     }
   }
-});
-
-app.on('before-quit', (e) => {
-  e.preventDefault();
-  quitApp();
 });
 
 app.on('window-all-closed', () => {
