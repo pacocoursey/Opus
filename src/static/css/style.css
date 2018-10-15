@@ -56,7 +56,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  -webkit-app-region: drag;
 }
 
 input[type="submit"],
@@ -108,21 +107,9 @@ body.dark {
   transition: var(--transition);
 }
 
-.traffic {
-  -webkit-app-region: drag;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 215px;
-  height: 40px;
-  border-right: 1px solid var(--separator);
-  background-color: var(--aside-bg);
-  transition: var(--transition);
-}
-
 .wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
   min-height: 100vh;
@@ -134,6 +121,34 @@ body.dark {
   transform: translateX(-215px);
   width: calc(100vw + 215px);
   transition: transform 200ms;
+}
+
+.traffic {
+  -webkit-app-region: drag;
+  width: 200vw;
+  height: 40px;
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.traffic > div {
+  height: 100%;
+  width: 215px;
+  background-color: var(--aside-bg);
+  border-right: 1px solid var(--separator);
+  transition: var(--transition);
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: calc(100vh - 40px);
 }
 
 aside {
@@ -150,10 +165,9 @@ aside {
 
 .sidebar {
   padding: 0 10px 10px 10px;
-  margin-top: 50px;
+  margin-top: 10px;
   line-height: 2.5em;
   font-size: 12px;
-  -webkit-app-region: no-drag;
   overflow: auto;
 }
 
@@ -181,12 +195,20 @@ aside {
   animation: highlight 200ms;
 }
 
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
 main {
   position: relative;
   flex-basis: 100%;
   max-height: calc(100vh - 20px);
-  margin: 40px 50px 0 50px;
-  padding-bottom: 50px;
+  margin: 15px 50px 0 50px;
+  padding-bottom: 10px;
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -196,14 +218,10 @@ footer {
   left: 215px;
   font-family: var(--font-stack-mono);
   user-select: none;
-  -webkit-app-region: no-drag;
   color: var(--footer-text);
   border-top: 1px solid var(--footer-border);
   background-color: var(--footer-bg);
   line-height: 40px;
-  position: absolute;
-  bottom: 0;
-  width: calc(100% - 215px);
   padding: 0 60px;
   overflow: hidden;
   display: flex;
@@ -352,7 +370,7 @@ footer.hide {
 }
 
 .ql-editor {
-  padding-bottom: 0;
+  padding: 0;
   font-weight: 400;
   tab-size: 2;
   line-height: 1.5rem;

@@ -12,51 +12,58 @@
   </head>
   <body>
 
-    <div class="traffic"></div>
 
     <div class="wrapper">
-      <aside>
-        <div class="sidebar">
-          <div id="tree"></div>
-        </div>
-      </aside>
+      <div class="traffic">
+        <div></div>
+      </div>
 
-      <main>
-        <div class="editor">
-          <p></p>
-        </div>
-
-      </main>
-
-      <footer>
-        <div class="stats" title="Cursor Position and Selection">
-          <div class="cursor-stats">
-            <div class="position">1:1</div>
-            <div class="selection"></div>
+      <div class="content">
+        <aside>
+          <div class="sidebar">
+            <div id="tree"></div>
           </div>
-          <div class="file-stats" title="File Lines and Words">0L 0W</div>
-          <div class="file-name" title="File Name"><div>untitled</div></div>
-          <div class="time" title="Time">00:00</div>
+        </aside>
+
+        <div class="main">
+          <main>
+            <div class="editor">
+              <p></p>
+            </div>
+          </main>
+
+          <footer>
+            <div class="stats" title="Cursor Position and Selection">
+              <div class="cursor-stats">
+                <div class="position">1:1</div>
+                <div class="selection"></div>
+              </div>
+              <div class="file-stats" title="File Lines and Words">0L 0W</div>
+              <div class="file-name" title="File Name"><div>untitled</div></div>
+              <div class="time" title="Time">00:00</div>
+            </div>
+
+            <div class="find">
+              <div>Find: </div>
+              <form class="find-form">
+                <input type="text" name="find" class="find-input">
+                <i class="fas fa-exchange-alt find-replace"></i>
+                <input type="text" name="replace" class="find-replace find-replace-input">
+                <input type="submit" class="find-submit">
+              </form>
+              <div class="find-stats"></div>
+            </div>
+
+            <div class="goto">
+              <div>Goto: </div>
+              <form class="goto-form">
+                <input type="text" name="goto" class="goto-input" tabindex="-1">
+              </form>
+            </div>
+          </footer>
         </div>
 
-        <div class="find">
-          <div>Find: </div>
-          <form class="find-form">
-            <input type="text" name="find" class="find-input">
-            <i class="fas fa-exchange-alt find-replace"></i>
-            <input type="text" name="replace" class="find-replace find-replace-input">
-            <input type="submit" class="find-submit">
-          </form>
-          <div class="find-stats"></div>
-        </div>
-
-        <div class="goto">
-          <div>Goto: </div>
-          <form class="goto-form">
-            <input type="text" name="goto" class="goto-input" tabindex="-1">
-          </form>
-        </div>
-      </footer>
+      </div>
     </div>
 
     <!-- Scripts -->
