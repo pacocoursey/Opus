@@ -1,4 +1,6 @@
 const ipc = require('electron-better-ipc');
+const { ipcRenderer } = require('electron');
+const settings = require('electron-settings');
 
 const back = document.querySelector('.back');
 const button = document.querySelector('.next');
@@ -48,10 +50,39 @@ async function transition(increment = 1) {
   nextSection.classList.add('active');
 }
 
-button.addEventListener('click', () => {
-  transition(1);
+/**
+ * Listen for theme toggle message from main process.
+ */
+
+ipcRenderer.on('message', (e, d) => {
+  const { method, module } = d;
+
+  if (module === 'theme' && method === 'toggle') {
+    document.body.classList.toggle('dark');
+    const isDark = document.body.classList.contains('dark');
+    settings.set('intro.dark', isDark);
+  }
 });
 
-back.addEventListener('click', () => {
-  transition(-1);
-});
+/**
+ * Setup event handlers and apply dark theme if necessary.
+ */
+
+function init() {
+  if (settings.has('intro.dark')) {
+    const isDark = settings.get('intro.dark');
+    if (isDark) {
+      document.body.classList.add('dark');
+    }
+  }
+
+  button.addEventListener('click', () => {
+    transition(1);
+  });
+
+  back.addEventListener('click', () => {
+    transition(-1);
+  });
+}
+
+init();

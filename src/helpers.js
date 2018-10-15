@@ -50,6 +50,11 @@ function closeIntroWindow() {
  */
 
 function createIntroWindow() {
+  if (introWindow) {
+    introWindow.focus();
+    return;
+  }
+
   // Set menu to intro menu.
   setIntroMenu();
 
@@ -94,6 +99,11 @@ function closeSplashWindow() {
  */
 
 function createSplashWindow() {
+  if (splashWindow) {
+    splashWindow.focus();
+    return;
+  }
+
   // Set menu to intro menu.
   setSplashMenu();
 
@@ -657,7 +667,7 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
         },
         {
           label: 'Toggle Dark Mode',
-          enabled: isEnabled,
+          // enabled: isEnabled,
           accelerator: 'CmdOrCtrl+D',
           click() { send('theme', 'toggle'); },
         },

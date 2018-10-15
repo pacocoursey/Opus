@@ -1,4 +1,6 @@
 :root {
+  --white: #fff;
+  --black: #000;
   --lighter-blue: #80d8ff;
   --light-blue: #90caf9;
   --blue: #00b0ff;
@@ -13,6 +15,19 @@
   --box-shadow-hover:
     0 0 110px 0 rgba(0, 0, 0, 0.08),
     0 10px 25px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dark {
+  --white: #1e1e1e;
+  --black: #fff;
+  --lighter-blue: #80d8ff;
+  --light-blue: #90caf9;
+  --blue: #00b0ff;
+  --lightest-gray: #100f11;
+  --lighter-gray: #474747;
+  --light-gray: #282828;
+  --gray: #888;
+  --dark-gray: rgb(173, 181, 189);
 }
 
 * {
@@ -40,6 +55,8 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  background-color: var(--white);
+  color: var(--black);
 }
 
 main {
@@ -171,7 +188,7 @@ footer {
 }
 
 .section.active {
-  color: #000;
+  color: var(--black);
 }
 
 .buttons {
@@ -203,7 +220,7 @@ footer {
   font-size: 14px;
   padding: 10px 20px;
   border: 1px solid var(--gray);
-  color: #000;
+  color: var(--black);
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
