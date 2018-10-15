@@ -81,7 +81,6 @@ module.exports = {
   },
   superscript() {
     const result = quill.getFormat().script;
-    console.log(result);
     if (result === 'super') {
       quill.format('script', null, Quill.sources.USER);
     } else {

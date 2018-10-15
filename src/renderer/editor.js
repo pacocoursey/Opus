@@ -195,7 +195,7 @@ module.exports = {
     try {
       module.exports.read(p);
     } catch (error) {
-      console.error(error);
+      throw new Error(error);
     }
 
     // Update the active file

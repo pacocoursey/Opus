@@ -145,8 +145,6 @@ aside {
   user-select: none;
   border-right: 1px solid var(--separator);
   transition: var(--transition);
-  /* margin-top: 40px; */
-  /* padding-top: 50px; */
   overflow: auto;
 }
 
