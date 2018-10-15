@@ -15,6 +15,7 @@
   --box-shadow-hover:
     0 0 110px 0 rgba(0, 0, 0, 0.08),
     0 10px 25px 0 rgba(0, 0, 0, 0.05);
+  --transition: color 400ms, background-color 400ms, border 400ms;
 }
 
 .dark {
@@ -57,6 +58,7 @@ body {
   align-items: stretch;
   background-color: var(--white);
   color: var(--black);
+  transition: var(--transition);
 }
 
 main {
@@ -171,6 +173,7 @@ footer {
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
+  transition: var(--transition);
 }
 
 .sections {
@@ -185,10 +188,12 @@ footer {
   font-size: 14px;
   margin-right: 50px;
   color: var(--gray);
+  transition: var(--transition);
 }
 
 .section.active {
   color: var(--black);
+  transition: var(--transition);
 }
 
 .buttons {
@@ -232,14 +237,4 @@ footer {
 
 .back:active {
   background-color: var(--lighter-gray);
-}
-
-.ql-toolbar {
-  display: none;
-}
-
-.ql-container {
-  flex: 1;
-  height: 100%;
-  width: 100%;
 }
