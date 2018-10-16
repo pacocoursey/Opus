@@ -165,7 +165,6 @@ aside {
 
 .sidebar {
   padding: 0 10px 10px 10px;
-  margin-top: 10px;
   line-height: 2.5em;
   font-size: 12px;
   overflow: auto;
@@ -207,7 +206,7 @@ main {
   position: relative;
   flex-basis: 100%;
   max-height: calc(100vh - 20px);
-  margin: 15px 50px 0 50px;
+  margin: 0 50px 0 50px;
   padding-bottom: 10px;
   overflow: auto;
   display: flex;
