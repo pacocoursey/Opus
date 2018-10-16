@@ -9,6 +9,7 @@
   --light-gray: #e0e0e0;
   --gray: #d2d2d3;
   --dark-gray: rgb(173, 181, 189);
+  --text: #fff;
   --box-shadow-default:
     0 0 30px 0 rgba(0, 0, 0, 0.08),
     0 1px 18px 0 rgba(0, 0, 0, 0.05);
@@ -21,6 +22,7 @@
 .dark {
   --white: #1e1e1e;
   --black: #fff;
+  --text: #fff;
   --lighter-blue: #80d8ff;
   --light-blue: #90caf9;
   --blue: #00b0ff;
@@ -209,6 +211,7 @@ aside {
 }
 
 .list-item {
+  color: var(--black);
   cursor: default;
   user-select: none;
   flex-basis: 50px;
@@ -216,28 +219,18 @@ aside {
 }
 
 .list-item.active {
-  color: var(--white);
+  color: var(--text);
   background: var(--blue);
   font-weight: 600;
 }
 
-.list-item.active > .path {
-  color: var(--white);
-}
-
-.list-item.active > .name {
-  color: var(--white);
-}
-
 .list-item > .name {
-  color: var(--black);
   font-size: 12px;
   margin-bottom: 2px;
 }
 
 .list-item > .path {
   font-size: 10px;
-  color: var(--dark-gray);
 }
 
 .no-recent {
@@ -249,7 +242,6 @@ aside {
   align-items: center;
   color: var(--gray);
   font-size: 12px;
-  transition: var(--transition);
 }
 
 footer {
