@@ -6,6 +6,7 @@ const back = document.querySelector('.back');
 const button = document.querySelector('.next');
 const content = document.querySelector('main');
 const sections = document.querySelector('.sections');
+const images = document.querySelectorAll('.example');
 let index = 0;
 
 async function transition(increment = 1) {
@@ -51,6 +52,17 @@ async function transition(increment = 1) {
 }
 
 /**
+ * Update the images based on the theme color.
+ */
+
+function updateImages(append) {
+  images.forEach((img) => {
+    const name = img.getAttribute('data-name');
+    img.src = `./img/${name}_${append}.png`;
+  });
+}
+
+/**
  * Listen for theme toggle message from main process.
  */
 
@@ -61,6 +73,14 @@ ipcRenderer.on('message', (e, d) => {
     document.body.classList.toggle('dark');
     const isDark = document.body.classList.contains('dark');
     settings.set('intro.dark', isDark);
+
+    let append = 'light';
+
+    if (isDark) {
+      append = 'dark';
+    }
+
+    updateImages(append);
   }
 });
 
@@ -73,6 +93,7 @@ function init() {
     const isDark = settings.get('intro.dark');
     if (isDark) {
       document.body.classList.add('dark');
+      updateImages('dark');
     }
   }
 

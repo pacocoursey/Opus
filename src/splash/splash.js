@@ -1,7 +1,7 @@
 const path = require('path');
 const ipc = require('electron-better-ipc');
 const settings = require('electron-settings');
-const { shell, remote } = require('electron');
+const { shell, remote, ipcRenderer } = require('electron');
 
 let p;
 let menu;
@@ -124,6 +124,17 @@ function populateSidebar() {
  */
 
 function initListeners() {
+  // Listen for message to toggle theme
+  ipcRenderer.on('message', (e, d) => {
+    const { method, module } = d;
+
+    if (module === 'theme' && method === 'toggle') {
+      document.body.classList.toggle('dark');
+      const isDark = document.body.classList.contains('dark');
+      settings.set('splash.dark', isDark);
+    }
+  });
+
   // Listen for message to show spinner
   ipc.answerMain('showSpinner', async () => {
     spinner.classList.add('active');
@@ -142,7 +153,6 @@ function initListeners() {
       shell.openExternal('https://github.com/pacocoursey/Opus/');
     });
   });
-
 
   // Add active class to the relevant list-item div.
   document.addEventListener('keydown', (e) => {
@@ -210,6 +220,19 @@ function removeProject(dataPath) {
   }
 }
 
+/**
+ * Apply dark theme if necessary.
+ */
+
+function init() {
+  if (settings.has('splash.dark')) {
+    const isDark = settings.get('splash.dark');
+    if (isDark) {
+      document.body.classList.add('dark');
+    }
+  }
+}
+
 menu = Menu.buildFromTemplate([
   {
     label: 'Remove',
@@ -217,5 +240,7 @@ menu = Menu.buildFromTemplate([
   },
 ]);
 
+
+init();
 populateSidebar();
 initListeners();
