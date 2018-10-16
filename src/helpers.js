@@ -346,8 +346,8 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
       label: 'Opus',
       submenu: [
         {
+          role: 'about',
           label: 'About Opus',
-          click() { shell.openExternal('https://github.com/pacocoursey/Opus/'); },
         },
         {
           type: 'separator',
