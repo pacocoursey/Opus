@@ -97,6 +97,7 @@ function populateSidebar() {
   aside.innerHTML = '';
   if (settings.has('windows')) {
     const windows = Object.values(settings.get('windows'));
+    console.log(windows);
     windows.sort(compare);
 
     if (windows.length === 0) {
@@ -131,7 +132,7 @@ function initListeners() {
     if (module === 'theme' && method === 'toggle') {
       document.body.classList.toggle('dark');
       const isDark = document.body.classList.contains('dark');
-      settings.set('splash.dark', isDark);
+      settings.set('intro.dark', isDark);
     }
   });
 
@@ -225,8 +226,8 @@ function removeProject(dataPath) {
  */
 
 function init() {
-  if (settings.has('splash.dark')) {
-    const isDark = settings.get('splash.dark');
+  if (settings.has('intro.dark')) {
+    const isDark = settings.get('intro.dark');
     if (isDark) {
       document.body.classList.add('dark');
     }

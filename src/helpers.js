@@ -157,9 +157,6 @@ async function createEditorWindow(win) {
   // Set the window to active
   win.active = true;
 
-  // Update the last opened timestamp
-  win.opened = Date.now();
-
   // Save the object to settings
   settings.set(`windows.${win.path}`, win);
 
@@ -183,6 +180,10 @@ async function createEditorWindow(win) {
     if (!quitFlag) {
       settings.set(`windows.${win.path}.active`, false);
     }
+
+    // Update the last closed timestamp
+    const closed = Date.now();
+    settings.set(`windows.${win.path}.closed`, closed);
 
     windows.delete(win.path);
     if (!quitFlag && windows.length() === 0) {
@@ -219,7 +220,7 @@ function createNewProject(projectPath) {
     path: projectPath,
     file: undefined,
     tree: undefined,
-    opened: undefined,
+    closed: undefined,
     active: false,
     footer: true,
     sidebar: true,
