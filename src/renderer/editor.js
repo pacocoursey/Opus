@@ -7,7 +7,7 @@ const { quill } = require('./quill');
 const footer = require('./footer');
 const store = require('./store');
 
-const { app, dialog, BrowserWindow } = remote;
+const { app, dialog } = remote;
 
 const turndownService = new Turndown();
 let activeFile = '';

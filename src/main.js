@@ -4,7 +4,6 @@ const path = require('path');
 const home = require('os').homedir();
 const fs = require('fs-extra');
 const {
-  quitApp,
   openWindow,
   getActiveWindows,
   closeIntroWindow,
