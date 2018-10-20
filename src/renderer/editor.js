@@ -1,4 +1,4 @@
-const { app, dialog } = require('electron').remote;
+const { remote } = require('electron');
 const Delta = require('quill-delta');
 const fs = require('fs');
 const path = require('path');
@@ -6,6 +6,8 @@ const Turndown = require('turndown');
 const { quill } = require('./quill');
 const footer = require('./footer');
 const store = require('./store');
+
+const { app, dialog, BrowserWindow } = remote;
 
 const turndownService = new Turndown();
 let activeFile = '';
@@ -76,10 +78,23 @@ module.exports = {
   },
   reload() {
     // If the current file has changed, and it was not a local save
-    // reload the document contents
+    // ask user to reload the document contents
     if (!saveFlag) {
-      console.warn('Reloading file from external change..');
-      module.exports.read(activeFile);
+      remote.getCurrentWindow().focus();
+
+      const choice = dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Use New', 'Keep Current'],
+        title: 'Confirm',
+        message: 'This file has been edited elsewhere. Which version would you like to use?',
+        detail: 'Your changes will be lost if you use the new version.',
+        icon: `${app.image}`,
+      });
+
+      if (choice === 0) {
+        // Use New
+        module.exports.read(activeFile);
+      }
     }
 
     saveFlag = false;
