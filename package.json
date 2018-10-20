@@ -1,7 +1,7 @@
 {
   "name": "opus",
   "productName": "Opus",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0",
   "description": "a minimal note-taking app",
   "main": "./src/main.js",
   "scripts": {
