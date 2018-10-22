@@ -10,7 +10,7 @@
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --ignore-path .gitignore --fix .",
     "clean": "rm ~/.opus && rm ~/Library/Application\\ Support/Opus/Settings",
-    "dist": "build"
+    "build": "build"
   },
   "repository": "https://github.com/pacocoursey/Opus",
   "author": "Paco Coursey <p@paco.im> (paco.im)",
