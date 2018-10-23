@@ -19,8 +19,6 @@ $ npm install
 $ npm start
 ```
 
-Keep in mind this project is still under development.
-
 ![Opus Light Mode Screenshot](assets/screenshot-light.png)
 ![Opus Dark Mode Screenshot](assets/screenshot-dark.png)
 
