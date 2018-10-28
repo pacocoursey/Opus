@@ -12,12 +12,12 @@ Much like a code-editor, Opus opens folders and allows you to edit the files ins
 
 ## Features
 
-- **Editing**: Supports rich text editing with all the features you'd expect.
-- **Uses Files**: Uses tangible files in JSON format, not inaccessible databases.
-- **Dark Mode**: Includes a dark mode for late night writing.
-- **Customizable**: The sidebar and footer can be hidden for a more focused experience.
-- **Multiple Projects**: Opus supports opening multiple folders at once.
-- **Simple**: Opus has only the features you need.
+- **🖋 Editing**: Supports rich text editing with all the features you'd expect.
+- **📄 Uses Files**: Uses tangible files in JSON format, not inaccessible databases.
+- **🌙 Dark Mode**: Includes a dark mode for late night writing.
+- **⚙️ Customizable**: The sidebar and footer can be hidden for a more focused experience.
+- **📂 Multiple Projects**: Opus supports opening multiple folders at once.
+- **✨ Simple**: Opus has only the features you need.
 
 ## Installation
 
