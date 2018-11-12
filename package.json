@@ -10,8 +10,9 @@
     "lint": "eslint --ignore-path .gitignore .",
     "fix": "eslint --ignore-path .gitignore --fix .",
     "clean": "rm ~/.opus && rm ~/Library/Application\\ Support/Opus/Settings",
-    "build": "build",
-    "build-win": "electron-builder -w"
+    "build:mac": "electron-builder -m",
+    "build:win": "electron-builder -w",
+    "build:linux": "electron-builder -l"
   },
   "repository": "https://github.com/pacocoursey/Opus",
   "author": "Paco Coursey <p@paco.im> (paco.im)",
