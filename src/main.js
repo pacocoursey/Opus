@@ -66,10 +66,8 @@ app.on('ready', async () => {
   }
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+app.on('window-all-closed', (e) => {
+  e.preventDefault();
 });
 
 app.on('activate', () => {
