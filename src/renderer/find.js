@@ -135,7 +135,7 @@ module.exports = {
     }
   },
   find(increment = 1) {
-    const str = input.value;
+    const str = input.value.toLowerCase();
     let replaceValue = '';
     module.exports.clear();
 
