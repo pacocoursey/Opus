@@ -369,7 +369,7 @@ footer.hide {
 }
 
 .ql-editor {
-  padding: 0;
+  padding: 0 30px 0 0;
   font-weight: 400;
   tab-size: 2;
   line-height: 1.5rem;
