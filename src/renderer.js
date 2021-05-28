@@ -52,7 +52,6 @@ footer.init();
 
 ipcRenderer.on('message', (e, d) => {
   const { method, module, parameters } = d;
-  console.log({ d });
   modules[module][method](parameters);
 });
 

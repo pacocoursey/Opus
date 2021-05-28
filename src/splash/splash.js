@@ -97,7 +97,6 @@ function populateSidebar() {
   aside.innerHTML = '';
   if (settings.has('windows')) {
     const windows = Object.values(settings.get('windows'));
-    console.log(windows);
     windows.sort(compare);
 
     if (windows.length === 0) {
