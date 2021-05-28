@@ -5,9 +5,9 @@ const Store = {
     this.path = p;
   },
 
-  get: (key) => {
+  get: (key, defaultValue) => {
     if (!this.path) throw new Error('No store path defined.');
-    return settings.get(`windows.${this.path}.${key}`);
+    return settings.get(`windows.${this.path}.${key}`, defaultValue);
   },
 
   set: (key, value) => {

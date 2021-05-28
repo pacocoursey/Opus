@@ -1,4 +1,5 @@
 const { remote } = require('electron');
+const store = require('./store');
 
 const {
   Menu, MenuItem,
@@ -53,7 +54,7 @@ const add = (text) => {
 module.exports = (selection) => {
   const menu = new Menu();
 
-  if (selection.isMisspelled) {
+  if (selection && selection.isMisspelled) {
     if (selection.suggestions.length === 0) {
       menu.append(new MenuItem({
         label: 'No Guesses Found',
@@ -79,10 +80,22 @@ module.exports = (selection) => {
         add(selection.word);
       },
     }));
-
-    menu.append(new MenuItem({ type: 'separator' }));
   }
 
+  menu.append(new MenuItem({
+    type: 'checkbox',
+    label: 'SpellChecker',
+    checked: store.get('spellcheck', true),
+    click: (_, browserWindow) => {
+      const { webContents } = browserWindow;
+      webContents.send('message', {
+        module: 'spellcheck',
+        method: 'toggle',
+      });
+    },
+  }));
+
+  menu.append(new MenuItem({ type: 'separator' }));
 
   buildMenu(menu);
   return menu;

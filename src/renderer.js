@@ -9,6 +9,7 @@ const footer = require('./renderer/footer');
 const store = require('./renderer/store');
 const find = require('./renderer/find');
 const go = require('./renderer/goto');
+const spellcheck = require('./renderer/spellcheck');
 
 const { app, dialog } = remote;
 
@@ -24,6 +25,7 @@ const modules = {
   store,
   find,
   go,
+  spellcheck,
 };
 
 // Initialize the store with the window's project object
@@ -31,13 +33,14 @@ const { path } = remote.getCurrentWindow();
 store.init(path);
 
 // Spellcheck in texteditor
-require('./renderer/spellcheck');
+spellcheck.init();
 
 // Disable file drop redirect
 require('electron-disable-file-drop');
 
 // Catch unhandled promise rejections
 require('electron-unhandled')();
+
 
 // Init all the modules
 theme.init();
@@ -49,6 +52,7 @@ footer.init();
 
 ipcRenderer.on('message', (e, d) => {
   const { method, module, parameters } = d;
+  console.log({ d });
   modules[module][method](parameters);
 });
 

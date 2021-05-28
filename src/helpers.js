@@ -511,6 +511,11 @@ function buildMenu(isEnabled = true, isOpenEnabled = true) {
           accelerator: 'CmdOrCtrl+Alt+G',
           click() { send('go', 'activate'); },
         },
+        {
+          label: 'Toggle SpellChecker',
+          enabled: isEnabled,
+          click() { send('spellcheck', 'toggle'); },
+        },
       ],
     },
     {
