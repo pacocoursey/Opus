@@ -64,7 +64,6 @@ function createIntroWindow() {
   webContents.on('did-finish-load', () => {
     webContents.setZoomFactor(1);
     webContents.setVisualZoomLevelLimits(1, 1);
-    webContents.setLayoutZoomLevelLimits(0, 0);
   });
 
   introWindow.loadURL(url.format({
@@ -113,7 +112,6 @@ function createSplashWindow() {
   webContents.on('did-finish-load', () => {
     webContents.setZoomFactor(1);
     webContents.setVisualZoomLevelLimits(1, 1);
-    webContents.setLayoutZoomLevelLimits(0, 0);
   });
 
   splashWindow.loadURL(url.format({
@@ -167,7 +165,6 @@ async function createEditorWindow(win) {
   webContents.on('did-finish-load', () => {
     webContents.setZoomFactor(1);
     webContents.setVisualZoomLevelLimits(1, 1);
-    webContents.setLayoutZoomLevelLimits(0, 0);
   });
 
   w.loadURL(url.format({

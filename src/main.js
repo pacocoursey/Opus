@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const ipc = require('electron-better-ipc');
+const { ipcMain } = require('electron-better-ipc');
 const path = require('path');
 const home = require('os').homedir();
 const fs = require('fs-extra');
@@ -17,23 +17,26 @@ const {
 app.image = path.join(__dirname, '../assets/icon.png');
 
 // Catch unhandled promise rejections
-require('electron-unhandled')();
+(async () => {
+  const unhandled = await import('electron-unhandled');
+  unhandled.default();
+})();
 
 /**
  * Handle messages from renderer process.
  */
 
-ipc.answerRenderer('openProject', async (p) => {
+ipcMain.answerRenderer('openProject', async (p) => {
   const res = await openWindow(p);
   if (res) closeSplashWindow();
   return res;
 });
 
-ipc.answerRenderer('closeSplashWindow', async () => {
+ipcMain.answerRenderer('closeSplashWindow', async () => {
   closeSplashWindow();
 });
 
-ipc.answerRenderer('closeIntroWindow', async () => {
+ipcMain.answerRenderer('closeIntroWindow', async () => {
   await fs.ensureFile(path.join(home, '.opus'));
   app.isFirstRun = false;
   closeIntroWindow();

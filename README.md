@@ -50,3 +50,8 @@ $ npm start
 
 - [Left](https://github.com/hundredrabbits/left): distractionless plain text writing application.
 - [Quill](https://github.com/quilljs/quill): The rich text editor that runs inside Opus.
+
+## Updates
+- February 2024: Updated compatibility with newer Electron versions
+- Removed deprecated API calls
+- Improved module handling
